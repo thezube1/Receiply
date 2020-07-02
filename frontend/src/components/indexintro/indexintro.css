@@ -1,0 +1,43 @@
+#photo {
+  height: auto;
+  width: 100%;
+  max-width: 500px;
+}
+
+#photowrapper {
+  position: absolute;
+}
+
+#barwrapper {
+  margin-top: 50px;
+  position: absolute;
+}
+
+.bars {
+  height: 15px;
+  width: 150px;
+  background-color: rgb(111, 0, 255);
+  border-radius: 7px;
+  margin-top: 10px;
+}
+
+#textWrapper {
+  text-align: center;
+}
+#header {
+  font-family: "Bebas Neue";
+  font-size: 70px;
+  color: white;
+}
+
+#headerText {
+  background-color: rgb(111, 0, 255);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+}
+
+#subtitle {
+  font-family: "Unna";
+  font-size: 20px;
+}
