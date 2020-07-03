@@ -11,12 +11,14 @@ class App extends Component {
     return (
       <React.Fragment>
         <Navbar />
-        <div id="indexIntro">
-          <div>
-            <IndexIntroPhoto />
-          </div>
-          <div>
-            <IndexIntroText />
+        <div id="mainpagewrapper">
+          <div id="indexIntro">
+            <div>
+              <IndexIntroPhoto />
+            </div>
+            <div>
+              <IndexIntroText />
+            </div>
           </div>
         </div>
       </React.Fragment>

@@ -21,23 +21,31 @@
   margin-top: 10px;
 }
 
-#textWrapper {
-  text-align: center;
-}
 #header {
-  font-family: "Bebas Neue";
-  font-size: 70px;
+  font-family: "Roboto";
+  font-size: 50px;
   color: white;
+  font-weight: 500;
 }
 
 #headerText {
   background-color: rgb(111, 0, 255);
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 5px;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 #subtitle {
   font-family: "Unna";
-  font-size: 20px;
+  font-size: 70px;
+  margin-top: 50px;
+}
+
+#descriptionHighlight {
+  font-weight: bold;
+  font-style: 70px;
+  background-color: rgb(111, 0, 255);
+  color: white;
+  padding: 5px;
+  border-radius: 20px;
+  line-height: 1.4;
 }

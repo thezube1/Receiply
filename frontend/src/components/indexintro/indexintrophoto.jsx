@@ -6,7 +6,7 @@ class IndexIntroPhoto extends Component {
   state = {};
   render() {
     return (
-      <div>
+      <React.Fragment>
         <div id="photowrapper">
           <img src={photo} id="photo" alt="Father and son" />
         </div>
@@ -15,7 +15,7 @@ class IndexIntroPhoto extends Component {
           <div class="bars"></div>
           <div class="bars"></div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
