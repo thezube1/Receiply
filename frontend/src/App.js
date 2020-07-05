@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import Navbar from "./components/navbar/navbar";
 import "./App.css";
 
-import IndexIntroPhoto from "./components/indexintro/indexintrophoto";
-import IndexIntroText from "./components/indexintro/indexintrotext";
-
 class App extends Component {
   state = {};
   render() {
@@ -12,13 +9,8 @@ class App extends Component {
       <React.Fragment>
         <Navbar />
         <div id="mainpagewrapper">
-          <div id="indexIntro">
-            <div>
-              <IndexIntroPhoto />
-            </div>
-            <div>
-              <IndexIntroText />
-            </div>
+          <div id="backgroundImage">
+            <div id="mainTitle">Receiply</div>
           </div>
         </div>
       </React.Fragment>

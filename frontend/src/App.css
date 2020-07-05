@@ -1,13 +1,13 @@
-#indexIntro {
-  margin-top: 100px;
-  justify-content: center;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 500px));
-  grid-column-gap: 100px;
+#backgroundImage {
+  background-image: url("./photos/index/WBC_7095.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
 }
 
-#mainpagewrapper {
-  max-width: 93%;
-  margin-left: auto;
-  margin-right: auto;
+#mainTitle {
+  color: white;
+  height: 500px;
 }
