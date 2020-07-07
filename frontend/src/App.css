@@ -5,9 +5,17 @@
   background-size: cover;
   width: 100vw;
   height: 100vh;
+  z-index: 0;
 }
 
 #mainTitle {
+  font-family: "Open Sans";
+  font-weight: 700;
+  font-size: 150px;
+  text-shadow: 2px 2px 7px #000000;
   color: white;
-  height: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

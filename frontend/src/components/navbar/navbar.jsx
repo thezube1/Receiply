@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./navbar.css";
 
+import { Link } from "react-router-dom";
+
 class Navbar extends Component {
   state = {};
   render() {
@@ -12,12 +14,16 @@ class Navbar extends Component {
           <span class="navitem">About</span>
         </div>
         <div id="accountitemswrapper">
-          <span class="navitem accountitems" id="signup">
-            Sign up
-          </span>
-          <span class="navitem accountitems" id="login">
-            Login
-          </span>
+          <Link to="/signup" style={{ textDecoration: "none" }}>
+            <span class="navitem accountitems" id="signup">
+              Sign up
+            </span>
+          </Link>
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <span class="navitem accountitems" id="login">
+              Login
+            </span>
+          </Link>
         </div>
       </div>
     );
