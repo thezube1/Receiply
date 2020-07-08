@@ -10,17 +10,17 @@ class Navbar extends Component {
       <div id="wrapper">
         <div id="title">Receiply</div>
         <div id="navitemswrapper">
-          <span class="navitem">Browse</span>
-          <span class="navitem">About</span>
+          <span className="navitem">Browse</span>
+          <span className="navitem">About</span>
         </div>
         <div id="accountitemswrapper">
           <Link to="/signup" style={{ textDecoration: "none" }}>
-            <span class="navitem accountitems" id="signup">
+            <span className="navitem accountitems" id="signup">
               Sign up
             </span>
           </Link>
           <Link to="/login" style={{ textDecoration: "none" }}>
-            <span class="navitem accountitems" id="login">
+            <span className="navitem accountitems" id="login">
               Login
             </span>
           </Link>

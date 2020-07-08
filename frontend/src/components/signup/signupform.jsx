@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import validator from "email-validator";
 import "./signup.css";
 
 class SignupForm extends Component {
@@ -15,8 +16,36 @@ class SignupForm extends Component {
     this.setState({ [inputType]: event.target.value });
   };
 
+  handleSubmit = () => {
+    let data = {
+      account: [
+        this.state.email,
+        this.state.first,
+        this.state.last,
+        this.state.user,
+        this.state.pass,
+      ],
+    };
+    if (
+      this.state.email.length < 4 ||
+      this.state.first.length === 0 ||
+      this.state.last.length === 0 ||
+      this.state.user.length === 0 ||
+      this.state.pass.length === 0
+    )
+      return console.log("One or more fields is missing");
+
+    if (validator.validate(this.state.email) === false) {
+      console.log("Please enter a valid email address!");
+    } else {
+      axios.post("/api/adduser", data, {
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log("User submitted - waiting for response");
+    }
+  };
+
   render() {
-    console.log(this.state.email, this.state.first);
     return (
       <div>
         <div id="formContainer">
@@ -57,7 +86,12 @@ class SignupForm extends Component {
             onChange={this.handleChange("pass")}
           />
           <br />
-          <input type="button" value="Submit" id="submitButton" />
+          <input
+            type="button"
+            value="Submit"
+            id="submitButton"
+            onClick={this.handleSubmit}
+          />
         </div>
       </div>
     );
