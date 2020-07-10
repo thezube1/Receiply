@@ -54,7 +54,7 @@ class LoginForm extends Component {
           />
           <div className="description">Password</div>
           <input
-            type="text"
+            type="password"
             className="input"
             value={this.state.pass}
             onChange={this.handleChange("pass")}
