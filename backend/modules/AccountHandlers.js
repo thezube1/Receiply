@@ -26,7 +26,7 @@ app.post("/api/login", (req, res) => {
       if (err) {
         console.log(err);
       }
-      if (data === undefined) {
+      if (data[0] === undefined) {
         console.log("User does not exist!");
       } else {
         let userPassword = data[0].PASS;
@@ -71,7 +71,6 @@ app.post("/api/adduser", (req, res) => {
   const pass = req.body.account[4];
   console.log("Check!");
 
- 
   connection.query(
     `SELECT EMAIL, PASS FROM Accounts WHERE EMAIL='${email}'`,
     (err, data) => {
