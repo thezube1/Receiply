@@ -35,9 +35,12 @@ class LoginForm extends Component {
   };
 
   render() {
+    /*
     if (this.state.check === true) {
       return <Redirect to="/" />;
     }
+    */
+    console.log(this.state.check);
     return (
       <div>
         <div id="formContainer">

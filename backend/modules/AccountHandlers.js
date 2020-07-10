@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 const connection = mysql.createConnection({
@@ -11,13 +13,15 @@ const connection = mysql.createConnection({
   database: process.env.DB,
 });
 
+app.use(cookieParser());
+
 app.post("/api/login", (req, res) => {
   const email = req.body.account[0];
   const pass = req.body.account[1];
   console.log("Initiating check!");
 
   connection.query(
-    `SELECT EMAIL, PASS FROM Accounts WHERE EMAIL='${email}'`,
+    `SELECT EMAIL, PASS, USER_ID FROM Accounts WHERE EMAIL='${email}'`,
     (err, data) => {
       if (err) {
         console.log(err);
@@ -32,8 +36,22 @@ app.post("/api/login", (req, res) => {
           }
           if (result === true) {
             console.log("User authenticated!");
-            res.send(true);
-            res.end();
+            jwt.sign(
+              { user_id: data[0].USER_ID, auth: true },
+              process.env.ACCESS_TOKEN_KEY,
+              (err, token) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  res.cookie(userAuthed, token, {
+                    httpOnly: true,
+                    secure: false,
+                  });
+                  res.send(true);
+                  res.end();
+                }
+              }
+            );
           } else {
             console.log("Incorrect password!");
             res.send(false);
