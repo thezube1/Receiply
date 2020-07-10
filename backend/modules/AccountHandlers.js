@@ -22,7 +22,7 @@ app.post("/api/login", (req, res) => {
       if (err) {
         console.log(err);
       }
-      if (data[0] === undefined) {
+      if (data === undefined) {
         console.log("User does not exist!");
       } else {
         let userPassword = data[0].PASS;
@@ -53,9 +53,7 @@ app.post("/api/adduser", (req, res) => {
   const pass = req.body.account[4];
   console.log("Check!");
 
-  const conn = new sql.ConnectionPool(dbConfig);
-  const request = new sql.Request(conn);
-
+ 
   connection.query(
     `SELECT EMAIL, PASS FROM Accounts WHERE EMAIL='${email}'`,
     (err, data) => {
