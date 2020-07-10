@@ -26,7 +26,9 @@ class LoginForm extends Component {
       } else {
         axios
           .post("/api/login", data, {
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+            },
           })
           .then((response) => this.setState({ check: response.data }));
         console.log("Login request submitted");
@@ -35,11 +37,9 @@ class LoginForm extends Component {
   };
 
   render() {
-    /*
     if (this.state.check === true) {
-      return <Redirect to="/" />;
+      return <Redirect to="/dashboard" />;
     }
-    */
     console.log(this.state.check);
     return (
       <div>
