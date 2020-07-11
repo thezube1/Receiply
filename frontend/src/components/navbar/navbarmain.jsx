@@ -3,27 +3,30 @@ import "./navbar.css";
 
 import { Link } from "react-router-dom";
 
-class Navbar extends Component {
+class NavbarMain extends Component {
   state = {};
   render() {
     return (
       <div id="navWrapper">
-        <Link to="/" style={{ textDecoration: "none" }}>
+        <Link to="/dashboard" style={{ textDecoration: "none" }}>
           <div id="title">Receiply</div>
         </Link>
         <div id="navitemswrapper">
           <span className="navitem">Browse</span>
-          <span className="navitem">About</span>
+          <span className="navitem">Upload</span>
+          <span className="navitem">Family</span>
+          <span className="navitem">My Recipies</span>
+          <span className="navitem">Search</span>
         </div>
         <div id="accountitemswrapper">
-          <Link to="/signup" style={{ textDecoration: "none" }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
             <span className="navitem accountitems" id="signup">
-              Sign up
+              Settings
             </span>
           </Link>
-          <Link to="/login" style={{ textDecoration: "none" }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
             <span className="navitem accountitems" id="login">
-              Login
+              Logout
             </span>
           </Link>
         </div>
@@ -32,4 +35,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default NavbarMain;

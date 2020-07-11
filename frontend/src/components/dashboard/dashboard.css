@@ -1,0 +1,46 @@
+#dashWrapper {
+  display: grid;
+  justify-content: center;
+}
+
+#dashTopWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, max-content);
+  margin-top: 120px;
+}
+
+#headerBar {
+  width: 130px;
+  height: 8px;
+  background-color: rgb(236, 111, 111);
+}
+
+#welcomeText {
+  font-size: 60px;
+  margin-top: 60px;
+}
+
+.headerText {
+  font-family: "Source Sans Pro";
+  font-weight: 900;
+  font-size: 28px;
+  margin-bottom: 25px;
+}
+
+#notificationHeader {
+  font-family: "Source Sans Pro";
+  font-weight: 900;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.dashNotificationLine {
+  height: 2px;
+  width: 250px;
+  background-color: black;
+  margin-bottom: 5px;
+}
+
+.dashNotificationText {
+  margin-bottom: 5px;
+}
