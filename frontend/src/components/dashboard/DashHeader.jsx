@@ -11,7 +11,7 @@ class DashHeader extends Component {
           Welcome back, {this.state.name}
         </div>
         <div id="subwelcomeText" className="headerText">
-          Here are some things you
+          Here are things you
           <br /> might be interested in:
         </div>
         <div id="headerBar"></div>
