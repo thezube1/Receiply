@@ -8,6 +8,7 @@ import DashNotification from "../components/dashboard/DashNotification";
 import NavbarMain from "../components/navbar/navbarmain";
 
 import UploadPage from "./upload";
+import FamilyPage from "./family";
 
 class DashboardPage extends Component {
   state = {};
@@ -16,6 +17,7 @@ class DashboardPage extends Component {
     return (
       <Switch>
         <PrivateRoute path="/dashboard/upload" component={UploadPage} />
+        <PrivateRoute path="/dashboard/family" component={FamilyPage} />
         <React.Fragment>
           <div>
             <NavbarMain />
