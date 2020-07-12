@@ -87,15 +87,18 @@ app.post("/api/adduser", (req, res) => {
               (err, data) => {
                 if (err) {
                   console.log(err);
+                  res.end();
                 } else {
                   connection.end();
                   console.log("Success!");
+                  res.end();
                 }
               }
             );
           });
         } else {
           console.log("Account with email has already been created!");
+          res.end();
         }
       }
     }

@@ -12,13 +12,13 @@ class DashNotification extends Component {
       <React.Fragment>
         <div id="notificationWrapper">
           <div id="notificationHeader">notifications:</div>
-          <div class="dashNotificationLine"></div>
-          <div class="dashNotificationText">1. {this.state.one}</div>
-          <div class="dashNotificationLine"></div>
-          <div class="dashNotificationText">2. {this.state.two}</div>
-          <div class="dashNotificationLine"></div>
-          <div class="dashNotificationText">3. {this.state.three}</div>
-          <div class="dashNotificationLine"></div>
+          <div className="dashNotificationLine"></div>
+          <div className="dashNotificationText">1. {this.state.one}</div>
+          <div className="dashNotificationLine"></div>
+          <div className="dashNotificationText">2. {this.state.two}</div>
+          <div className="dashNotificationLine"></div>
+          <div className="dashNotificationText">3. {this.state.three}</div>
+          <div className="dashNotificationLine"></div>
           <Link to="/" style={{ textDecoration: "none" }}>
             <div id="notificationExpand">View More</div>
           </Link>

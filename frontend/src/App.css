@@ -6,12 +6,16 @@
   width: 100vw;
   height: 100vh;
   z-index: 0;
+  /*
+  filter: grayscale(15%);
+  */
 }
 
 #mainTitle {
-  font-family: "Open Sans";
-  font-weight: 700;
-  font-size: 150px;
+  font-family: "Source Sans Pro";
+  font-weight: 600;
+  font-style: italic;
+  font-size: 250px;
   text-shadow: 2px 2px 7px #000000;
   color: white;
   position: absolute;

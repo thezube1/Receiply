@@ -13,7 +13,9 @@ class NavbarMain extends Component {
         </Link>
         <div id="navitemswrapper">
           <span className="navitem">Browse</span>
-          <span className="navitem">Upload</span>
+          <Link to="/dashboard/upload" style={{ textDecoration: "none" }}>
+            <span className="navitem">Upload</span>
+          </Link>
           <span className="navitem">Family</span>
           <span className="navitem">My Recipies</span>
           <span className="navitem">Search</span>

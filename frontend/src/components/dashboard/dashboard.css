@@ -1,9 +1,8 @@
-#dashTopWrapper {
-  margin-top: 130px;
-  display: flex;
+#dashWrapper {
+  margin-top: 160px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 500px));
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 300px;
 }
 
 #headerBar {
@@ -14,7 +13,7 @@
 
 #welcomeText {
   font-size: 60px;
-  margin-top: 70px;
+  margin-top: 30px;
 }
 
 .headerText {
@@ -22,6 +21,11 @@
   font-weight: 900;
   font-size: 28px;
   margin-bottom: 25px;
+}
+
+#notificationWrapper {
+  margin-right: 50px;
+  justify-self: end;
 }
 
 #notificationHeader {
@@ -59,4 +63,48 @@
   font-family: "Source Sans Pro";
   font-weight: 900;
   font-size: 18px;
+}
+
+#dashDivider1 {
+  margin-top: 30px;
+  width: 100%;
+  height: 2px;
+  background-color: black;
+  grid-row: 2/3;
+  grid-column: 1/3;
+}
+
+#dashRecent {
+  order: 4;
+  width: 300px;
+  height: 50px;
+  font-family: "Source Sans Pro";
+  font-size: 34px;
+  color: white;
+
+  text-shadow: 0.3px 1px 5px #9e9e9e;
+  box-shadow: 0.3px 1px 5px #9e9e9e;
+  font-weight: 900;
+  background-color: rgb(136, 228, 138);
+  grid-row: 3/4;
+  margin-top: 30px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 1020px) {
+  #notificationWrapper {
+    grid-row: 2/3;
+    justify-self: start;
+  }
+  #dashDivider1 {
+    grid-row: 3/4;
+  }
+  #dashRecent {
+    grid-row: 4/5;
+  }
+}
+
+@media screen and (max-width: 900px) {
 }
