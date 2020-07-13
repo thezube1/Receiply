@@ -12,7 +12,8 @@ class SignupForm extends Component {
     last: "",
     user: "",
     pass: "",
-    check: "",
+    check1: "",
+    check2: undefined,
   };
 
   handleChange = (inputType) => (event) => {
@@ -45,14 +46,26 @@ class SignupForm extends Component {
         .post("/api/adduser", data, {
           headers: { "Content-Type": "application/json" },
         })
-        .then((result) => this.setState({ check: result.data }));
+        .then(result => {
+          this.setState({ check1: result.data });
+          const datas = {
+            account: [this.state.email, this.state.pass],
+          };
+          axios
+          .post("/api/login", datas, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((response) => this.setState({ check2: response.data }));
+        });
       console.log("User submitted - waiting for response");
     }
   };
 
   render() {
-    if (this.state.check === true) {
-      return <Redirect to="/login" />;
+    if (this.state.check2 === true) {
+      return <Redirect to="/dashboard" />;
     }
     return (
       <div>

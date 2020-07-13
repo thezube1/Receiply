@@ -5,7 +5,7 @@ CREATE TABLE Receiply.Accounts (
     USERNAME varchar(200),
     PASS varchar(200),
     FIRST_NAME varchar(200),
-    LAST_NAME varchar(200)
+    LAST_NAME varchar(200),
     FAMILY varchar(36)
 );
 

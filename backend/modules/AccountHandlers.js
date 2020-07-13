@@ -26,6 +26,7 @@ app.post("/api/login", (req, res) => {
       if (err) {
         console.log(err);
       }
+      if(data != null){
       if (data.length === 0) {
         console.log("User does not exist!");
       } else {
@@ -60,6 +61,10 @@ app.post("/api/login", (req, res) => {
           }
         });
       }
+    }
+    else{
+      console.log("DATA IS NULLLLLL");
+    }
     }
   );
 });
