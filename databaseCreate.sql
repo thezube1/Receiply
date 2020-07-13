@@ -26,3 +26,10 @@ CREATE TABLE Receiply.Families (
     FAMILY_DESCRIPTION longtext, 
     FAMILY_CREATED varchar(100)
 );
+
+CREATE TABLE Receiply.Invites (
+    INVITE_ID varchar(36), 
+    INVITE_TO varchar(36),
+    TIME_CREATED varchar(100),
+    WHICH_TABLE varchar(100)
+);
