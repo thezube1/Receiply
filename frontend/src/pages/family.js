@@ -5,8 +5,8 @@ import PrivateRoute from "../privateroute";
 
 import CreateFamilyPage from "./createfamily";
 import FamilyNav from "../components/family/FamilyNav";
-
-import FamilyInvite from "../components/family/FamilyInvite";
+import FamilyLinkInvite from "../components/invites/FamilyLinkInvite";
+import FamilyMain from "../components/family/familyMain";
 
 import "../components/family/family.css";
 
@@ -27,24 +27,23 @@ class FamilyPage extends Component {
     }
     return (
       <React.Fragment>
-        <div id="familyWrapper">
-          <div>
-            <FamilyNav />
-          </div>
-          <Switch>
-            <PrivateRoute
-              path="/dashboard/family/invite"
-              component={FamilyInvite}
-            />
-            <React.Fragment>
-              <div id="familyContentWrapper">
-                <div id="familyName">
-                  You are apart of the family: {this.state.family}
-                </div>
+        <Switch>
+          <PrivateRoute
+            path="/dashboard/family/inviteurl/:familyID"
+            component={FamilyLinkInvite}
+          />
+
+          <React.Fragment>
+            <div id="familyWrapper">
+              <div>
+                <FamilyNav />
               </div>
-            </React.Fragment>
-          </Switch>
-        </div>
+              <div>
+                <FamilyMain />
+              </div>
+            </div>
+          </React.Fragment>
+        </Switch>
       </React.Fragment>
     );
   }

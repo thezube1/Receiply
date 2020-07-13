@@ -9,4 +9,8 @@ const connection = mysql.createConnection({
   database: process.env.DB,
 });
 
+app.get("/api/invite/:familyID", (req, res) => {
+  console.log(req.params.familyID);
+});
+
 module.exports = app;
