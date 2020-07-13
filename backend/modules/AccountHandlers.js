@@ -26,7 +26,7 @@ app.post("/api/login", (req, res) => {
       if (err) {
         console.log(err);
       }
-      if (data[0] === undefined) {
+      if (data.length === 0) {
         console.log("User does not exist!");
       } else {
         let userPassword = data[0].PASS;
@@ -83,7 +83,7 @@ app.post("/api/adduser", (req, res) => {
             if (err) console.log(err);
             const hashPass = String(hash);
             connection.query(
-              `INSERT INTO Accounts VALUES (UUID(), '${email}', '${user}', '${hashPass}', '${first}', '${last}')`,
+              `INSERT INTO Accounts VALUES (UUID(), '${email}', '${user}', '${hashPass}', '${first}', '${last}', NULL)`,
               (err, data) => {
                 if (err) {
                   console.log(err);
@@ -91,6 +91,7 @@ app.post("/api/adduser", (req, res) => {
                 } else {
                   connection.end();
                   console.log("Success!");
+                  res.send(true);
                   res.end();
                 }
               }

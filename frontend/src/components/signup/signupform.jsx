@@ -3,6 +3,8 @@ import axios from "axios";
 import validator from "email-validator";
 import "./signup.css";
 
+import { Redirect } from "react-router-dom";
+
 class SignupForm extends Component {
   state = {
     email: "",
@@ -10,6 +12,7 @@ class SignupForm extends Component {
     last: "",
     user: "",
     pass: "",
+    check: "",
   };
 
   handleChange = (inputType) => (event) => {
@@ -38,14 +41,19 @@ class SignupForm extends Component {
     if (validator.validate(this.state.email) === false) {
       console.log("Please enter a valid email address!");
     } else {
-      axios.post("/api/adduser", data, {
-        headers: { "Content-Type": "application/json" },
-      });
+      axios
+        .post("/api/adduser", data, {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then((result) => this.setState({ check: result.data }));
       console.log("User submitted - waiting for response");
     }
   };
 
   render() {
+    if (this.state.check === true) {
+      return <Redirect to="/login" />;
+    }
     return (
       <div>
         <div id="formContainer">

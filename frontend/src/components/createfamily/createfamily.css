@@ -1,0 +1,69 @@
+#createFamWrapper {
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+#createFamTitle {
+  font-family: "Source Sans Pro";
+  font-size: 60px;
+  font-weight: 900;
+  width: max-content;
+}
+
+.createFamHeader {
+  padding-top: 20px;
+  font-family: "Source Sans Pro";
+  font-size: 50px;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.createFamDesc {
+  font-family: "Source Sans Pro";
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.createFamInput {
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 5px;
+  border: rgb(167, 167, 167);
+  border-style: solid;
+  margin-bottom: 30px;
+  width: 400px;
+}
+
+#createFamSecondWrap {
+  background-color: rgb(131, 226, 133);
+  border-radius: 10px;
+  margin-top: 40px;
+  padding: 20px;
+}
+
+#createFamJoin {
+  height: 70px;
+}
+
+.createFamSubmit {
+  padding: 5px;
+  font-size: 20px;
+  background-color: white;
+  border: white;
+  border-style: solid;
+  border-radius: 10px;
+  width: 100px;
+}
+
+.createFamSubmit:hover {
+  background-color: rgb(221, 221, 221);
+}
+
+.createFamSubmit:active {
+  border: gray;
+  border-style: solid;
+}
