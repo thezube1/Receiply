@@ -13,13 +13,15 @@ class SignupForm extends Component {
     user: "",
     pass: "",
     check1: "",
-    check2: undefined,
   };
 
   handleChange = (inputType) => (event) => {
     this.setState({ [inputType]: event.target.value });
   };
 
+  CancelToken = axios.CancelToken;
+  source = this.CancelToken.source();
+  abortController = new AbortController();
   handleSubmit = () => {
     let data = {
       account: [
@@ -44,29 +46,40 @@ class SignupForm extends Component {
     } else {
       axios
         .post("/api/adduser", data, {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            cancelToken: this.source.token,
+          },
         })
-        .then(result => {
+        .then((result) => {
           this.setState({ check1: result.data });
+
           const datas = {
             account: [this.state.email, this.state.pass],
           };
           axios
-          .post("/api/login", datas, {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-          .then((response) => this.setState({ check2: response.data }));
+            .post("/api/login", datas, {
+              headers: {
+                "Content-Type": "application/json",
+                cancelToken: this.source.token,
+              },
+            })
+            .then((response) => this.setState({ check2: response.data }));
         });
+
       console.log("User submitted - waiting for response");
     }
   };
 
+  componentWillUnmount() {
+    this.source.cancel();
+  }
+
   render() {
-    if (this.state.check2 === true) {
+    if (this.state.check1 === true) {
       return <Redirect to="/dashboard" />;
     }
+
     return (
       <div>
         <div id="formContainer">

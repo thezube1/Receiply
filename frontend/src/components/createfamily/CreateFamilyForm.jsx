@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
 import "./createfamily.css";
 import axios from "axios";
@@ -8,6 +9,7 @@ class CreateFamilyForm extends Component {
     name: "",
     desc: "",
     url: "",
+    checkJoin: undefined,
   };
 
   handleChange = (inputType) => (event) => {
@@ -25,7 +27,14 @@ class CreateFamilyForm extends Component {
     }
   };
 
+  handleJoin = () => {
+    this.setState({ checkJoin: true });
+  };
+
   render() {
+    if (this.state.checkJoin === true) {
+      return <Redirect to={this.state.url} />;
+    }
     return (
       <div id="createFamWrapper">
         <div id="createFamTitle">Create or join a family!</div>
@@ -61,7 +70,12 @@ class CreateFamilyForm extends Component {
             onChange={this.handleChange("url")}
           ></textarea>
           <br />
-          <input type="submit" value="Join" className="createFamSubmit"></input>
+          <input
+            type="submit"
+            value="Join"
+            className="createFamSubmit"
+            onClick={this.handleJoin}
+          ></input>
         </div>
       </div>
     );

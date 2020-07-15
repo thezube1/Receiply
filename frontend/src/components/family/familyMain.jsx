@@ -1,27 +1,31 @@
 import React, { Component } from "react";
 import axios from "axios";
-import PrivateRoute from "../../privateroute";
-import { Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import FamilyInvite from "./FamilyInvite";
 
 class FamilyMain extends Component {
   state = {};
 
+  CancelToken = axios.CancelToken;
+  source = this.CancelToken.source();
+
+  abortController = new AbortController();
   componentDidMount() {
     axios
-      .get("/api/getfamily")
-      .then((result) => this.setState({ family: result.data }));
+      .get("/api/getfamily", { cancelToken: this.source.token })
+      .then((result) => this.setState({ family: result.data }))
+      .catch((error) => console.log(error));
+  }
+
+  componentWillUnmount() {
+    this.source.cancel();
   }
 
   render() {
     return (
       <React.Fragment>
         <Switch>
-          <PrivateRoute
-            path="/dashboard/family/invite"
-            component={FamilyInvite}
-          />
-
+          <Route path="/dashboard/family/invite" component={FamilyInvite} />
           <React.Fragment>
             <div id="familyContentWrapper">
               <div id="familyName">

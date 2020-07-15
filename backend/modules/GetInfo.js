@@ -3,8 +3,6 @@ const app = express();
 const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const { response } = require("express");
-const { connect } = require("./FamilyHandlers");
 require("dotenv").config();
 
 app.use(cookieParser());
@@ -57,7 +55,7 @@ app.get("/api/getfamily", (req, res) => {
               console.log(err);
               res.end();
             }
-            if (data[0] === null) {
+            if (data[0] === undefined || data[0].FAMILY === null) {
               console.log("No family found!");
               res.send(false);
               res.end();

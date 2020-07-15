@@ -10,6 +10,10 @@ class LoginForm extends Component {
     check: undefined,
   };
 
+  CancelToken = axios.CancelToken;
+  source = this.CancelToken.source();
+  abortController = new AbortController();
+
   handleChange = (inputType) => (event) => {
     this.setState({ [inputType]: event.target.value });
   };
@@ -28,6 +32,7 @@ class LoginForm extends Component {
           .post("/api/login", data, {
             headers: {
               "Content-Type": "application/json",
+              cancelToken: this.source.token,
             },
           })
           .then((response) => this.setState({ check: response.data }));
@@ -36,11 +41,14 @@ class LoginForm extends Component {
     }
   };
 
+  componentWillUnmount() {
+    this.source.cancel();
+  }
+
   render() {
     if (this.state.check === true) {
       return <Redirect to="/dashboard" />;
     }
-    console.log(this.state.check);
     return (
       <div>
         <div id="formContainer">

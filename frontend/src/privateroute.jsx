@@ -11,13 +11,30 @@ class PrivateRoute extends Component {
   componentDidMount() {
     axios
       .get("/api/authorize")
-      .then((result) => this.setState({ authorized: result.data }));
+      .then((result) => this.setState({ authorized: result.data }))
+      .catch((error) => {
+        console.log(error.response);
+      });
   }
   render() {
     if (this.state.authorized === false) {
-      return <Redirect to="/" />;
+      return <Redirect to="/login" />;
+    } else {
+      return <Route path={this.state.route} component={this.state.component} />;
     }
-    return <Route path={this.state.route} component={this.state.component} />;
+
+    /*
+      <Route
+        path={this.state.route}
+        component={() =>
+          this.state.authorized === true ? (
+            <DashboardPage />
+          ) : (
+            <Redirect to="/login" />
+          )
+        }
+      />
+      */
   }
 }
 

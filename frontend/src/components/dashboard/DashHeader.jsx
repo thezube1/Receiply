@@ -6,10 +6,17 @@ class DashHeader extends Component {
     name: "Zubin",
   };
 
+  abortController = new AbortController();
   componentDidMount() {
-    axios.get("/api/getname").then((response) => {
-      this.setState({ name: response.data.FIRST_NAME });
-    });
+    axios
+      .get("/api/getname", { signal: this.abortController.signal })
+      .then((response) => {
+        this.setState({ name: response.data.FIRST_NAME });
+      });
+  }
+
+  componentWillUnmount() {
+    this.abortController.abort();
   }
   render() {
     return (

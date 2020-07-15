@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Switch } from "react-router-dom";
-import PrivateRoute from "../privateroute";
+import { Switch, Route } from "react-router-dom";
 
 import CreateFamilyPage from "./createfamily";
 import FamilyNav from "../components/family/FamilyNav";
@@ -14,11 +13,20 @@ class FamilyPage extends Component {
   state = {
     family: "",
   };
-
+  CancelToken = axios.CancelToken;
+  source = this.CancelToken.source();
+  abortController = new AbortController();
   componentDidMount() {
     axios
-      .get("/api/getfamily")
-      .then((result) => this.setState({ family: result.data }));
+      .get("/api/getfamily", { cancelToken: this.source.token })
+      .then((result) => this.setState({ family: result.data }))
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  componentWillUnmount() {
+    this.source.cancel("Operation canceled by the user.");
   }
 
   render() {
@@ -28,11 +36,10 @@ class FamilyPage extends Component {
     return (
       <React.Fragment>
         <Switch>
-          <PrivateRoute
+          <Route
             path="/dashboard/family/inviteurl/:familyID"
             component={FamilyLinkInvite}
           />
-
           <React.Fragment>
             <div id="familyWrapper">
               <div>

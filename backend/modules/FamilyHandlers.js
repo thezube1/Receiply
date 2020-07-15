@@ -54,7 +54,6 @@ app.post("/api/addfamily", (req, res) => {
                                 console.log(err);
                               } else {
                                 console.log("Everything has been updated!");
-                                connection.end();
                               }
                             }
                           );
@@ -70,7 +69,6 @@ app.post("/api/addfamily", (req, res) => {
           console.log(
             `Family with name ${data[0].FAMILY_NAME} has already been created`
           );
-          connection.end();
         }
       }
     }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 class FamilyLinkInvite extends Component {
@@ -6,10 +7,27 @@ class FamilyLinkInvite extends Component {
     family: "",
   };
   componentDidMount() {
-    //axios.get(`/api/invite/${params.familyID}`);
+    axios
+      .get(`/api/invite/${this.props.match.params.familyID}`)
+      .then((result) => {
+        this.setState({ family: result.data });
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
   }
   render() {
-    return <div>Welcome to the family!</div>;
+    if (this.state.family === false) {
+      return <div id="famInvFailed">Failed to add to family</div>;
+    }
+    return (
+      <div id="famInvWrapper">
+        <div>Welcome to the family!</div>
+        <Link to="/dashboard" style={{ textDecoration: "none" }}>
+          <span id="famInvReturn">Return to dashboard</span>
+        </Link>
+      </div>
+    );
   }
 }
 

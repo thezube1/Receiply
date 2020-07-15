@@ -26,8 +26,7 @@ app.post("/api/login", (req, res) => {
       if (err) {
         console.log(err);
       }
-      if(data != null){
-      if (data.length === 0) {
+      if (data[0] === undefined) {
         console.log("User does not exist!");
       } else {
         let userPassword = data[0].PASS;
@@ -49,7 +48,6 @@ app.post("/api/login", (req, res) => {
                     secure: false,
                   });
                   res.send(true);
-
                   res.end();
                 }
               }
@@ -61,10 +59,6 @@ app.post("/api/login", (req, res) => {
           }
         });
       }
-    }
-    else{
-      console.log("DATA IS NULLLLLL");
-    }
     }
   );
 });
@@ -94,7 +88,6 @@ app.post("/api/adduser", (req, res) => {
                   console.log(err);
                   res.end();
                 } else {
-                  connection.end();
                   console.log("Success!");
                   res.send(true);
                   res.end();
