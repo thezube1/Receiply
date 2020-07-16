@@ -31,9 +31,16 @@ class CreateFamilyForm extends Component {
     this.setState({ checkJoin: true });
   };
 
+  fixLink = () => {
+    const link = this.state.url;
+    const newLink = link.replace("localhost:3000", "");
+    return newLink;
+  };
+
   render() {
     if (this.state.checkJoin === true) {
-      return <Redirect to={this.state.url} />;
+      window.location.reload(false);
+      return <Redirect to={this.fixLink()} />;
     }
     return (
       <div id="createFamWrapper">

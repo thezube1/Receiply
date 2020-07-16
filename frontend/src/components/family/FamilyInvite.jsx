@@ -9,7 +9,7 @@ class FamilyInvite extends Component {
   onCreate = () => {
     axios.get("/api/createinvite").then((result) => {
       this.setState({
-        inviteLink: `localhost:3000/dashboard/family/inviteurl/${result.data}`,
+        inviteLink: `localhost:3000/inviteurl/${result.data}`,
       });
     });
   };

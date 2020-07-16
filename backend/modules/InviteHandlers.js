@@ -15,6 +15,7 @@ app.get("/api/invite/:familyID", (req, res) => {
   const encoded = req.params.familyID;
   jwt.verify(encoded, process.env.ACCESS_TOKEN_KEY, (err, family) => {
     if (err) {
+      console.log(err);
       res.send(false);
       res.end();
     } else {
@@ -28,6 +29,7 @@ app.get("/api/invite/:familyID", (req, res) => {
               if (err) {
                 console.log(err);
               }
+
               if (check[0].FAMILY === null || check[0].FAMILY === undefined) {
                 console.log("Allowed to add family");
                 connection.query(
@@ -36,7 +38,6 @@ app.get("/api/invite/:familyID", (req, res) => {
                     if (err) {
                       console.log(err);
                     }
-                    console.log(response);
                   }
                 );
               } else {
@@ -52,6 +53,7 @@ app.get("/api/invite/:familyID", (req, res) => {
 });
 
 app.get("/api/createinvite", (req, res) => {
+  const jwtExpirySeconds = 1800;
   const token = req.cookies.userAuth;
   if (!token) return res.status(200).send(false);
   jwt.verify(
@@ -65,10 +67,19 @@ app.get("/api/createinvite", (req, res) => {
           (err, data) => {
             const family_id = data[0].FAMILY;
             const payload = { family: family_id };
-            jwt.sign(payload, process.env.ACCESS_TOKEN_KEY, (err, token) => {
-              res.send(token);
-              res.end();
-            });
+            jwt.sign(
+              payload,
+              process.env.ACCESS_TOKEN_KEY,
+              { expiresIn: jwtExpirySeconds },
+              (err, token) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  res.send(token);
+                  res.end();
+                }
+              }
+            );
           }
         );
       }

@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Switch, Route } from "react-router-dom";
 
 import CreateFamilyPage from "./createfamily";
 import FamilyNav from "../components/family/FamilyNav";
-import FamilyLinkInvite from "../components/invites/FamilyLinkInvite";
 import FamilyMain from "../components/family/familyMain";
 
 import "../components/family/family.css";
@@ -35,22 +33,16 @@ class FamilyPage extends Component {
     }
     return (
       <React.Fragment>
-        <Switch>
-          <Route
-            path="/dashboard/family/inviteurl/:familyID"
-            component={FamilyLinkInvite}
-          />
-          <React.Fragment>
-            <div id="familyWrapper">
-              <div>
-                <FamilyNav />
-              </div>
-              <div>
-                <FamilyMain />
-              </div>
+        <React.Fragment>
+          <div id="familyWrapper">
+            <div>
+              <FamilyNav />
             </div>
-          </React.Fragment>
-        </Switch>
+            <div>
+              <FamilyMain />
+            </div>
+          </div>
+        </React.Fragment>
       </React.Fragment>
     );
   }

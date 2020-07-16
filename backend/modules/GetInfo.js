@@ -55,7 +55,13 @@ app.get("/api/getfamily", (req, res) => {
               console.log(err);
               res.end();
             }
-            if (data[0] === undefined || data[0].FAMILY === null) {
+            if (
+              data[0] === undefined ||
+              data === undefined ||
+              data[0].FAMILY === null ||
+              data[0].FAMILY === "null" ||
+              data.length === 0
+            ) {
               console.log("No family found!");
               res.send(false);
               res.end();

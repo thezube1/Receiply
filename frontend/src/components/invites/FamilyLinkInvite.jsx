@@ -18,7 +18,11 @@ class FamilyLinkInvite extends Component {
   }
   render() {
     if (this.state.family === false) {
-      return <div id="famInvFailed">Failed to add to family</div>;
+      return (
+        <React.Fragment>
+          <div id="famInvFailed">Failed to add to family</div>
+        </React.Fragment>
+      );
     }
     return (
       <div id="famInvWrapper">
