@@ -3,6 +3,7 @@ const app = express();
 const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const { response } = require("express");
 require("dotenv").config();
 
 app.use(cookieParser());
@@ -84,4 +85,55 @@ app.get("/api/getfamily", (req, res) => {
   );
 });
 
+app.get("/api/getfamily/description", (req, res) => {
+  jwt.verify(
+    req.cookies.userAuth,
+    process.env.ACCESS_TOKEN_KEY,
+    (err, token) => {
+      if (err) return console.log(err);
+      connection.query(
+        `SELECT FAMILY FROM Accounts WHERE USER_ID='${token.user_id}'`,
+        (err, result1) => {
+          if (err) return console.log(err);
+          const family = result1[0].FAMILY;
+          connection.query(
+            `SELECT FAMILY_DESCRIPTION FROM Families WHERE FAMILY_ID='${family}'`,
+            (err, result2) => {
+              if (err) return console.log(err);
+              res.send(result2[0].FAMILY_DESCRIPTION);
+              res.end();
+            }
+          );
+        }
+      );
+    }
+  );
+});
+
+app.get("/api/getfamily/members", (req, res) => {
+  jwt.verify(
+    req.cookies.userAuth,
+    process.env.ACCESS_TOKEN_KEY,
+    (err, token) => {
+      if (err) return console.log(err);
+      connection.query(
+        `SELECT FAMILY FROM Accounts WHERE USER_ID='${token.user_id}'`,
+        (err, result1) => {
+          if (err) return console.log(err);
+          const family = result1[0].FAMILY;
+          connection.query(
+            `SELECT FIRST_NAME, LAST_NAME, USER_ID FROM Accounts WHERE FAMILY='${family}'`,
+            (err, result2) => {
+              if (err) return console.log(err);
+              else {
+                res.json(result2);
+                res.end();
+              }
+            }
+          );
+        }
+      );
+    }
+  );
+});
 module.exports = app;

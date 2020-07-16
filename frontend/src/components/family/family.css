@@ -41,12 +41,40 @@
   display: grid;
 }
 
+.familyTitle {
+  font-family: "Source Sans Pro";
+  font-weight: 700;
+  font-size: 50px;
+  color: white;
+  background-color: rgb(136, 228, 138);
+  padding: 3px;
+  border-radius: 5px;
+  text-shadow: 0px 0px 5px rgb(141, 141, 141);
+}
+
 #familyName {
   font-family: "Source Sans Pro";
   font-weight: 900;
   font-size: 60px;
-  width: 550px;
-  margin-top: 100px;
+  margin-top: 13px;
+}
+
+.familyHeader {
+  font-family: "Source Sans Pro";
+  font-weight: 700;
+  font-size: 40px;
+  color: white;
+  background-color: rgb(136, 228, 138);
+  padding: 3px;
+  border-radius: 5px;
+  text-shadow: 0px 0px 5px rgb(141, 141, 141);
+}
+
+#familyDescription {
+  font-family: "Source Sans Pro";
+  font-weight: 600;
+  font-size: 40px;
+  margin-top: 13px;
 }
 
 #famInvWrapper {
@@ -112,6 +140,28 @@
   font-family: "Source Sans Pro";
   font-weight: 600;
   text-shadow: 0px 0px 5px gray;
+}
+
+#familyMemberWrapper {
+  display: grid;
+  justify-content: center;
+  margin-top: 200px;
+  font-family: "Source Sans Pro";
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.familyMemberItem {
+  margin-top: 20px;
+}
+
+.familyMemberHeader {
+  font-size: 50px;
+  color: white;
+  background-color: rgb(136, 228, 138);
+  padding: 5px;
+  text-shadow: 0px 0px 5px rgb(146, 146, 146);
+  border-radius: 5px;
 }
 
 @media screen and (max-width: 500px) {

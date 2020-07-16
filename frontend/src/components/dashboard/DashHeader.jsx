@@ -6,18 +6,21 @@ class DashHeader extends Component {
     name: "Zubin",
   };
 
+  CancelToken = axios.CancelToken;
+  source = this.CancelToken.source();
   abortController = new AbortController();
   componentDidMount() {
     axios
-      .get("/api/getname", { signal: this.abortController.signal })
+      .get("/api/getname", { cancelToken: this.source.token })
       .then((response) => {
         this.setState({ name: response.data.FIRST_NAME });
       });
   }
 
   componentWillUnmount() {
-    this.abortController.abort();
+    this.source.cancel();
   }
+
   render() {
     return (
       <React.Fragment>

@@ -13,7 +13,12 @@ class FamilyNav extends Component {
           <div className="familyNavHeader">Family</div>
         </Link>
         <div className="familyNavItem">Manage</div>
-        <div className="familyNavItem">Members</div>
+        <Link
+          to="/dashboard/family/members"
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <div className="familyNavItem">Members</div>
+        </Link>
         <Link
           to="/dashboard/family/invite"
           style={{ textDecoration: "none", color: "black" }}
