@@ -35,52 +35,6 @@
   margin-top: 20px;
 }
 
-#uploadManualDash {
-  max-width: 1000px;
-  width: 95vw;
-  height: 60px;
-  background: linear-gradient(
-    45deg,
-    white 23%,
-    #ec6f6f 23% 45%,
-    #83e285 45% 67%,
-    #83b1e2 67% 89%,
-    #b483e2 89%
-  );
-  box-shadow: 0px 0px 5px gray;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 0;
-  position: relative;
-}
-
-#uploadManualDashWrapper {
-  display: flex;
-  gap: 140px;
-  margin-right: 95px;
-  flex-shrink: 2;
-  z-index: 2;
-}
-
-#uploadManualDashSelection {
-  width: 140px;
-  height: 50px;
-  background-color: rgb(255, 255, 255);
-  z-index: 1;
-  left: 30px;
-  position: absolute;
-  box-shadow: 1px 1px 10px rgb(92, 92, 92);
-  border-radius: 10px;
-}
-
-.uploadManualDashText {
-  font-family: "Source Sans Pro";
-  font-weight: 900;
-  font-size: 35px;
-  color: black;
-}
-
 #uploadManualBar {
   max-width: 1000px;
   width: 95vw;
@@ -122,13 +76,15 @@
 #uploadManualWrapper {
   display: grid;
   justify-content: center;
-  margin-top: 200px;
+  margin-top: 130px;
 }
 
 @media screen and (max-width: 1080px) {
-  #uploadManualDash {
+  #uploadManualBar {
     visibility: hidden;
   }
+}
+@media screen and (max-width: 730px) {
   #uploadManualBar {
     visibility: hidden;
   }

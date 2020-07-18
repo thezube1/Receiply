@@ -1,23 +1,39 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import "./uploadNav.css";
 
 class UploadManualNav extends Component {
   state = {};
 
   getLocation = () => {
     let path = window.location.pathname;
-    if (path === "/dashboard/upload/manual/") {
-      return 0;
-    }
-    if (path === "/dashboard/upload/manual/2") {
-      return 230;
-    }
-    if (path === "/dashboard/upload/manual/3") {
-      return 470;
-    }
-    if (path === "/dashboard/upload/manual/4") {
-      return 710;
+    if (window.matchMedia("(max-width: 1080px)").matches === true) {
+      if (path === "/dashboard/upload/manual") {
+        return -28;
+      }
+      if (path === "/dashboard/upload/manual/2") {
+        return 139;
+      }
+      if (path === "/dashboard/upload/manual/3") {
+        return 305;
+      }
+      if (path === "/dashboard/upload/manual/4") {
+        return 478;
+      }
+    } else {
+      if (path === "/dashboard/upload/manual") {
+        return 0;
+      }
+      if (path === "/dashboard/upload/manual/2") {
+        return 230;
+      }
+      if (path === "/dashboard/upload/manual/3") {
+        return 470;
+      }
+      if (path === "/dashboard/upload/manual/4") {
+        return 710;
+      }
     }
   };
 
@@ -31,7 +47,7 @@ class UploadManualNav extends Component {
           ></motion.div>
           <div id="uploadManualDashWrapper">
             <Link
-              to="/dashboard/upload/manual/"
+              to="/dashboard/upload/manual"
               style={{ textDecoration: "none" }}
             >
               <span className="uploadManualDashText">Step 1</span>

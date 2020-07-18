@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import NavbarMain from "../../navbar/navbarmain";
-import UploadManualNav from "../UploadManualNav";
+
+import UploadNavButtons from "../uploadNav/UploadNavButtons";
+import UploadManualNav from "../uploadNav/UploadManualNav";
 
 import UploadManual1 from "./UploadManual1";
 import UploadManual2 from "./UploadManual2";
@@ -30,8 +32,9 @@ class UploadManualMain extends Component {
               path="/dashboard/upload/manual/4"
               component={UploadManual4}
             />
-            <UploadManual1 />
+            <Route path="/dashboard/upload/manual" component={UploadManual1} />
           </Switch>
+          <UploadNavButtons />
         </div>
       </React.Fragment>
     );
