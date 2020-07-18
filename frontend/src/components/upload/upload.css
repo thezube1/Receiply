@@ -89,8 +89,47 @@
   margin-top: 20px;
 }
 
+#uploadManualRecipeName {
+  width: 400px;
+}
+
+#uploadManualRecipeDescription {
+  height: 300px;
+}
+
+#uploadManual1Wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 400px));
+  grid-auto-rows: 200px;
+  grid-column-gap: 200px;
+  margin-top: 40px;
+}
+
+.uploadManualRecipeInput {
+  max-width: 400px;
+  width: 100%;
+  font-family: "Source Sans Pro";
+  font-weight: 900;
+  font-size: 20px;
+}
+
+.uploadManualHeader {
+  font-family: "Source Sans Pro";
+  font-weight: 900;
+  font-size: 40px;
+}
+
 #uploadManualWrapper {
   display: grid;
   justify-content: center;
   margin-top: 200px;
+}
+
+@media screen and (max-width: 1080px) {
+  #uploadManualDash {
+    visibility: hidden;
+  }
+  #uploadManualBar {
+    visibility: hidden;
+  }
 }
