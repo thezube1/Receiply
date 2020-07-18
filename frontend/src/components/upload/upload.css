@@ -1,0 +1,96 @@
+#uploadHubWrapper {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.uploadHubHeader {
+  font-family: "Source Sans Pro";
+  font-weight: 900;
+  font-size: 40px;
+  background-color: rgb(136, 228, 138);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.uploadHubLink {
+  background-color: rgb(236, 111, 111);
+  padding: 5px;
+  color: white;
+  text-shadow: 0px 0px 5px rgb(126, 126, 126);
+  font-family: "Source Sans Pro";
+  font-weight: 700;
+  font-size: 25px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+#uploadHubLinkWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+#uploadManualDash {
+  max-width: 1000px;
+  width: 95vw;
+  height: 60px;
+  background: linear-gradient(
+    45deg,
+    white 23%,
+    #ec6f6f 23% 45%,
+    #83e285 45% 67%,
+    #83b1e2 67% 89%,
+    #b483e2 89%
+  );
+  box-shadow: 0px 0px 5px gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+  position: relative;
+}
+
+#uploadManualDashWrapper {
+  display: flex;
+  gap: 140px;
+  margin-right: 95px;
+  flex-shrink: 2;
+  z-index: 2;
+}
+
+#uploadManualDashSelection {
+  width: 140px;
+  height: 50px;
+  background-color: rgb(255, 255, 255);
+  z-index: 1;
+  left: 30px;
+  position: absolute;
+  box-shadow: 1px 1px 10px rgb(92, 92, 92);
+  border-radius: 10px;
+}
+
+.uploadManualDashText {
+  font-family: "Source Sans Pro";
+  font-weight: 900;
+  font-size: 35px;
+  color: black;
+}
+
+#uploadManualBar {
+  max-width: 1000px;
+  width: 95vw;
+  height: 2px;
+  background-color: black;
+  margin-top: 20px;
+}
+
+#uploadManualWrapper {
+  display: grid;
+  justify-content: center;
+  margin-top: 200px;
+}
