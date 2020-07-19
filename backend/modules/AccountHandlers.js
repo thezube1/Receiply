@@ -69,14 +69,13 @@ app.post("/api/login", (req, res) => {
 
 app.post("/api/adduser", (req, res) => {
   pool.getConnection((err, connection) => {
-    if (err) console.log(err);
+    if (err) throw err;
     const email = req.body.account[0];
     const first = req.body.account[1];
     const last = req.body.account[2];
     const user = req.body.account[3];
     const pass = req.body.account[4];
     console.log("Check!");
-
     connection.query(
       `SELECT EMAIL, PASS FROM Accounts WHERE EMAIL='${email}'`,
       (err, data) => {

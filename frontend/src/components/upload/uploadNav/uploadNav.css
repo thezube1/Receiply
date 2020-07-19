@@ -14,7 +14,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 0;
   position: relative;
 }
 
@@ -23,14 +22,14 @@
   gap: 140px;
   margin-right: 95px;
   flex-shrink: 2;
-  z-index: 2;
+  z-index: 3;
 }
 
 #uploadManualDashSelection {
   width: 140px;
   height: 50px;
   background-color: rgb(255, 255, 255);
-  z-index: 1;
+  z-index: 2;
   left: 30px;
   position: absolute;
   box-shadow: 1px 1px 10px rgb(92, 92, 92);
@@ -57,14 +56,14 @@
 }
 
 #uploadManualButtonWrapper {
-  position: absolute;
-  bottom: 50px;
+  bottom: 30px;
   justify-self: center;
   display: flex;
-  gap: 200px;
+  gap: 400px;
   font-family: "Source Sans Pro";
   font-weight: 900;
   font-size: 40px;
+  position: fixed;
 }
 
 .UploadManualButton {
