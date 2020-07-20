@@ -35,51 +35,6 @@
   margin-top: 20px;
 }
 
-#uploadManualBar {
-  max-width: 1000px;
-  width: 95vw;
-  height: 2px;
-  background-color: black;
-  margin-top: 20px;
-}
-
-#uploadManualRecipeName {
-  width: 400px;
-}
-
-#uploadManualRecipeDescription {
-  height: 400px;
-}
-
-#uploadManual1Wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 400px));
-  grid-auto-rows: 200px;
-  grid-column-gap: 200px;
-  margin-top: 40px;
-  margin-bottom: 400px;
-}
-
-.uploadManualRecipeInput {
-  max-width: 400px;
-  width: 100%;
-  font-family: "Source Sans Pro";
-  font-weight: 900;
-  font-size: 20px;
-}
-
-.uploadManualHeader {
-  font-family: "Source Sans Pro";
-  font-weight: 900;
-  font-size: 40px;
-}
-
-#uploadManualWrapper {
-  display: grid;
-  justify-content: center;
-  margin-top: 130px;
-}
-
 @media screen and (max-width: 1080px) {
   #uploadManualBar {
     visibility: hidden;

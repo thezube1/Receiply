@@ -1,10 +1,10 @@
-#signupBody {
+#loginBody {
   background-color: rgb(136, 228, 138);
   height: 100vh;
   width: 100vw;
 }
 
-#signupFormWrapper {
+#loginFormWrapper {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -16,11 +16,11 @@
   border-radius: 10px;
 }
 
-#signupFormContainer {
+#loginFormContainer {
   position: relative;
 }
 
-#signupHeader {
+#loginHeader {
   font-family: "Roboto";
   font-size: 50px;
   margin-top: 20px;
@@ -30,14 +30,14 @@
   font-weight: 200;
 }
 
-#signupBar {
+#loginBar {
   width: 100%;
   height: 1px;
   background-color: rgb(216, 216, 216);
   margin-bottom: 20px;
 }
 
-.signupDescription {
+.loginDescription {
   font-size: 22px;
   font-family: "Source Sans Pro";
   font-weight: 100;
@@ -45,7 +45,7 @@
   margin-bottom: 5px;
 }
 
-.signupInput {
+.loginInput {
   width: 350px;
   height: 45px;
   margin-bottom: 20px;
@@ -59,12 +59,12 @@
   color: rgb(110, 110, 110);
 }
 
-.signupInput::placeholder {
+.loginInput::placeholder {
   color: rgb(179, 179, 179);
   font-size: 15px;
 }
 
-#signupSubmitButton {
+#loginSubmitButton {
   margin-top: 20px;
   font-size: 20px;
   font-family: "Roboto";
@@ -79,12 +79,12 @@
   height: 50px;
 }
 
-#signupSubmitButton:hover {
+#loginSubmitButton:hover {
   border: rgb(206, 206, 206);
   border-style: solid;
   border-width: 2px;
 }
 
-#signupSubmitButton:active {
+#loginSubmitButton:active {
   background-color: rgb(108, 184, 109);
 }

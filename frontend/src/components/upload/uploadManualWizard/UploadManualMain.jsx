@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
+import "./uploadWizard.css";
 import NavbarMain from "../../navbar/navbarmain";
 
 import UploadNavButtons from "../uploadNav/UploadNavButtons";

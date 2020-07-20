@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import validator from "email-validator";
 import { Redirect } from "react-router";
 import axios from "axios";
+import "./login.css";
 
 class LoginForm extends Component {
   state = {
@@ -50,30 +51,36 @@ class LoginForm extends Component {
       return <Redirect to="/dashboard" />;
     }
     return (
-      <div>
-        <div id="formContainer">
-          <div id="header">Login to Receiply</div>
-          <div className="description">Email</div>
-          <input
-            type="text"
-            className="input"
-            value={this.state.email}
-            onChange={this.handleChange("email")}
-          />
-          <div className="description">Password</div>
-          <input
-            type="password"
-            className="input"
-            value={this.state.pass}
-            onChange={this.handleChange("pass")}
-          />
-          <br />
-          <input
-            type="button"
-            value="Submit"
-            id="submitButton"
-            onClick={this.handleSubmit}
-          />
+      <div id="loginBody">
+        <div id="loginFormWrapper">
+          <div id="loginFormContainer">
+            <div id="loginHeader">Login</div>
+            <div id="loginBar"></div>
+            <div className="loginDescription">Email</div>
+            <input
+              type="text"
+              className="loginInput"
+              placeholder="Enter email"
+              value={this.state.email}
+              onChange={this.handleChange("email")}
+            />
+            <div className="loginDescription">Password</div>
+            <input
+              type="password"
+              className="loginInput"
+              placeholder="Enter password"
+              value={this.state.pass}
+              onChange={this.handleChange("pass")}
+            />
+            <div style={{ textAlign: "center" }}>
+              <input
+                type="button"
+                value="Login"
+                id="loginSubmitButton"
+                onClick={this.handleSubmit}
+              />
+            </div>
+          </div>
         </div>
       </div>
     );

@@ -81,51 +81,61 @@ class SignupForm extends Component {
     }
 
     return (
-      <div>
-        <div id="formContainer">
-          <div id="header">Enter your information to sign up</div>
-          <div className="description">Email</div>
-          <input
-            type="text"
-            className="input"
-            value={this.state.email}
-            onChange={this.handleChange("email")}
-          />
-          <div className="description">First name</div>
-          <input
-            type="text"
-            className="input"
-            value={this.state.first}
-            onChange={this.handleChange("first")}
-          />
-          <div className="description">Last name</div>
-          <input
-            type="text"
-            className="input"
-            value={this.state.last}
-            onChange={this.handleChange("last")}
-          />
-          <div className="description">Username</div>
-          <input
-            type="text"
-            className="input"
-            value={this.state.user}
-            onChange={this.handleChange("user")}
-          />
-          <div className="description">Password</div>
-          <input
-            type="password"
-            className="input"
-            value={this.state.pass}
-            onChange={this.handleChange("pass")}
-          />
-          <br />
-          <input
-            type="button"
-            value="Submit"
-            id="submitButton"
-            onClick={this.handleSubmit}
-          />
+      <div id="signupBody">
+        <div id="signupFormWrapper">
+          <div id="signupFormContainer">
+            <div id="signupHeader">Signup</div>
+            <div id="signupBar"></div>
+            <div className="signupDescription">Email</div>
+            <input
+              type="text"
+              className="signupInput"
+              placeholder="Enter email"
+              value={this.state.email}
+              onChange={this.handleChange("email")}
+            />
+            <div className="signupDescription">First name</div>
+            <input
+              type="text"
+              className="signupInput"
+              placeholder="Enter first name"
+              value={this.state.first}
+              onChange={this.handleChange("first")}
+            />
+            <div className="signupDescription">Last name</div>
+            <input
+              type="text"
+              className="signupInput"
+              placeholder="Enter last name"
+              value={this.state.last}
+              onChange={this.handleChange("last")}
+            />
+            <div className="signupDescription">Username</div>
+            <input
+              type="text"
+              className="signupInput"
+              placeholder="Enter username"
+              value={this.state.user}
+              onChange={this.handleChange("user")}
+            />
+            <div className="signupDescription">Password</div>
+            <input
+              type="password"
+              className="signupInput"
+              placeholder="Enter password"
+              value={this.state.pass}
+              onChange={this.handleChange("pass")}
+            />
+
+            <div style={{ textAlign: "center" }}>
+              <input
+                type="button"
+                value="Submit"
+                id="signupSubmitButton"
+                onClick={this.handleSubmit}
+              />
+            </div>
+          </div>
         </div>
       </div>
     );
