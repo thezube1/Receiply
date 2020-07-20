@@ -4,6 +4,8 @@ import { Redirect } from "react-router";
 import axios from "axios";
 import "./login.css";
 
+import Navbar from "../navbar/navbar";
+
 class LoginForm extends Component {
   state = {
     email: "",
@@ -51,7 +53,8 @@ class LoginForm extends Component {
       return <Redirect to="/dashboard" />;
     }
     return (
-      <div id="loginBody">
+      <div id="loginBody" className="mainColor">
+        <Navbar />
         <div id="loginFormWrapper">
           <div id="loginFormContainer">
             <div id="loginHeader">Login</div>
@@ -78,6 +81,7 @@ class LoginForm extends Component {
                 value="Login"
                 id="loginSubmitButton"
                 onClick={this.handleSubmit}
+                className="mainColor"
               />
             </div>
           </div>
