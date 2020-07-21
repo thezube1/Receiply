@@ -1,11 +1,51 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+
+import DashFamilyItem from "./DashFamilyItem";
 
 class DashFamily extends Component {
-  state = {};
+  state = {
+    family: undefined,
+  };
+
+  CancelToken = axios.CancelToken;
+  source = this.CancelToken.source();
+  abortController = new AbortController();
+
+  componentDidMount() {
+    axios.get("/api/getfamily").then((result) => {
+      this.setState({ family: result.data });
+    });
+  }
   render() {
+    const checkFamily = () => {
+      if (this.state.family === false) {
+        return (
+          <div className="dashRecipeContent">
+            <div>You're not apart of a family!</div>
+            <Link to="/dashboard/family" style={{ textDecoration: "none" }}>
+              <span className="dashRecipeCreate">Join family</span>
+            </Link>
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <div id="dashFamilyName">{this.state.family}</div>
+            <div id="dashFamilyContent">
+              <DashFamilyItem />
+              <DashFamilyItem />
+              <DashFamilyItem />
+            </div>
+          </div>
+        );
+      }
+    };
     return (
       <div className="dashOutlineWrapper">
         <div className="dashOutlineHeader">Family</div>
+        {checkFamily()}
       </div>
     );
   }

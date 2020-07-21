@@ -10,7 +10,6 @@ import DashRecipes from "../components/dashboard/DashRecipes";
 
 import UploadPage from "./upload";
 import FamilyPage from "./family";
-import CreateFamilyPage from "./createfamily";
 
 class DashboardPage extends Component {
   state = {};
@@ -18,22 +17,8 @@ class DashboardPage extends Component {
   CancelToken = axios.CancelToken;
   source = this.CancelToken.source();
   abortController = new AbortController();
-  componentDidMount() {
-    axios
-      .get("/api/getfamily", { cancelToken: this.source.token })
-      .then((result) => this.setState({ family: result.data }))
-      .catch((error) => {
-        console.log(error.response);
-      });
-  }
 
-  componentWillUnmount() {
-    this.source.cancel();
-  }
   render() {
-    if (this.state.family === false) {
-      return <CreateFamilyPage />;
-    }
     return (
       <React.Fragment>
         <Switch>

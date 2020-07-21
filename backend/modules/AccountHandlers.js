@@ -106,6 +106,7 @@ app.post("/api/adduser", (req, res) => {
             );
           } else {
             console.log("Account with email has already been created!");
+            res.send(false);
             res.end();
           }
         }

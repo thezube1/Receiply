@@ -58,14 +58,18 @@ class SignupForm extends Component {
           const datas = {
             account: [this.state.email, this.state.pass],
           };
-          axios
-            .post("/api/login", datas, {
-              headers: {
-                "Content-Type": "application/json",
-                cancelToken: this.source.token,
-              },
-            })
-            .then((response) => this.setState({ check2: response.data }));
+          if (result.data === false) {
+            console.log("User already exists!");
+          } else {
+            axios
+              .post("/api/login", datas, {
+                headers: {
+                  "Content-Type": "application/json",
+                  cancelToken: this.source.token,
+                },
+              })
+              .then((response) => this.setState({ check2: response.data }));
+          }
         });
 
       console.log("User submitted - waiting for response");

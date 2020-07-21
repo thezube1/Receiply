@@ -5,7 +5,6 @@ import { Switch, Route, Link } from "react-router-dom";
 import UploadPhoto from "../components/upload/uploadPhoto/UploadPhoto";
 import NavbarMain from "../components/navbar/navbarmain";
 
-import UploadManualMain from "../components/upload/uploadManualWizard/UploadManualMain";
 import UploadManualStraight from "../components/upload/uploadManualStraight/UploadManualStraight";
 
 class UploadPage extends Component {
