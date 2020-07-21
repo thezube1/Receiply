@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import validator from "email-validator";
 import "./signup.css";
+import Navbar from "../navbar/navbar";
 
 import { Redirect } from "react-router-dom";
 
@@ -82,6 +83,7 @@ class SignupForm extends Component {
 
     return (
       <div id="signupBody">
+        <Navbar />
         <div id="signupFormWrapper">
           <div id="signupFormContainer">
             <div id="signupHeader">Signup</div>
