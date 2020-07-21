@@ -11,10 +11,12 @@ import SignupPage from "./pages/signup";
 import LoginPage from "./pages/login";
 import DashboardPage from "./pages/dashboard";
 import InviteRouter from "./pages/inviterouter";
+import Random from "./pages/random";
 
 ReactDOM.render(
   <Router>
     <Switch>
+      <Route path="/random" component={Random} />
       <Route path="/signup" component={SignupPage} />
       <Route path="/login" component={LoginPage} />
       <PrivateRoute path="/dashboard" component={DashboardPage} />

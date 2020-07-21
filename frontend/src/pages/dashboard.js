@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import "../components/dashboard/dashboard.css";
 import { Switch, Route } from "react-router-dom";
 import axios from "axios";
-
-import DashHeader from "../components/dashboard/DashHeader";
-import DashNotification from "../components/dashboard/DashNotification";
 import NavbarMain from "../components/navbar/navbarmain";
+
+import DashPop from "../components/dashboard/DashPop";
+import DashFamily from "../components/dashboard/DashFamily";
+import DashRecipes from "../components/dashboard/DashRecipes";
 
 import UploadPage from "./upload";
 import FamilyPage from "./family";
@@ -42,12 +43,15 @@ class DashboardPage extends Component {
             <div>
               <NavbarMain />
               <div id="dashWrapper">
-                <div>
-                  <DashHeader />
+                <div id="dashAreaTop" className="dashArea">
+                  <DashPop />
                 </div>
-                <DashNotification />
-                <div id="dashDivider1"></div>
-                <div id="dashRecent">Recently Viewed</div>
+                <div id="dashAreaBottom" className="dashArea">
+                  <DashRecipes />
+                </div>
+                <div id="dashAreaRight" className="dashArea">
+                  <DashFamily />
+                </div>
               </div>
             </div>
           </React.Fragment>
