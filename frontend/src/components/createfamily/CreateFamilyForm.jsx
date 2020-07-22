@@ -1,19 +1,24 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import NavbarMain from "../navbar/navbarmain";
+import { ToggleButtonGroup, ToggleButton } from "react-bootstrap";
 
 import "./createfamily.css";
 import axios from "axios";
 
+import FamilyChoice from "./FamilyChoice";
+
 class CreateFamilyForm extends Component {
   state = {
-    name: "",
-    desc: "",
-    url: "",
-    checkJoin: undefined,
+    families: [
+      { family: "Marwaha Family", creator: "Damini Marwaha", value: 1 },
+      { family: "Marwaha Family", creator: "Vivan Marwaha", value: 2 },
+      { family: "Marwaha Family", creator: "Vishal Marwaha", value: 3 },
+    ],
+    value: undefined,
   };
 
-  handleChange = (inputType) => (event) => {
-    this.setState({ [inputType]: event.target.value });
+  handleChange = (event) => {
+    this.setState({ value: event });
   };
 
   handleCreate = () => {
@@ -27,62 +32,44 @@ class CreateFamilyForm extends Component {
     }
   };
 
-  handleJoin = () => {
-    this.setState({ checkJoin: true });
-  };
-
-  fixLink = () => {
-    const link = this.state.url;
-    const newLink = link.replace("localhost:3000", "");
-    return newLink;
-  };
-
   render() {
-    if (this.state.checkJoin === true) {
-      window.location.reload(false);
-      return <Redirect to={this.fixLink()} />;
-    }
+    console.log(this.state.value);
     return (
-      <div id="createFamWrapper">
-        <div id="createFamTitle">Create or join a family!</div>
-        <div id="createFamSecondWrap">
-          <div className="createFamHeader">Create Family</div>
-          <div className="createFamDesc">Name of family</div>
-          <input
-            type="text"
-            className="createFamInput"
-            value={this.state.name}
-            onChange={this.handleChange("name")}
-          ></input>
-          <div className="createFamDesc">Family description</div>
-          <textarea
-            type="text"
-            className="createFamInput"
-            value={this.state.desc}
-            onChange={this.handleChange("desc")}
-          ></textarea>
-          <br />
-          <input
-            type="submit"
-            value="Create"
-            className="createFamSubmit"
-            onClick={this.handleCreate}
-          ></input>
-          <div className="createFamHeader">Join Family</div>
-          <div className="createFamDesc">Enter invite url</div>
-          <textarea
-            id="createFamJoin"
-            className="createFamInput"
-            value={this.state.url}
-            onChange={this.handleChange("url")}
-          ></textarea>
-          <br />
-          <input
-            type="submit"
-            value="Join"
-            className="createFamSubmit"
-            onClick={this.handleJoin}
-          ></input>
+      <div id="createFam">
+        <NavbarMain />
+        <div id="createFamWrapper">
+          <div id="createFamContent">
+            <div id="createFamIntro" className="createFamThinText">
+              Here are some families we found for you
+            </div>
+            <ToggleButtonGroup
+              id="familyChoiceOrder"
+              type="radio"
+              name="selectFamily"
+              onChange={this.handleChange}
+            >
+              {this.state.families.map((item) => (
+                <ToggleButton
+                  variant="light"
+                  className="createFamilyChoiceWrapper"
+                  key={item.value}
+                  value={item.value}
+                >
+                  <FamilyChoice family={item.family} creator={item.creator} />
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+            <span>
+              <input
+                id="createFamilyJoin"
+                type="button"
+                value="Request to join"
+              />
+            </span>
+            <div id="createFamilyOR" className="createFamBoldText">
+              OR
+            </div>
+          </div>
         </div>
       </div>
     );

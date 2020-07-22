@@ -1,69 +1,98 @@
+.createFamThinText {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+}
+
+.createFamBoldText {
+  font-family: "Source Sans Pro";
+  font-weight: 900;
+}
+
+#createFam {
+  background-color: rgb(136, 228, 138);
+  width: 100vw;
+  height: 100vh;
+}
+
 #createFamWrapper {
-  left: 50%;
   top: 50%;
-  position: absolute;
+  left: 50%;
   transform: translate(-50%, -50%);
+  position: absolute;
+  border-radius: 5px;
+  max-width: 1000px;
+  max-height: 600px;
+  width: 90vw;
+  height: 90vh;
+  background-color: white;
+}
+
+#createFamContent {
+  margin-top: 30px;
+  display: grid;
+  justify-content: center;
   text-align: center;
 }
 
-#createFamTitle {
-  font-family: "Source Sans Pro";
-  font-size: 60px;
-  font-weight: 900;
-  width: max-content;
+#createFamIntro {
+  font-size: 35px;
 }
 
-.createFamHeader {
-  padding-top: 20px;
-  font-family: "Source Sans Pro";
-  font-size: 50px;
-  font-weight: 900;
-  color: white;
-  margin-bottom: 20px;
+#familyChoiceOrder {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
 }
 
-.createFamDesc {
-  font-family: "Source Sans Pro";
-  font-size: 30px;
-  font-weight: 900;
-}
-
-.createFamInput {
-  padding: 10px;
-  font-size: 20px;
+.createFamilyChoiceWrapper {
   border-radius: 5px;
-  border: rgb(167, 167, 167);
+  border-width: 1px;
+  border: rgb(241, 241, 241);
   border-style: solid;
-  margin-bottom: 30px;
-  width: 400px;
-}
-
-#createFamSecondWrap {
-  background-color: rgb(131, 226, 133);
-  border-radius: 10px;
-  margin-top: 40px;
-  padding: 20px;
-}
-
-#createFamJoin {
-  height: 70px;
-}
-
-.createFamSubmit {
-  padding: 5px;
-  font-size: 20px;
+  width: 250px;
+  height: 100px;
+  position: relative;
+  text-align: center;
   background-color: white;
-  border: white;
-  border-style: solid;
-  border-radius: 10px;
-  width: 100px;
 }
 
-.createFamSubmit:hover {
-  background-color: rgb(221, 221, 221);
+#createFamilyChoiceFamily {
+  font-size: 26px;
 }
 
-.createFamSubmit:active {
-  border: gray;
+#createFamilyJoin {
+  margin-top: 30px;
+  padding: 5px;
+  background-color: rgb(136, 228, 138);
+  border: rgb(136, 228, 138);
   border-style: solid;
+  border-width: 1px;
+  font-family: "Source Sans Pro";
+  font-size: 23px;
+  font-weight: 200;
+  color: white;
+}
+
+#createFamilyOR {
+  margin-top: 20px;
+  font-size: 37px;
+}
+
+#createFamilyJoin:hover {
+  background-color: rgb(116, 189, 117);
+}
+
+#createFamilyJoin:active {
+  border: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+@media screen and (max-width: 800px) {
+  #familyChoiceOrder {
+    display: grid;
+    justify-content: center;
+    gap: 10px;
+  }
 }
