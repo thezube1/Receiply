@@ -82,7 +82,11 @@ class SignupForm extends Component {
 
   render() {
     if (this.state.check1 === true) {
-      return <Redirect to="/dashboard" />;
+      return (
+        <React.Fragment>
+          <Redirect to="/dashboard" />
+        </React.Fragment>
+      );
     }
 
     return (

@@ -18,12 +18,17 @@ class FamilyMain extends Component {
   componentDidMount() {
     axios
       .get("/api/getfamily", { cancelToken: this.source.token })
-      .then((result) => this.setState({ family: result.data }))
+      .then((result) => {
+        this.setState({ family: result.data });
+        if (result !== false) {
+          axios
+            .get("/api/getfamily/description", {
+              cancelToken: this.source.token,
+            })
+            .then((result) => this.setState({ description: result.data }));
+        }
+      })
       .catch((error) => console.log(error));
-
-    axios
-      .get("/api/getfamily/description", { cancelToken: this.source.token })
-      .then((result) => this.setState({ description: result.data }));
   }
 
   componentWillUnmount() {
