@@ -32,42 +32,54 @@ class CreateFamilyForm extends Component {
     }
   };
 
+  renderChoiceButton = () => {
+    if (this.state.value === undefined) {
+    } else {
+      return (
+        <span>
+          <input id="createFamilyJoin" type="button" value="Request to join" />
+        </span>
+      );
+    }
+  };
+
   render() {
     console.log(this.state.value);
     return (
       <div id="createFam">
         <NavbarMain />
         <div id="createFamWrapper">
-          <div id="createFamContent">
-            <div id="createFamIntro" className="createFamThinText">
-              Here are some families we found for you
-            </div>
-            <ToggleButtonGroup
-              id="familyChoiceOrder"
-              type="radio"
-              name="selectFamily"
-              onChange={this.handleChange}
-            >
-              {this.state.families.map((item) => (
-                <ToggleButton
-                  variant="light"
-                  className="createFamilyChoiceWrapper"
-                  key={item.value}
-                  value={item.value}
-                >
-                  <FamilyChoice family={item.family} creator={item.creator} />
-                </ToggleButton>
-              ))}
-            </ToggleButtonGroup>
-            <span>
-              <input
-                id="createFamilyJoin"
-                type="button"
-                value="Request to join"
-              />
-            </span>
-            <div id="createFamilyOR" className="createFamBoldText">
-              OR
+          <div>
+            <div id="createFamContent">
+              <div id="createFamIntro" className="createFamThinText">
+                Here are some families we found for you
+              </div>
+              <ToggleButtonGroup
+                id="familyChoiceOrder"
+                type="radio"
+                name="selectFamily"
+                onChange={this.handleChange}
+              >
+                {this.state.families.map((item) => (
+                  <ToggleButton
+                    variant="light"
+                    className="createFamilyChoiceWrapper"
+                    key={item.value}
+                    value={item.value}
+                  >
+                    <FamilyChoice family={item.family} creator={item.creator} />
+                  </ToggleButton>
+                ))}
+              </ToggleButtonGroup>
+              {this.renderChoiceButton()}
+              <div id="createFamilyOR" className="createFamBoldText">
+                OR
+              </div>
+              <div id="createFamilyBottom">
+                <div>Stuff</div>
+                <div id="createFamilyBottomSeperator"></div>
+                <div>Stuff2</div>
+              </div>
             </div>
           </div>
         </div>

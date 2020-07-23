@@ -9,7 +9,7 @@ class DashPop extends Component {
   render() {
     return (
       <div className="dashOutlineWrapper">
-        <div className="dashOutlineHeader">Popular recipes</div>
+        <div className="dashOutlineHeader">Popular Recipes</div>
         <Carousel indicators={false}>
           <Carousel.Item>
             <div className="dashPopItemWrapper">

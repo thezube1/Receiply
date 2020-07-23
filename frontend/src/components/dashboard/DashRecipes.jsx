@@ -23,7 +23,7 @@ class DashRecipes extends Component {
     };
     return (
       <div className="dashOutlineWrapper">
-        <div className="dashOutlineHeader">My recipes</div>
+        <div className="dashOutlineHeader">My Recipes</div>
         {checkRecipe()}
       </div>
     );

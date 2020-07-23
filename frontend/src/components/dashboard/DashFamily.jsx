@@ -18,6 +18,11 @@ class DashFamily extends Component {
       this.setState({ family: result.data });
     });
   }
+
+  componentWillUnmount() {
+    this.source.cancel("Operation canceled by the user.");
+  }
+
   render() {
     const checkFamily = () => {
       if (this.state.family === false) {

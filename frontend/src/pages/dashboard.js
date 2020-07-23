@@ -25,7 +25,7 @@ class DashboardPage extends Component {
           <Route path="/dashboard/upload" component={UploadPage} />
           <Route path="/dashboard/family" component={FamilyPage} />
           <React.Fragment>
-            <div>
+            <div id="dashboard">
               <NavbarMain />
               <div id="dashWrapper">
                 <div id="dashAreaTop" className="dashArea">

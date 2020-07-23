@@ -1,3 +1,7 @@
+#dashboard {
+  margin-bottom: 50px;
+}
+
 #dashWrapper {
   margin-top: 90px;
   display: grid;
