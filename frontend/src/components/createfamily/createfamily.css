@@ -67,8 +67,8 @@
   border-width: 1px;
   border: rgb(241, 241, 241);
   border-style: solid;
-  width: 250px;
-  height: 100px;
+  max-width: 250px;
+  height: max-content;
   position: relative;
   text-align: center;
   background-color: white;

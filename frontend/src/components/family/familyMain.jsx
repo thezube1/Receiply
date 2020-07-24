@@ -20,6 +20,7 @@ class FamilyMain extends Component {
       .get("/api/getfamily", { cancelToken: this.source.token })
       .then((result) => {
         this.setState({ family: result.data });
+        /*
         if (result.data !== false) {
           axios
             .get("/api/getfamily/description", {
@@ -28,6 +29,7 @@ class FamilyMain extends Component {
             .then((result) => this.setState({ description: result.data }))
             .catch((error) => console.log(error));
         }
+        */
       })
       .catch((error) => console.log(error));
   }

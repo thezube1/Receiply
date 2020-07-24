@@ -9,28 +9,24 @@ import FamilyChoice from "./FamilyChoice";
 
 class CreateFamilyForm extends Component {
   state = {
-    families: [
-      { family: "Marwaha Family", creator: "Damini Marwaha", value: 1 },
-      { family: "Marwaha Family", creator: "Vivan Marwaha", value: 2 },
-      { family: "Marwaha Family", creator: "Vishal Marwaha", value: 3 },
-    ],
+    families: [],
     value: undefined,
-    createName: undefined,
-  };
-
-  handleInput = (inputType) => (event) => {
-    this.setState({ [inputType]: event.target.value });
+    createName: "",
   };
 
   handleChange = (event) => {
     this.setState({ value: event });
   };
 
+  handleInput = (inputType) => (event) => {
+    this.setState({ [inputType]: event.target.value });
+  };
+
   handleCreate = () => {
     const data = {
       family: [this.state.createName],
     };
-    if (this.state.name.length === 0) {
+    if (this.state.createName.length === 0) {
       console.log("One or more fields is empty");
     } else {
       axios.post("/api/addfamily", data);
@@ -52,9 +48,53 @@ class CreateFamilyForm extends Component {
     }
   };
 
+  renderChoice = () => {
+    if (this.state.families.length == !0) {
+      return (
+        <React.Fragment>
+          <div id="createFamIntro" className="createFamThinText">
+            Here are some families we found for you
+          </div>
+          <ToggleButtonGroup
+            id="familyChoiceOrder"
+            type="radio"
+            name="selectFamily"
+            onChange={this.handleChange}
+          >
+            {this.state.families.map((item, index) => (
+              <ToggleButton
+                variant="light"
+                className="createFamilyChoiceWrapper"
+                key={item.FAMILY_CREATOR}
+                value={index}
+              >
+                <FamilyChoice
+                  family={item.FAMILY_NAME}
+                  creator={`${item.FIRST_NAME} ${item.LAST_NAME}`}
+                />
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+          {this.renderChoiceButton()}
+          <div id="createFamilyOR" className="createFamBoldText">
+            OR
+          </div>
+        </React.Fragment>
+      );
+    } else {
+      return (
+        <div id="createFamilyOR" className="createFamBoldText">
+          Search or create a family
+        </div>
+      );
+    }
+  };
+
   componentDidMount() {
     document.body.style.backgroundColor = "rgb(136, 228, 138)";
-    axios.get("/api/findfamily");
+    axios
+      .get("/api/findfamily")
+      .then((response) => this.setState({ families: response.data }));
   }
 
   componentWillUnmount() {
@@ -70,30 +110,8 @@ class CreateFamilyForm extends Component {
         <div id="createFamWrapper">
           <div>
             <div id="createFamContent">
-              <div id="createFamIntro" className="createFamThinText">
-                Here are some families we found for you
-              </div>
-              <ToggleButtonGroup
-                id="familyChoiceOrder"
-                type="radio"
-                name="selectFamily"
-                onChange={this.handleChange}
-              >
-                {this.state.families.map((item) => (
-                  <ToggleButton
-                    variant="light"
-                    className="createFamilyChoiceWrapper"
-                    key={item.value}
-                    value={item.value}
-                  >
-                    <FamilyChoice family={item.family} creator={item.creator} />
-                  </ToggleButton>
-                ))}
-              </ToggleButtonGroup>
-              {this.renderChoiceButton()}
-              <div id="createFamilyOR" className="createFamBoldText">
-                OR
-              </div>
+              {this.renderChoice()}
+
               <div id="createFamilyBottom">
                 <div>
                   <div className="createFamThinText">Search for family</div>
@@ -127,6 +145,7 @@ class CreateFamilyForm extends Component {
                       className="createFamilyButton"
                       type="button"
                       value="Create"
+                      onClick={this.handleCreate}
                     />
                   </div>
                 </div>

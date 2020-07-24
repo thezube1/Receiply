@@ -20,7 +20,6 @@ app.post("/api/addfamily", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) return console.log(err);
     const name = req.body.family[0];
-    const desc = req.body.family[1];
     connection.query(
       `SELECT FAMILY_NAME from Families WHERE FAMILY_NAME='${name}'`,
       (err, data) => {
@@ -32,26 +31,26 @@ app.post("/api/addfamily", (req, res) => {
             const date = `${
               d.getMonth() + 1
             } ${d.getDate()} ${d.getFullYear()}`;
-            connection.query(
-              `INSERT INTO Families VALUES (UUID(), '${name}', '${desc}', '${date}')`,
-              (err, data) => {
-                if (err) {
-                  console.log(err);
-                } else {
-                  console.log("Successfully created family!");
-                  connection.query(
-                    `SELECT FAMILY_ID FROM Families WHERE FAMILY_NAME = '${name}'`,
-                    (err, data) => {
-                      if (err) {
-                        console.log(err);
-                      } else {
-                        const token = req.cookies.userAuth;
-                        if (!token) return res.status(200).send(false);
-                        jwt.verify(
-                          req.cookies.userAuth,
-                          process.env.ACCESS_TOKEN_KEY,
-                          (err, result) => {
-                            if (err) return res.status(500);
+            const token = req.cookies.userAuth;
+            if (!token) return res.status(200).send(false);
+            jwt.verify(
+              req.cookies.userAuth,
+              process.env.ACCESS_TOKEN_KEY,
+              (err, result) => {
+                if (err) return res.status(500);
+                connection.query(
+                  `INSERT INTO Families VALUES (UUID(), '${name}', '${date}', '${result.user_id}')`,
+                  (err, data) => {
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      console.log("Successfully created family!");
+                      connection.query(
+                        `SELECT FAMILY_ID FROM Families WHERE FAMILY_NAME = '${name}'`,
+                        (err, data) => {
+                          if (err) {
+                            console.log(err);
+                          } else {
                             connection.query(
                               `UPDATE Receiply.accounts SET FAMILY = '${data[0].FAMILY_ID}' WHERE USER_ID= '${result.user_id}'`,
                               (err, data) => {
@@ -63,11 +62,11 @@ app.post("/api/addfamily", (req, res) => {
                               }
                             );
                           }
-                        );
-                      }
+                        }
+                      );
                     }
-                  );
-                }
+                  }
+                );
               }
             );
           } else {
@@ -98,10 +97,17 @@ app.get("/api/findfamily", (req, res) => {
             if (err) throw err;
             const lastName = data[0].LAST_NAME;
             connection.query(
-              `SELECT FAMILY_NAME FROM Families WHERE FAMILY_NAME LIKE '%${lastName}%'`,
+              `SELECT a.FAMILY_NAME, a.FAMILY_CREATOR, Accounts.FIRST_NAME, Accounts.LAST_NAME FROM (SELECT FAMILY_NAME, FAMILY_CREATOR FROM Receiply.Families WHERE Families.FAMILY_NAME LIKE '%${lastName}%') a INNER JOIN Receiply.Accounts ON a.FAMILY_CREATOR=Accounts.USER_ID`,
               (err, family) => {
                 if (err) throw err;
-                console.log(family);
+                if (family.length === 0) {
+                  res.send(false);
+                  res.end();
+                } else {
+                  console.log("Sent");
+                  res.send(family);
+                  res.end();
+                }
               }
             );
           }

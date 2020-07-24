@@ -23,13 +23,6 @@ CREATE TABLE Receiply.Recipes (
 CREATE TABLE Receiply.Families (
     FAMILY_ID varchar(36), 
     FAMILY_NAME varchar(100), 
-    FAMILY_DESCRIPTION longtext, 
-    FAMILY_CREATED varchar(100)
-);
-
-CREATE TABLE Receiply.Invites (
-    INVITE_ID varchar(36), 
-    INVITE_TO varchar(36),
-    TIME_CREATED varchar(100),
-    WHICH_TABLE varchar(100)
+    FAMILY_CREATED varchar(100),
+    FAMILY_CREATOR varchar(200)
 );
