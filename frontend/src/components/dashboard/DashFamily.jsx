@@ -14,9 +14,11 @@ class DashFamily extends Component {
   abortController = new AbortController();
 
   componentDidMount() {
-    axios.get("/api/getfamily").then((result) => {
-      this.setState({ family: result.data });
-    });
+    axios
+      .get("/api/getfamily", { cancelToken: this.source.token })
+      .then((result) => {
+        this.setState({ family: result.data });
+      });
   }
 
   componentWillUnmount() {

@@ -90,7 +90,7 @@ app.post("/api/adduser", (req, res) => {
                 if (err) console.log(err);
                 const hashPass = String(hash);
                 connection.query(
-                  `INSERT INTO Accounts VALUES (UUID(), '${email}', '${user}', '${hashPass}', '${first}', '${last}', NULL)`,
+                  `INSERT INTO Accounts VALUES (UUID(), '${email}', '${user}', '${hashPass}', '${first}', '${last}', NULL, NULL)`,
                   (err, data) => {
                     if (err) {
                       console.log(err);

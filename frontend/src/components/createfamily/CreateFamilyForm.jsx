@@ -9,10 +9,26 @@ import FamilyChoice from "./FamilyChoice";
 
 class CreateFamilyForm extends Component {
   state = {
+    name: { FIRST_NAME: "", LAST_NAME: "" },
     families: [],
     value: undefined,
     createName: "",
   };
+
+  CancelToken = axios.CancelToken;
+  source = this.CancelToken.source();
+  abortController = new AbortController();
+
+  componentDidMount() {
+    document.body.style.backgroundColor = "rgb(136, 228, 138)";
+    axios
+      .get("/api/getname")
+      .then((response) => this.setState({ name: response.data }));
+
+    axios
+      .get("/api/findfamily", { cancelToken: this.source.token })
+      .then((response) => this.setState({ families: response.data }));
+  }
 
   handleChange = (event) => {
     this.setState({ value: event });
@@ -33,6 +49,13 @@ class CreateFamilyForm extends Component {
     }
   };
 
+  handleJoin = () => {
+    const data = {
+      FAMILY_ID: this.state.families[this.state.value].FAMILY_ID,
+    };
+    axios.post("/api/requestfamily", data);
+  };
+
   renderChoiceButton = () => {
     if (this.state.value === undefined) {
     } else {
@@ -42,6 +65,7 @@ class CreateFamilyForm extends Component {
             className="createFamilyButton"
             type="button"
             value="Request to join"
+            onClick={this.handleJoin}
           />
         </span>
       );
@@ -49,7 +73,7 @@ class CreateFamilyForm extends Component {
   };
 
   renderChoice = () => {
-    if (this.state.families.length == !0) {
+    if (this.state.families.length !== 0) {
       return (
         <React.Fragment>
           <div id="createFamIntro" className="createFamThinText">
@@ -70,6 +94,7 @@ class CreateFamilyForm extends Component {
               >
                 <FamilyChoice
                   family={item.FAMILY_NAME}
+                  identifier={`#${item.FAMILY_IDENTIFIER}`}
                   creator={`${item.FIRST_NAME} ${item.LAST_NAME}`}
                 />
               </ToggleButton>
@@ -90,20 +115,12 @@ class CreateFamilyForm extends Component {
     }
   };
 
-  componentDidMount() {
-    document.body.style.backgroundColor = "rgb(136, 228, 138)";
-    axios
-      .get("/api/findfamily")
-      .then((response) => this.setState({ families: response.data }));
-  }
-
   componentWillUnmount() {
     document.body.style.backgroundColor = "white";
+    this.source.cancel("Operation canceled by the user.");
   }
 
   render() {
-    console.log(this.state.value);
-    console.log(this.state.createName);
     return (
       <div id="createFam">
         <NavbarMain />
@@ -136,7 +153,7 @@ class CreateFamilyForm extends Component {
                     className="createFamInput"
                     type="text"
                     placeholder="Enter name of family"
-                    value={this.state.createName}
+                    defaultValue={this.state.name.LAST_NAME}
                     onChange={this.handleInput("createName")}
                   />
                   <div>

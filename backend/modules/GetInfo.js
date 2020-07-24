@@ -56,7 +56,7 @@ app.get("/api/getfamily", (req, res) => {
         if (err) return res.status(500).send(false);
         if (result.auth === true) {
           connection.query(
-            `SELECT FAMILY from Accounts WHERE USER_ID = '${result.user_id}'`,
+            `SELECT FAMILY, FAMILY_AUTH from Accounts WHERE USER_ID = '${result.user_id}'`,
             (err, data) => {
               if (err) {
                 console.log(err);
@@ -73,16 +73,21 @@ app.get("/api/getfamily", (req, res) => {
                 res.send(false);
                 res.end();
               } else {
-                connection.query(
-                  `SELECT FAMILY_NAME FROM Families WHERE FAMILY_ID = '${data[0].FAMILY}'`,
-                  (err, data) => {
-                    if (err) {
-                      console.log(err);
+                if (data[0].FAMILY_AUTH === "request") {
+                  res.send(false);
+                  res.end();
+                } else {
+                  connection.query(
+                    `SELECT FAMILY_NAME FROM Families WHERE FAMILY_ID = '${data[0].FAMILY}'`,
+                    (err, data) => {
+                      if (err) {
+                        console.log(err);
+                      }
+                      res.send(data[0].FAMILY_NAME);
+                      res.end();
                     }
-                    res.send(data[0].FAMILY_NAME);
-                    res.end();
-                  }
-                );
+                  );
+                }
               }
             }
           );

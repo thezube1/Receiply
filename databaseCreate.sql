@@ -6,7 +6,8 @@ CREATE TABLE Receiply.Accounts (
     PASS varchar(200),
     FIRST_NAME varchar(200),
     LAST_NAME varchar(200),
-    FAMILY varchar(36)
+    FAMILY varchar(36),
+    FAMILY_AUTH varchar(100)
 );
 
 CREATE TABLE Receiply.Recipes ( 
@@ -22,6 +23,7 @@ CREATE TABLE Receiply.Recipes (
 
 CREATE TABLE Receiply.Families (
     FAMILY_ID varchar(36), 
+    FAMILY_IDENTIFIER varchar(5),
     FAMILY_NAME varchar(100), 
     FAMILY_CREATED varchar(100),
     FAMILY_CREATOR varchar(200)
