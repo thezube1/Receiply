@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import NavbarMain from "../navbar/navbarmain";
 import { ToggleButtonGroup, ToggleButton } from "react-bootstrap";
+import axios from "axios";
 
 import "./createfamily.css";
-import axios from "axios";
 
 import FamilyChoice from "./FamilyChoice";
 
@@ -15,6 +15,11 @@ class CreateFamilyForm extends Component {
       { family: "Marwaha Family", creator: "Vishal Marwaha", value: 3 },
     ],
     value: undefined,
+    createName: undefined,
+  };
+
+  handleInput = (inputType) => (event) => {
+    this.setState({ [inputType]: event.target.value });
   };
 
   handleChange = (event) => {
@@ -23,9 +28,9 @@ class CreateFamilyForm extends Component {
 
   handleCreate = () => {
     const data = {
-      family: [this.state.name, this.state.desc],
+      family: [this.state.createName],
     };
-    if (this.state.name.length === 0 || this.state.desc.length === 0) {
+    if (this.state.name.length === 0) {
       console.log("One or more fields is empty");
     } else {
       axios.post("/api/addfamily", data);
@@ -37,14 +42,28 @@ class CreateFamilyForm extends Component {
     } else {
       return (
         <span>
-          <input id="createFamilyJoin" type="button" value="Request to join" />
+          <input
+            className="createFamilyButton"
+            type="button"
+            value="Request to join"
+          />
         </span>
       );
     }
   };
 
+  componentDidMount() {
+    document.body.style.backgroundColor = "rgb(136, 228, 138)";
+    axios.get("/api/findfamily");
+  }
+
+  componentWillUnmount() {
+    document.body.style.backgroundColor = "white";
+  }
+
   render() {
     console.log(this.state.value);
+    console.log(this.state.createName);
     return (
       <div id="createFam">
         <NavbarMain />
@@ -76,9 +95,41 @@ class CreateFamilyForm extends Component {
                 OR
               </div>
               <div id="createFamilyBottom">
-                <div>Stuff</div>
+                <div>
+                  <div className="createFamThinText">Search for family</div>
+                  <input
+                    className="createFamInput"
+                    type="text"
+                    placeholder="Search for family"
+                  />
+                  <div>
+                    <input
+                      id="createFamilyBottomButton"
+                      className="createFamilyButton"
+                      type="button"
+                      value="Search"
+                    />
+                  </div>
+                </div>
                 <div id="createFamilyBottomSeperator"></div>
-                <div>Stuff2</div>
+                <div>
+                  <div className="createFamThinText">Create family</div>
+                  <input
+                    className="createFamInput"
+                    type="text"
+                    placeholder="Enter name of family"
+                    value={this.state.createName}
+                    onChange={this.handleInput("createName")}
+                  />
+                  <div>
+                    <input
+                      id="createFamilyBottomButton"
+                      className="createFamilyButton"
+                      type="button"
+                      value="Create"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -82,4 +82,34 @@ app.post("/api/addfamily", (req, res) => {
   });
 });
 
+app.get("/api/findfamily", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    const userCookie = req.cookies.userAuth;
+    if (!userCookie) return res.status(200).send(false);
+    jwt.verify(
+      req.cookies.userAuth,
+      process.env.ACCESS_TOKEN_KEY,
+      (err, result) => {
+        if (err) throw err;
+        connection.query(
+          `SELECT LAST_NAME FROM Accounts WHERE USER_ID = '${result.user_id}'`,
+          (err, data) => {
+            if (err) throw err;
+            const lastName = data[0].LAST_NAME;
+            connection.query(
+              `SELECT FAMILY_NAME FROM Families WHERE FAMILY_NAME LIKE '%${lastName}%'`,
+              (err, family) => {
+                if (err) throw err;
+                console.log(family);
+              }
+            );
+          }
+        );
+      }
+    );
+    connection.release();
+  });
+});
+
 module.exports = app;
