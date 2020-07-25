@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Switch, Route } from "react-router-dom";
 
+import FamilyMemberRequests from "./FamilyMemberRequests";
 import FamilyMembers from "../family/FamilyMembers";
 import FamilyInvite from "./FamilyInvite";
 
@@ -9,6 +10,8 @@ class FamilyMain extends Component {
   state = {
     family: undefined,
     description: undefined,
+    setShow: false,
+    show: false,
   };
 
   CancelToken = axios.CancelToken;
@@ -45,6 +48,7 @@ class FamilyMain extends Component {
           <Route path="/dashboard/family/invite" component={FamilyInvite} />
           <Route path="/dashboard/family/members" component={FamilyMembers} />
           <React.Fragment>
+            <FamilyMemberRequests />
             <div id="familyContentWrapper">
               <div style={{ marginTop: 100 }}>
                 <span className="familyTitle">Family:</span>

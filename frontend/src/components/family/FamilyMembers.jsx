@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import FamilyMemberRequests from "./FamilyMemberRequests";
 
 class FamilyMembers extends Component {
   state = {
@@ -26,6 +27,7 @@ class FamilyMembers extends Component {
   render() {
     return (
       <div id="familyMemberWrapper">
+        <FamilyMemberRequests />
         <div className="familyMemberHeader">Members:</div>
         {this.state.members.map((content, index) => (
           <div className="familyMemberItem" key={content.USER_ID}>{`${

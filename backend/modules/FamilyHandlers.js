@@ -4,6 +4,7 @@ const mysql = require("mysql");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const { response } = require("express");
 require("dotenv").config();
 
 const pool = mysql.createPool({
@@ -46,7 +47,7 @@ app.post("/api/addfamily", (req, res) => {
                     console.log(err);
                   } else {
                     connection.query(
-                      `UPDATE Receiply.accounts SET FAMILY = '${data[0].FAMILY_ID}' WHERE USER_ID= '${result.user_id}'`,
+                      `UPDATE Receiply.accounts SET FAMILY = '${data[0].FAMILY_ID}', FAMILY_AUTH = 1 WHERE USER_ID= '${result.user_id}'`,
                       (err, data) => {
                         if (err) {
                           console.log(err);
@@ -119,6 +120,38 @@ app.post("/api/requestfamily", (req, res) => {
           if (err) throw err;
           res.send(true);
           res.end();
+        }
+      );
+    });
+    connection.release();
+  });
+});
+
+app.get("/api/getfamilyrequests", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    const userCookie = req.cookies.userAuth;
+    jwt.verify(userCookie, process.env.ACCESS_TOKEN_KEY, (err, result) => {
+      if (err) throw err;
+      const userID = result.user_id;
+      connection.query(
+        `SELECT FAMILY FROM Accounts WHERE USER_ID='${userID}'`,
+        (err, response) => {
+          if (err) throw err;
+          const familyID = response[0].FAMILY;
+          connection.query(
+            `SELECT USER_ID, USERNAME FROM Accounts WHERE FAMILY='${familyID}' AND FAMILY_AUTH='request'`,
+            (err, data) => {
+              if (err) throw err;
+              if (data.length === 0) {
+                res.send(false);
+                res.end();
+              } else {
+                res.send(data);
+                res.end();
+              }
+            }
+          );
         }
       );
     });
