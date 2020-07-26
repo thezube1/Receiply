@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 class FamilyMemberRequests extends Component {
   state = {
@@ -20,6 +21,63 @@ class FamilyMemberRequests extends Component {
     this.setState({ setShow: false });
   };
 
+  handleAccept = (index) => {
+    const user = this.state.users[index];
+    axios.post("/api/acceptfamilyuser", user);
+  };
+
+  renderUsers = () => {
+    if (this.state.users.length !== 0) {
+      return (
+        <div>
+          {this.state.users.map((item, index) => (
+            <div key={item.USER_ID} id="familyRequestItem">
+              <span id="familyRequestHeader">user:</span>
+              <span>{item.USERNAME}</span>
+              <Button
+                variant="success"
+                onClick={() => {
+                  this.handleAccept(index);
+                }}
+              >
+                Accept
+              </Button>
+              <Button variant="danger">Ignore</Button>
+            </div>
+          ))}
+        </div>
+      );
+    } else {
+      const icon = {
+        hidden: {
+          pathLength: 0,
+          fill: "rgba(255, 255, 255, 0)",
+        },
+        visible: {
+          pathLength: 1,
+          fill: "rgba(255, 255, 255, 1)",
+        },
+      };
+      return (
+        <React.Fragment>
+          <div>No requests</div>
+          <motion.svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            variants={this.pathVariants}
+            initial="hidden"
+            animate="visible"
+            ease="easeInOut"
+          >
+            <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" />
+          </motion.svg>
+        </React.Fragment>
+      );
+    }
+  };
+
   componentDidMount() {
     axios
       .get("/api/getfamilyrequests", { cancelToken: this.source.token })
@@ -30,7 +88,6 @@ class FamilyMemberRequests extends Component {
     this.source.cancel("Operation canceled by the user.");
   }
   render() {
-    console.log(this.state.users);
     return (
       <React.Fragment>
         <input
@@ -43,13 +100,7 @@ class FamilyMemberRequests extends Component {
           <Modal.Header closeButton>
             <Modal.Title>Join requests</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <div>
-              {this.state.users.map((item) => (
-                <div key={item.USER_ID}>{item.USERNAME}</div>
-              ))}
-            </div>
-          </Modal.Body>
+          <Modal.Body>{this.renderUsers()}</Modal.Body>
         </Modal>
       </React.Fragment>
     );

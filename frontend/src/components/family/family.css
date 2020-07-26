@@ -24,6 +24,22 @@
   outline: none;
 }
 
+#familyRequestItem {
+  font-family: "Source Sans Pro";
+  font-weight: 900;
+  font-size: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 50px;
+}
+
+#familyRequestHeader {
+  font-weight: 500;
+  margin-right: -15px;
+}
+
 #familyRequestLink:hover {
   background-color: rgb(43, 43, 43);
 }

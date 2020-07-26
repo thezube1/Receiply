@@ -144,7 +144,6 @@ app.get("/api/getfamilyrequests", (req, res) => {
             (err, data) => {
               if (err) throw err;
               if (data.length === 0) {
-                res.send(false);
                 res.end();
               } else {
                 res.send(data);
@@ -156,6 +155,34 @@ app.get("/api/getfamilyrequests", (req, res) => {
       );
     });
     connection.release();
+  });
+});
+
+app.post("/api/acceptfamilyuser", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    const userID = req.body.USER_ID;
+    connection.query(
+      `UPDATE Accounts SET FAMILY_AUTH = 1 WHERE USER_ID='${userID}'`,
+      (err, response) => {
+        if (err) throw err;
+        console.log("Request accepted");
+      }
+    );
+  });
+});
+
+app.post("/api/ignorefamilyuser", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    const userID = req.body.USER_ID;
+    connection.query(
+      `UPDATE Accounts SET FAMILY_AUTH = NULL, FAMILY = NULL WHERE USER_ID='${userID}'`,
+      (err, response) => {
+        if (err) throw err;
+        console.log("Request ignored");
+      }
+    );
   });
 });
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Switch, Route } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import FamilyMemberRequests from "./FamilyMemberRequests";
 import FamilyMembers from "../family/FamilyMembers";
@@ -40,6 +41,18 @@ class FamilyMain extends Component {
   componentWillUnmount() {
     this.source.cancel();
   }
+
+  pathVariants = {
+    hidden: { opacity: 0, pathLength: 0 },
+    visible: {
+      opacity: 1,
+      pathLength: 1,
+      transition: {
+        duration: 1,
+        ease: "easeInOut",
+      },
+    },
+  };
 
   render() {
     return (
