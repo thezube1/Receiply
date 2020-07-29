@@ -9,22 +9,27 @@
 .uploadHubHeader {
   font-family: "Source Sans Pro";
   font-weight: 900;
-  font-size: 40px;
+  font-size: 50px;
   background-color: rgb(136, 228, 138);
   padding: 5px;
-  border-radius: 5px;
+  border-radius: 2px;
+  color: white;
 }
 
 .uploadHubLink {
-  background-color: rgb(236, 111, 111);
+  background-color: rgb(136, 228, 138);
   padding: 5px;
   color: white;
-  text-shadow: 0px 0px 5px rgb(126, 126, 126);
   font-family: "Source Sans Pro";
-  font-weight: 700;
-  font-size: 25px;
+  font-weight: 300;
+  font-size: 35px;
   text-decoration: none;
   border-radius: 5px;
+  box-shadow: 0px 0px 2px rgb(197, 197, 197);
+}
+
+.uploadHubLink:hover {
+  background-color: rgb(115, 189, 116);
 }
 
 #uploadHubLinkWrapper {

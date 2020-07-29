@@ -41,7 +41,7 @@ class DashFamily extends Component {
           <div>
             <div id="dashFamilyName">{this.state.family}</div>
             <div id="dashFamilyContent">
-              <DashFamilyItem />
+              <DashFamilyItem title="Stuff" />
               <DashFamilyItem />
               <DashFamilyItem />
             </div>

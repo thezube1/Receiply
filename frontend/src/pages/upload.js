@@ -4,8 +4,7 @@ import { Switch, Route, Link } from "react-router-dom";
 
 import UploadPhoto from "../components/upload/uploadPhoto/UploadPhoto";
 import NavbarMain from "../components/navbar/navbarmain";
-
-import UploadManualStraight from "../components/upload/uploadManualStraight/UploadManualStraight";
+import UploadManual from "../components/upload/uploadManual/uploadManual";
 
 class UploadPage extends Component {
   state = {};
@@ -14,10 +13,7 @@ class UploadPage extends Component {
       <React.Fragment>
         <Switch>
           <Route path="/dashboard/upload/photo" component={UploadPhoto} />
-          <Route
-            path="/dashboard/upload/manual/"
-            component={UploadManualStraight}
-          />
+          <Route path="/dashboard/upload/manual/" component={UploadManual} />
           <React.Fragment>
             <NavbarMain />
             <div id="uploadHubWrapper">
@@ -34,7 +30,7 @@ class UploadPage extends Component {
                   <div className="uploadHubLink">From photo</div>
                 </Link>
                 <Link
-                  to="/dashboard/upload/manual/1"
+                  to="/dashboard/upload/manual"
                   style={{ textDecoration: "none" }}
                 >
                   <div className="uploadHubLink">Manual entry</div>
