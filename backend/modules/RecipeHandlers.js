@@ -27,15 +27,25 @@ app.post("/api/createrecipe", (req, res) => {
         `SELECT FAMILY, FAMILY_AUTH FROM Accounts WHERE USER_ID = '${result.user_id}'`,
         (err, family) => {
           if (err) throw err;
+
           if (family[0].FAMILY_AUTH !== "request") {
+            let SHARING;
+            let FAMILY_ID;
+            const USER_ID = result.user_id;
+            const recipe = req.body;
             if (family[0].FAMILY === "NULL" || family[0].FAMILY === null) {
               FAMILY_ID = null;
             } else {
-              const FAMILY_ID = family[0].FAMILY;
+              FAMILY_ID = family[0].FAMILY;
             }
 
-            const USER_ID = result.user_id;
-            const recipe = req.body;
+            if (recipe.sharing === 0) {
+              SHARING = "private";
+            } else if (recipe.sharing === 1) {
+              SHARING = "family";
+            } else {
+              SHARING = "public";
+            }
             connection.query(
               `INSERT INTO Recipes VALUES (uuid(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), '${
                 recipe.TTM
@@ -47,10 +57,17 @@ app.post("/api/createrecipe", (req, res) => {
                 recipe.prep
               )}}', '{"cooking": ${JSON.stringify(
                 recipe.steps
-              )}}', '{"tags": ${JSON.stringify(recipe.tags)}}', NULL, NULL)`,
+              )}}', '{"tags": ${JSON.stringify(
+                recipe.tags
+              )}}', '${SHARING}', NULL)`,
               (err, response) => {
-                if (err) throw err;
-                else console.log("Success");
+                if (err) {
+                  throw err;
+                } else {
+                  console.log("Success");
+                  res.send(true);
+                  res.end();
+                }
               }
             );
           } else {
@@ -59,6 +76,7 @@ app.post("/api/createrecipe", (req, res) => {
         }
       );
     });
+    connection.release();
   });
 });
 

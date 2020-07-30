@@ -6,6 +6,7 @@ import { ToggleButtonGroup, ToggleButton } from "react-bootstrap";
 
 class uploadManual extends Component {
   state = {
+    complete: false,
     check: true,
     name: "",
     TTM: "",
@@ -26,6 +27,7 @@ class uploadManual extends Component {
       prep: this.state.prepCount,
       steps: this.state.cookingCount,
       tags: this.state.tags,
+      sharing: this.state.sharing,
     };
     if (
       this.state.sharing === undefined ||
@@ -37,7 +39,9 @@ class uploadManual extends Component {
     ) {
       this.setState({ check: false });
     } else {
-      axios.post("/api/createrecipe", data);
+      axios
+        .post("/api/createrecipe", data)
+        .then((res) => this.setState({ complete: res.data }));
     }
   };
 
@@ -128,6 +132,9 @@ class uploadManual extends Component {
     document.body.style.backgroundColor = "white";
   }
   render() {
+    if (this.state.complete === true) {
+      return <div id="uploadManualWrapper">Recipe has been uploaded</div>;
+    }
     return (
       <React.Fragment>
         <NavbarMain />
