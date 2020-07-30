@@ -4,7 +4,7 @@ const AccountHandlers = require("./modules/AccountHandlers");
 const GetInfo = require("./modules/GetInfo");
 const FamilyHandlers = require("./modules/FamilyHandlers");
 const InviteHandlers = require("./modules/InviteHandlers");
-const FindFamily = require("./modules/FindFamily");
+const RecipeHandlers = require("./modules/RecipeHandlers");
 const bodyParser = require("body-parser");
 const PORT = 8080;
 
@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(AccountHandlers);
 app.use(GetInfo);
 app.use(FamilyHandlers);
+app.use(RecipeHandlers);
 app.use(InviteHandlers);
 
 app.listen(PORT, () => {

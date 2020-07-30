@@ -1,10 +1,8 @@
 const express = require("express");
 const app = express();
 const mysql = require("mysql");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const { response } = require("express");
 require("dotenv").config();
 
 const pool = mysql.createPool({

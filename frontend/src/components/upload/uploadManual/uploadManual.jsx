@@ -1,13 +1,48 @@
 import React, { Component } from "react";
 import "./uploadManual.css";
 import NavbarMain from "../../navbar/navbarmain";
+import axios from "axios";
+import { ToggleButtonGroup, ToggleButton } from "react-bootstrap";
 
 class uploadManual extends Component {
   state = {
+    check: true,
+    name: "",
+    TTM: "",
+    description: "",
     ingredientCount: [""],
     prepCount: [""],
     cookingCount: [""],
     tags: [""],
+    sharing: undefined,
+  };
+
+  handleSubmit = () => {
+    const data = {
+      name: this.state.name,
+      TTM: this.state.TTM,
+      description: this.state.description,
+      ingredients: this.state.ingredientCount,
+      prep: this.state.prepCount,
+      steps: this.state.cookingCount,
+      tags: this.state.tags,
+    };
+    if (
+      this.state.sharing === undefined ||
+      this.state.name === "" ||
+      this.state.TTM === "" ||
+      this.state.description === "" ||
+      this.state.cookingCount.length === 0 ||
+      this.state.cookingCount[0] === ""
+    ) {
+      this.setState({ check: false });
+    } else {
+      axios.post("/api/createrecipe", data);
+    }
+  };
+
+  handleChange2 = (event) => {
+    this.setState({ sharing: event });
   };
 
   handleRemove = (name, type, index) => {
@@ -28,6 +63,10 @@ class uploadManual extends Component {
     this.setState({
       [inputType]: newArray,
     });
+  };
+
+  handleChange = (inputType) => (event) => {
+    this.setState({ [inputType]: event.target.value });
   };
 
   includeAdd = (name, type, index) => {
@@ -70,6 +109,17 @@ class uploadManual extends Component {
     }
   };
 
+  handleWarning = () => {
+    if (this.state.check === false) {
+      window.scrollTo(0, 0);
+      return (
+        <div className="uploadManualRequired">
+          One or more fields is missing!
+        </div>
+      );
+    }
+  };
+
   componentDidMount() {
     document.body.style.backgroundColor = "rgb(136, 228, 138)";
   }
@@ -89,6 +139,7 @@ class uploadManual extends Component {
                 Items with * are required fields
               </div>
             </div>
+            {this.handleWarning()}
             <div className="uploadManualInputWrapper">
               <div>Upload Photo:</div>
               <input
@@ -100,9 +151,22 @@ class uploadManual extends Component {
             <div className="uploadManualInputWrapper">
               <div>
                 <span className="uploadManualRequired">*</span>
+                <span>Time to make</span>
+              </div>
+              <textarea
+                id="uploadManualTTM"
+                onChange={this.handleChange("TTM")}
+                className="uploadManualInput"
+                placeholder="Enter estimated time to make"
+              ></textarea>
+            </div>
+            <div className="uploadManualInputWrapper">
+              <div>
+                <span className="uploadManualRequired">*</span>
                 <span>Name of Recipe:</span>
               </div>
               <textarea
+                onChange={this.handleChange("name")}
                 className="uploadManualInput"
                 placeholder="Enter name of Recipe"
               ></textarea>
@@ -113,6 +177,7 @@ class uploadManual extends Component {
                 <span>Description:</span>
               </div>
               <textarea
+                onChange={this.handleChange("description")}
                 className="uploadManualInput"
                 id="uploadManualInputDescription"
                 placeholder="Enter description of Recipe"
@@ -244,11 +309,46 @@ class uploadManual extends Component {
               })}
             </div>
             <div className="uploadManualInputWrapper">
+              <div>
+                <span className="uploadManualRequired">*</span>
+                <span>Who can view your recipe:</span>
+              </div>
+              <ToggleButtonGroup
+                name="selectShare"
+                type="radio"
+                onChange={this.handleChange2}
+                id="uploadManualShare"
+              >
+                <ToggleButton
+                  variant="success"
+                  className="uploadManualShareButton"
+                  value={1}
+                >
+                  Private
+                </ToggleButton>
+                <ToggleButton
+                  variant="success"
+                  className="uploadManualShareButton"
+                  value={2}
+                >
+                  Family
+                </ToggleButton>
+                <ToggleButton
+                  variant="success"
+                  className="uploadManualShareButton"
+                  value={3}
+                >
+                  Public
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </div>
+            <div className="uploadManualInputWrapper">
               <input
                 id="uploadManualSave"
                 className="uploadManualButton"
                 type="button"
                 value="Save recipe"
+                onClick={this.handleSubmit}
               />
             </div>
           </div>

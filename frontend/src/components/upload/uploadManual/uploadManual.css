@@ -32,6 +32,10 @@
   color: red;
 }
 
+#uploadManualTTM {
+  width: 300px;
+}
+
 .uploadManualButton {
   background-color: rgb(131, 226, 133);
   border: none;
@@ -160,4 +164,13 @@
   margin-bottom: 50px;
   height: 50px;
   width: 150px;
+}
+
+.uploadManualShareButton {
+  background-color: rgb(131, 226, 133);
+  border: rgb(131, 226, 133);
+}
+
+#uploadManualShare {
+  margin-bottom: 50px;
 }
