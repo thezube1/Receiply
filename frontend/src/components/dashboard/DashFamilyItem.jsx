@@ -4,13 +4,20 @@ class DashFamilyItem extends Component {
   state = {
     title: this.props.title,
     description: this.props.description,
+    image: this.props.image,
   };
   render() {
     return (
       <div id="dashFamilyItem" className="dashPopItem">
-        <div className="dashPopItemContent">
+        <div className="dashPopItemContent" id="dashFamilyItemContent">
           <div className="dashPopItemTitle">{this.state.title}</div>
-          <div className="dashPopItemImg" id="dashFamImg"></div>
+          <div>
+            <img
+              src={`/${this.state.image}`}
+              alt="food"
+              className="dashPopItemImg"
+            />
+          </div>
           <div className="dashPopItemDesc">{this.state.description}</div>
         </div>
       </div>

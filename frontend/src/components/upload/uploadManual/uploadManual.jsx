@@ -6,6 +6,7 @@ import { ToggleButtonGroup, ToggleButton } from "react-bootstrap";
 
 class uploadManual extends Component {
   state = {
+    selectedFile: null,
     complete: false,
     check: true,
     name: "",
@@ -19,6 +20,8 @@ class uploadManual extends Component {
   };
 
   handleSubmit = () => {
+    const formData = new FormData();
+    formData.append("myImage", this.state.selectedFile);
     const data = {
       name: this.state.name,
       TTM: this.state.TTM,
@@ -29,6 +32,10 @@ class uploadManual extends Component {
       tags: this.state.tags,
       sharing: this.state.sharing,
     };
+
+    for (var key in data) {
+      formData.append(key, data[key]);
+    }
     if (
       this.state.sharing === undefined ||
       this.state.name === "" ||
@@ -37,10 +44,11 @@ class uploadManual extends Component {
       this.state.cookingCount.length === 0 ||
       this.state.cookingCount[0] === ""
     ) {
+      window.scrollTo(0, 0);
       this.setState({ check: false });
     } else {
       axios
-        .post("/api/createrecipe", data)
+        .post("/api/createrecipe", formData)
         .then((res) => this.setState({ complete: res.data }));
     }
   };
@@ -115,12 +123,23 @@ class uploadManual extends Component {
 
   handleWarning = () => {
     if (this.state.check === false) {
-      window.scrollTo(0, 0);
       return (
         <div className="uploadManualRequired">
           One or more fields is missing!
         </div>
       );
+    }
+  };
+
+  onFileChange = (event) => {
+    this.setState({ selectedFile: event.target.files[0] });
+  };
+
+  handlePhotoName = () => {
+    if (this.state.selectedFile !== null) {
+      return this.state.selectedFile.name;
+    } else {
+      return "Choose a file";
     }
   };
 
@@ -150,10 +169,15 @@ class uploadManual extends Component {
             <div className="uploadManualInputWrapper">
               <div>Upload Photo:</div>
               <input
-                className="uploadManualButton"
-                type="button"
-                value="select"
+                id="uploadManualPhoto"
+                type="file"
+                name="uploadManualPhoto"
+                accept="image/x-png,image/gif,image/jpeg"
+                onChange={this.onFileChange}
               />
+              <label htmlFor="uploadManualPhoto">
+                {this.handlePhotoName()}
+              </label>
             </div>
             <div className="uploadManualInputWrapper">
               <div>

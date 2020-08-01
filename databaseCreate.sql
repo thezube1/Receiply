@@ -23,7 +23,7 @@ CREATE TABLE Receiply.Recipes (
     COOKING_INSTRUCTIONS json, 
     TAGS json,
     PUBLISH_STATE varchar(50),
-    PHOTO_NAME varchar(36)
+    PHOTO_NAME varchar(200)
 );
 
 CREATE TABLE Receiply.Families (

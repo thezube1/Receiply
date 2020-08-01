@@ -15,6 +15,7 @@ app.use(GetInfo);
 app.use(FamilyHandlers);
 app.use(RecipeHandlers);
 app.use(InviteHandlers);
+app.use("/uploads", express.static("uploads"));
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);

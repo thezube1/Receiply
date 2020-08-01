@@ -7,6 +7,7 @@ import DashFamilyItem from "./DashFamilyItem";
 class DashFamily extends Component {
   state = {
     family: undefined,
+    family_recipe: [],
   };
 
   CancelToken = axios.CancelToken;
@@ -19,7 +20,60 @@ class DashFamily extends Component {
       .then((result) => {
         this.setState({ family: result.data });
       });
+    axios
+      .get("/api/familyrecipes/card")
+      .then((res) => this.setState({ family_recipe: res.data }));
   }
+
+  randomShowRange = () => {
+    const recipeLength = this.state.family_recipe.length;
+    console.log(this.state.family_recipe);
+    if (recipeLength > 3) {
+      let secondNum;
+      let randomNum = Math.floor(Math.random() * Math.floor(recipeLength));
+      console.log(randomNum);
+      if (randomNum === recipeLength) {
+        secondNum = randomNum - 3;
+      } else if (randomNum + 1 === recipeLength) {
+        randomNum = randomNum - 2;
+        secondNum = recipeLength;
+      } else if (randomNum + 2 === recipeLength) {
+        randomNum = randomNum - 1;
+        secondNum = recipeLength;
+      } else {
+        secondNum = randomNum + 3;
+      }
+      console.log(randomNum, secondNum);
+      return [randomNum, secondNum];
+    } else {
+      return [0, 3];
+    }
+
+    //const recipeAmount = this.state.family_recipe.length;
+    //console.log(Math.floor(Math.random() * Math.floor(recipeAmount)));
+  };
+
+  handleRecipes = () => {
+    if (this.state.family_recipe === false) {
+      return <div>Your family does not have any recipes yet!</div>;
+    } else {
+      const num = this.randomShowRange();
+      return (
+        <div>
+          {this.state.family_recipe.slice(num[0], num[1]).map((item) => {
+            return (
+              <DashFamilyItem
+                key={item.RECIPE_ID}
+                title={item.RECIPE_NAME}
+                description={item.DESCRIPTION}
+                image={item.PHOTO_NAME}
+              />
+            );
+          })}
+        </div>
+      );
+    }
+  };
 
   componentWillUnmount() {
     this.source.cancel("Operation canceled by the user.");
@@ -40,11 +94,7 @@ class DashFamily extends Component {
         return (
           <div>
             <div id="dashFamilyName">{this.state.family}</div>
-            <div id="dashFamilyContent">
-              <DashFamilyItem title="Stuff" />
-              <DashFamilyItem />
-              <DashFamilyItem />
-            </div>
+            <div id="dashFamilyContent">{this.handleRecipes()}</div>
           </div>
         );
       }
