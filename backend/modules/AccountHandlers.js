@@ -145,4 +145,8 @@ app.get("/api/authorize", (req, res) => {
     }
   );
 });
+
+app.get("/api/getuserinfo/:user", (req, res) => {
+  console.log(req.params.user);
+});
 module.exports = app;

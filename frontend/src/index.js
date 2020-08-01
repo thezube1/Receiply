@@ -20,7 +20,7 @@ ReactDOM.render(
       <Route path="/random" component={Random} />
       <Route path="/signup" component={SignupPage} />
       <Route path="/login" component={LoginPage} />
-      <Route path="/:user" component={PublicUser} />
+      <Route path="/users/:user" component={PublicUser} />
       <PrivateRoute path="/dashboard" component={DashboardPage} />
       <PrivateRoute path="/inviteurl/" component={InviteRouter} />
       <Route exact path="/" component={App} />
