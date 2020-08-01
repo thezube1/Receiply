@@ -10,6 +10,7 @@ import App from "./App";
 import SignupPage from "./pages/signup";
 import LoginPage from "./pages/login";
 import DashboardPage from "./pages/dashboard";
+import PublicUser from "./pages/publicuser";
 import InviteRouter from "./pages/inviterouter";
 import Random from "./pages/random";
 
@@ -19,6 +20,7 @@ ReactDOM.render(
       <Route path="/random" component={Random} />
       <Route path="/signup" component={SignupPage} />
       <Route path="/login" component={LoginPage} />
+      <Route path="/:user" component={PublicUser} />
       <PrivateRoute path="/dashboard" component={DashboardPage} />
       <PrivateRoute path="/inviteurl/" component={InviteRouter} />
       <Route exact path="/" component={App} />

@@ -83,25 +83,35 @@ app.post("/api/adduser", (req, res) => {
           console.log(err);
         } else {
           if (data[0] === undefined) {
-            bcrypt.hash(
-              pass,
-              parseInt(process.env.SALT_ROUNDS),
-              (err, hash) => {
-                if (err) console.log(err);
-                const hashPass = String(hash);
-                connection.query(
-                  `INSERT INTO Accounts VALUES (UUID(), '${email}', '${user}', '${hashPass}', '${first}', '${last}', NULL, NULL)`,
-                  (err, data) => {
-                    if (err) {
-                      console.log(err);
-                      res.end();
-                    } else {
-                      console.log("Success!");
-                      res.send(true);
-                      res.end();
+            connection.query(
+              `SELECT USERNAME FROM Accounts WHERE USERNAME='${user}'`,
+              (err, exists) => {
+                if (err) throw err;
+                if (exists[0] === undefined) {
+                  bcrypt.hash(
+                    pass,
+                    parseInt(process.env.SALT_ROUNDS),
+                    (err, hash) => {
+                      if (err) console.log(err);
+                      const hashPass = String(hash);
+                      connection.query(
+                        `INSERT INTO Accounts VALUES (UUID(), '${email}', '${user}', '${hashPass}', '${first}', '${last}', NULL, NULL)`,
+                        (err, data) => {
+                          if (err) {
+                            console.log(err);
+                            res.end();
+                          } else {
+                            console.log("Success!");
+                            res.send(true);
+                            res.end();
+                          }
+                        }
+                      );
                     }
-                  }
-                );
+                  );
+                } else {
+                  console.log("User with that username already exists!");
+                }
               }
             );
           } else {

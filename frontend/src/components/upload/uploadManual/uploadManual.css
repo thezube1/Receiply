@@ -199,3 +199,8 @@
 #uploadManualShare {
   margin-bottom: 50px;
 }
+
+#uploadManualBottom {
+  height: 50px;
+  width: 100%;
+}

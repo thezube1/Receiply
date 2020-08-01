@@ -384,6 +384,7 @@ class uploadManual extends Component {
             </div>
           </div>
         </div>
+        <div id="uploadManualBottom"></div>
       </React.Fragment>
     );
   }
