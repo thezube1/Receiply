@@ -4,6 +4,7 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import PrivateRoute from "./privateroute";
+import RouterFork from "./RouteFork";
 
 //pages
 import App from "./App";
@@ -20,9 +21,8 @@ ReactDOM.render(
       <Route path="/signup" component={SignupPage} />
       <Route path="/login" component={LoginPage} />
       <Route path="/users/:user" component={PublicUser} />
-      <PrivateRoute path="/dashboard" component={DashboardPage} />
       <PrivateRoute path="/inviteurl/" component={InviteRouter} />
-      <Route exact path="/" component={App} />
+      <RouterFork Route1={App} Route2={DashboardPage} />
       <Route component={NotFoundPage} />
     </Switch>
   </Router>,

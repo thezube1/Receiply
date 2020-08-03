@@ -50,7 +50,7 @@ class LoginForm extends Component {
 
   render() {
     if (this.state.check === true) {
-      return <Redirect to="/dashboard" />;
+      return <Redirect to="/" />;
     }
     return (
       <div id="loginBody" className="mainColor">
