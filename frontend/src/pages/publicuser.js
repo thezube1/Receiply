@@ -5,6 +5,7 @@ import "../components/userProfile/user.css";
 
 import UserInfo from "../components/userProfile/UserInfo";
 import UserDescription from "../components/userProfile/UserDescription";
+import UserRecipes from "../components/userProfile/UserRecipes";
 
 class PublicUser extends Component {
   state = {
@@ -42,6 +43,7 @@ class PublicUser extends Component {
             />
 
             <UserDescription />
+            <UserRecipes />
           </div>
         </div>
       </React.Fragment>
