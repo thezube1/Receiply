@@ -4,7 +4,7 @@ class UserInfo extends Component {
   state = {};
   render() {
     return (
-      <div>
+      <div id="userInfoContent">
         <div id="userUsername">{this.props.username}</div>
         <div className="userInfo">
           <span className="userInfoHeader">Name: </span>

@@ -34,16 +34,21 @@ class PublicUser extends Component {
     return (
       <React.Fragment>
         <div id="userWrapper">
-          <div id="userInfoContent">
-            <UserInfo
-              username={this.props.match.params.user}
-              first={this.state.user[0].FIRST_NAME}
-              last={this.state.user[0].LAST_NAME}
-              family={this.state.user[0].FAMILY}
-            />
-
-            <UserDescription />
-            <UserRecipes />
+          <div id="userContent">
+            <div id="userBlock1">
+              <UserInfo
+                username={this.props.match.params.user}
+                first={this.state.user[0].FIRST_NAME}
+                last={this.state.user[0].LAST_NAME}
+                family={this.state.user[0].FAMILY}
+              />
+            </div>
+            <div id="userBlock2">
+              <UserDescription />
+            </div>
+            <div id="userBlock3" className="userBlockOutline">
+              <UserRecipes />
+            </div>
           </div>
         </div>
       </React.Fragment>
