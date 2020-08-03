@@ -147,6 +147,35 @@ app.get("/api/authorize", (req, res) => {
 });
 
 app.get("/api/getuserinfo/:user", (req, res) => {
-  console.log(req.params.user);
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query(
+      `SELECT USERNAME, FIRST_NAME, LAST_NAME, FAMILY FROM Accounts WHERE USERNAME='${req.params.user}'`,
+      (err, data) => {
+        if (err) throw err;
+        if (data.length === 0) {
+          res.send(false);
+          res.end();
+        } else {
+          if (data[0].FAMILY === null || data[0].FAMILY === "NULL") {
+            data[0].FAMILY = "No family";
+            res.send(data);
+            res.end();
+          } else {
+            connection.query(
+              `SELECT FAMILY_NAME FROM Families WHERE FAMILY_ID='${data[0].FAMILY}'`,
+              (err, family) => {
+                if (err) throw err;
+                data[0].FAMILY = family[0].FAMILY_NAME;
+                res.send(data);
+                res.end();
+              }
+            );
+          }
+        }
+      }
+    );
+    connection.release();
+  });
 });
 module.exports = app;

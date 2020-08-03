@@ -12,18 +12,18 @@ import LoginPage from "./pages/login";
 import DashboardPage from "./pages/dashboard";
 import PublicUser from "./pages/publicuser";
 import InviteRouter from "./pages/inviterouter";
-import Random from "./pages/random";
+import NotFoundPage from "./pages/404page";
 
 ReactDOM.render(
   <Router>
     <Switch>
-      <Route path="/random" component={Random} />
       <Route path="/signup" component={SignupPage} />
       <Route path="/login" component={LoginPage} />
       <Route path="/users/:user" component={PublicUser} />
       <PrivateRoute path="/dashboard" component={DashboardPage} />
       <PrivateRoute path="/inviteurl/" component={InviteRouter} />
       <Route exact path="/" component={App} />
+      <Route component={NotFoundPage} />
     </Switch>
   </Router>,
   document.getElementById("root")

@@ -1,8 +1,15 @@
 import React, { Component } from "react";
 import axios from "axios";
+import NotFoundPage from "./404page";
+import "../components/userProfile/user.css";
+
+import UserInfo from "../components/userProfile/UserInfo";
+import UserDescription from "../components/userProfile/UserDescription";
 
 class PublicUser extends Component {
-  state = {};
+  state = {
+    user: [{ USERNAME: "", FIRST_NAME: "", LAST_NAME: "", FAMILY: "" }],
+  };
 
   CancelToken = axios.CancelToken;
   source = this.CancelToken.source();
@@ -12,21 +19,33 @@ class PublicUser extends Component {
       .get(`/api/getuserinfo/${this.props.match.params.user}`, {
         cancelToken: this.source.token,
       })
-      .catch((thrown) => {
-        if (axios.isCancel(thrown)) {
-          console.log(thrown.message);
-        } else {
-          throw thrown;
-        }
-      });
+      .then((response) => this.setState({ user: response.data }));
   }
 
   componentWillUnmount() {
-    this.source.cancel("Operation canceled by user");
+    this.source.cancel();
   }
+
   render() {
-    console.log(this.props.match.params.user);
-    return <div>{this.props.match.params.user}</div>;
+    if (this.state.user === false) {
+      return <NotFoundPage />;
+    }
+    return (
+      <React.Fragment>
+        <div id="userWrapper">
+          <div id="userInfoContent">
+            <UserInfo
+              username={this.props.match.params.user}
+              first={this.state.user[0].FIRST_NAME}
+              last={this.state.user[0].LAST_NAME}
+              family={this.state.user[0].FAMILY}
+            />
+
+            <UserDescription />
+          </div>
+        </div>
+      </React.Fragment>
+    );
   }
 }
 

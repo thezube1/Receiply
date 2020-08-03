@@ -1,0 +1,36 @@
+#userWrapper {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-content: center;
+}
+
+#userUsername {
+  font-size: 80px;
+  font-style: "Source Sans Pro";
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.userInfo {
+  line-height: 1;
+  font-family: "Source Sans Pro";
+  font-size: 30px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.userInfoHeader {
+  font-weight: 100;
+}
+
+#userInfoContent {
+  display: grid;
+  grid-template-columns: 500px 1fr;
+}
+
+.userBoxOutline {
+  border: gray;
+  border-style: solid;
+}
