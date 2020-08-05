@@ -48,7 +48,7 @@ class uploadManual extends Component {
       this.setState({ check: false });
     } else {
       axios
-        .post("/api/createrecipe", formData)
+        .post("/api/recipe", formData)
         .then((res) => this.setState({ complete: res.data }));
     }
   };

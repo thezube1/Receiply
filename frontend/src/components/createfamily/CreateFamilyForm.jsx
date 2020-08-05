@@ -22,7 +22,7 @@ class CreateFamilyForm extends Component {
   componentDidMount() {
     document.body.style.backgroundColor = "rgb(136, 228, 138)";
     axios
-      .get("/api/getname")
+      .get("/api/getname", { cancelToken: this.source.token })
       .then((response) => this.setState({ name: response.data }));
 
     axios

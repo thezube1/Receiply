@@ -8,15 +8,15 @@ class NavbarMain extends Component {
   render() {
     return (
       <div id="navWrapper">
-        <Link to="/dashboard" style={{ textDecoration: "none" }}>
+        <Link to="/" style={{ textDecoration: "none" }}>
           <div id="title">Receiply</div>
         </Link>
         <div id="navitemswrapper">
           <span className="navitem">Browse</span>
-          <Link to="/dashboard/upload" style={{ textDecoration: "none" }}>
+          <Link to="/upload" style={{ textDecoration: "none" }}>
             <span className="navitem">Upload</span>
           </Link>
-          <Link to="/dashboard/family" style={{ textDecoration: "none" }}>
+          <Link to="/family" style={{ textDecoration: "none" }}>
             <span className="navitem">Family</span>
           </Link>
           <span className="navitem">My Recipies</span>

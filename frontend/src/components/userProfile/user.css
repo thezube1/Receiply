@@ -1,8 +1,9 @@
 #userWrapper {
+  margin-top: 100px;
   width: 100vw;
   height: 100vh;
   display: grid;
-  place-content: center;
+  justify-content: center;
 }
 
 #userUsername {
@@ -27,8 +28,9 @@
 
 #userContent {
   display: grid;
-  grid-template-columns: 500px 1fr;
+  grid-template-columns: 550px 1fr;
   grid-row-gap: 20px;
+  grid-template-rows: 200px;
   position: relative;
 }
 
@@ -43,16 +45,17 @@
   border-style: solid;
   border-width: 2px;
   border-radius: 3px;
-  height: 100px;
   max-width: 1000px;
   width: 97%;
+  height: max-content;
 }
 
 #userRecipeContent {
-  top: 50%;
-  left: 50%;
-  position: absolute;
-  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 200px);
+  grid-gap: 10px;
+  justify-content: center;
+  margin: 20px;
 }
 
 #userBlock3 {
@@ -63,6 +66,7 @@
 @media screen and (max-width: 900px) {
   #userContent {
     grid-template-columns: 400px;
+    grid-template-rows: repeat(auto-fit, 150px);
   }
   #userBlock1 {
     grid-row: 1/3;

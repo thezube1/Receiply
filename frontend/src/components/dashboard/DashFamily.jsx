@@ -19,19 +19,21 @@ class DashFamily extends Component {
       .get("/api/getfamily", { cancelToken: this.source.token })
       .then((result) => {
         this.setState({ family: result.data });
-      });
+      })
+      .catch((err) => console.log(err));
+
     axios
       .get("/api/familyrecipes/card")
-      .then((res) => this.setState({ family_recipe: res.data }));
+      .then((res) => this.setState({ family_recipe: res.data }))
+      .catch((err) => console.log(err));
   }
 
   randomShowRange = () => {
     const recipeLength = this.state.family_recipe.length;
-    console.log(this.state.family_recipe);
     if (recipeLength > 3) {
       let secondNum;
       let randomNum = Math.floor(Math.random() * Math.floor(recipeLength));
-      console.log(randomNum);
+
       if (randomNum === recipeLength) {
         secondNum = randomNum - 3;
       } else if (randomNum + 1 === recipeLength) {

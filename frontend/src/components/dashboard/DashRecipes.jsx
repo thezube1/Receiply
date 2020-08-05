@@ -43,7 +43,8 @@ class DashRecipes extends Component {
   componentDidMount() {
     axios
       .get("/api/myrecipes/card", { cancelToken: this.source.token })
-      .then((response) => this.setState({ recipes: response.data }));
+      .then((response) => this.setState({ recipes: response.data }))
+      .catch((err) => console.log(err));
   }
 
   componentWillUnmount() {

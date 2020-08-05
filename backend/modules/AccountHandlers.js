@@ -128,12 +128,12 @@ app.post("/api/adduser", (req, res) => {
 
 app.get("/api/authorize", (req, res) => {
   const token = req.cookies.userAuth;
-  if (!token) return res.status(200).send(false);
+  if (!token) return res.send(false).end();
   jwt.verify(
     req.cookies.userAuth,
     process.env.ACCESS_TOKEN_KEY,
     (err, result) => {
-      if (err) return res.status(500).send(false);
+      if (err) return res.status(500).send(false).end();
       if (result.auth === true) {
         res.send(true);
         res.end();

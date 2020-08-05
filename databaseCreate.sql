@@ -11,7 +11,8 @@ CREATE TABLE Receiply.Accounts (
 );
 
 CREATE TABLE Receiply.Recipes (
-    RECIPE_ID varchar(36), 
+    RECIPE_ID varchar(36),
+    RECIPE_IDENTIFIER varchar(36), 
     CREATOR_ID varchar(36), 
     FAMILY_ID varchar(36), 
     DATE_CREATED date, 

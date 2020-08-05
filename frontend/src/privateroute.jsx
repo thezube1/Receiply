@@ -4,25 +4,30 @@ import axios from "axios";
 
 class PrivateRoute extends Component {
   state = {
-    authorized: "",
-    component: this.props.component,
-    route: this.props.route,
+    authorized: undefined,
   };
+
+  CancelToken = axios.CancelToken;
+  source = this.CancelToken.source();
+  abortController = new AbortController();
   componentDidMount() {
     axios
-      .get("/api/authorize")
+      .get("/api/authorize", { cancelToken: this.source.token })
       .then((result) => this.setState({ authorized: result.data }))
       .catch((error) => {
         console.log(error.response);
       });
   }
+
+  componentWillUnmount() {
+    this.source.cancel();
+  }
   render() {
     if (this.state.authorized === false) {
       return <Redirect to="/login" />;
     } else {
-      return <Route path={this.state.route} component={this.state.component} />;
+      return <Route path={this.props.route} component={this.props.component} />;
     }
-
     /*
       <Route
         path={this.state.route}

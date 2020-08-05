@@ -129,6 +129,7 @@ app.get("/api/getfamilyrequests", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     const userCookie = req.cookies.userAuth;
+    if (!userCookie) return res.end();
     jwt.verify(userCookie, process.env.ACCESS_TOKEN_KEY, (err, result) => {
       if (err) throw err;
       const userID = result.user_id;

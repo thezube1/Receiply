@@ -23,16 +23,6 @@ class FamilyMain extends Component {
       .get("/api/getfamily", { cancelToken: this.source.token })
       .then((result) => {
         this.setState({ family: result.data });
-        /*
-        if (result.data !== false) {
-          axios
-            .get("/api/getfamily/description", {
-              cancelToken: this.source.token,
-            })
-            .then((result) => this.setState({ description: result.data }))
-            .catch((error) => console.log(error));
-        }
-        */
       })
       .catch((error) => console.log(error));
   }
@@ -57,8 +47,8 @@ class FamilyMain extends Component {
     return (
       <React.Fragment>
         <Switch>
-          <Route path="/dashboard/family/invite" component={FamilyInvite} />
-          <Route path="/dashboard/family/members" component={FamilyMembers} />
+          <Route path="/family/invite" component={FamilyInvite} />
+          <Route path="/family/members" component={FamilyMembers} />
           <React.Fragment>
             <FamilyMemberRequests />
             <div id="familyContentWrapper">
