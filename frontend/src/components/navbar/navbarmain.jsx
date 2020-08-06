@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./navbar.css";
-import { FaSearch } from "react-icons/fa";
+import NavbarSearch from "./navbarSearch";
 
 import { Link } from "react-router-dom";
+import Navbar from "./navbar";
 
 class NavbarMain extends Component {
   state = {};
@@ -21,12 +22,7 @@ class NavbarMain extends Component {
             <span className="navitem">Family</span>
           </Link>
           <span className="navitem">My Recipies</span>
-          <span className="navitem">
-            <input type="text" placeholder="Search" id="navsearch" />
-            <button id="navSearchButton">
-              <FaSearch id="navSearchButtonIcon" />
-            </button>
-          </span>
+          <NavbarSearch />
           <span id="accountitemswrapper">
             <Link to="/" style={{ textDecoration: "none" }}>
               <span className="navitem accountitems" id="signup">
