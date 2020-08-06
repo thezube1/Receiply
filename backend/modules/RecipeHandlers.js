@@ -154,9 +154,10 @@ app.get("/api/familyrecipes/card", (req, res) => {
         (err, family) => {
           if (err) throw err;
           if (
-            family[0].FAMILY_AUTH === "request" ||
+            family.length === 0 ||
             family[0].FAMILY === "NULL" ||
-            family[0].FAMILY === undefined
+            family[0].FAMILY === undefined ||
+            family[0].FAMILY_AUTH === "request"
           ) {
             res.send(false);
             res.end();

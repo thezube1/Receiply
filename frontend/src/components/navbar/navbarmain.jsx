@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./navbar.css";
+import { FaSearch } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
 
@@ -8,10 +9,10 @@ class NavbarMain extends Component {
   render() {
     return (
       <div id="navWrapper">
-        <Link to="/" style={{ textDecoration: "none" }}>
-          <div id="title">Receiply</div>
-        </Link>
-        <div id="navitemswrapper">
+        <div id="navContent">
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <span id="title">Receiply</span>
+          </Link>
           <span className="navitem">Browse</span>
           <Link to="/upload" style={{ textDecoration: "none" }}>
             <span className="navitem">Upload</span>
@@ -20,19 +21,24 @@ class NavbarMain extends Component {
             <span className="navitem">Family</span>
           </Link>
           <span className="navitem">My Recipies</span>
-          <span className="navitem">Search</span>
-        </div>
-        <div id="accountitemswrapper">
-          <Link to="/" style={{ textDecoration: "none" }}>
-            <span className="navitem accountitems" id="signup">
-              Settings
-            </span>
-          </Link>
-          <Link to="/" style={{ textDecoration: "none" }}>
-            <span className="navitem accountitems" id="login">
-              Logout
-            </span>
-          </Link>
+          <span className="navitem">
+            <input type="text" placeholder="Search" id="navsearch" />
+            <button id="navSearchButton">
+              <FaSearch id="navSearchButtonIcon" />
+            </button>
+          </span>
+          <span id="accountitemswrapper">
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <span className="navitem accountitems" id="signup">
+                Settings
+              </span>
+            </Link>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <span className="navitem accountitems" id="login">
+                Logout
+              </span>
+            </Link>
+          </span>
         </div>
       </div>
     );

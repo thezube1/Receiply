@@ -15,6 +15,7 @@ import InviteRouter from "./pages/inviterouter";
 import UploadPage from "./pages/upload";
 import FamilyPage from "./pages/family";
 import RecipePage from "./pages/recipe";
+import SearchPage from "./pages/search";
 import NotFoundPage from "./pages/404page";
 
 ReactDOM.render(
@@ -22,7 +23,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/signup" component={SignupPage} />
       <Route path="/login" component={LoginPage} />
-
+      <Route path="/search" component={SearchPage} />
       <PrivateRoute path="/inviteurl/" component={InviteRouter} />
       <PrivateRoute path="/upload" component={UploadPage} />
       <PrivateRoute path="/family" component={FamilyPage} />
