@@ -113,7 +113,50 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
 app.get("/api/recipe/:id", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
-    console.log(req.params.id);
+    const token = req.cookies.userAuth;
+    if (!token) return res.send(false).end();
+    connection.query(
+      `SELECT * FROM Recipes WHERE RECIPE_IDENTIFIER='${req.params.id}'`,
+      (err, recipe) => {
+        if (err) throw err;
+        if (recipe.length === 0) {
+          console.log("No recipe found!");
+          res.send(false);
+          res.end();
+        } else if (recipe[0].PUBLISH_STATE === "private") {
+          if (token.user_id === recipe.CREATOR_ID) {
+            console.log("This is users own recipe");
+            res.send(recipe);
+            res.end();
+          } else {
+            console.log("Not a public recipe!");
+            res.send(false);
+            res.end();
+          }
+        } else if (recipe[0].PUBLIC_STATE === "family") {
+          connection.query(
+            `SELECT FAMILY, FAMILY_AUTH FROM Accounts WHERE USER_ID='${token.user_id}'`,
+            (err, response) => {
+              if (err) throw err;
+              if (response.FAMILY_AUTH === 1) {
+                if (response.FAMILY === recipe.FAMILY_ID) {
+                  console.log("Family recipe is ok!");
+                  res.send(recipe).end();
+                } else {
+                  console.log("No access to family recipe!");
+                  res.send(false).end();
+                }
+              }
+            }
+          );
+        } else {
+          console.log("Sending public recipe!");
+          res.send(recipe);
+          res.end();
+        }
+      }
+    );
+    connection.release();
   });
 });
 
