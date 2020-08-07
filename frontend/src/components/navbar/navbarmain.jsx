@@ -3,7 +3,6 @@ import "./navbar.css";
 import NavbarSearch from "./navbarSearch";
 
 import { Link } from "react-router-dom";
-import Navbar from "./navbar";
 
 class NavbarMain extends Component {
   state = {};
@@ -22,8 +21,9 @@ class NavbarMain extends Component {
             <span className="navitem">Family</span>
           </Link>
           <span className="navitem">My Recipies</span>
-          <NavbarSearch />
+
           <span id="accountitemswrapper">
+            <NavbarSearch />
             <Link to="/" style={{ textDecoration: "none" }}>
               <span className="navitem accountitems" id="signup">
                 Settings

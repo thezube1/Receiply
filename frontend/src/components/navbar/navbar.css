@@ -15,9 +15,10 @@
 
 #accountitemswrapper {
   margin-left: auto;
-  margin-right: 20px;
+  margin-right: 12px;
   display: flex;
-  gap: 20px;
+  gap: 12px;
+  align-items: center;
 }
 
 #title {
@@ -38,7 +39,7 @@
 .accountitems {
   color: white;
   border-radius: 3px;
-  padding: 7px;
+  padding: 7px 12px 7px 12px;
   background-color: rgb(255, 110, 120);
 }
 
