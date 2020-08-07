@@ -15,4 +15,9 @@ const pool = mysql.createPool({
 
 app.use(cookieParser());
 
+app.post("/api/search", (req, res) => {
+  console.log(req.body);
+  res.end();
+});
+
 module.exports = app;
