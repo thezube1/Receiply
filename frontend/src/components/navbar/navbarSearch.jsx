@@ -13,10 +13,8 @@ class NavbarSearch extends Component {
   };
 
   handleSubmit = () => {
-    const searchValue = this.state.search;
-    const newValue = searchValue.split(" ");
-    const secondString = newValue.join("&foo=");
-    this.setState({ redirect: `foo=${secondString}` });
+    const searchValue = this.state.search.split(" ").join("&foo=");
+    this.setState({ redirect: `foo=${searchValue}` });
   };
 
   render() {
