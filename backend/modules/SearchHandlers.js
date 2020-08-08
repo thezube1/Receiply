@@ -16,7 +16,18 @@ const pool = mysql.createPool({
 app.use(cookieParser());
 
 app.post("/api/search", (req, res) => {
-  console.log(req.body);
+  params = req.body.s;
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query(
+      `SELECT RECIPE_ID FROM Recipes WHERE RECIPE_ID LIKE '%${params[0]}%'`,
+      (err, data) => {
+        if (err) throw err;
+        console.log(data);
+      }
+    );
+  });
+  console.log(params);
   res.end();
 });
 
