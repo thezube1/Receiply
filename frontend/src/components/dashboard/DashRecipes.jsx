@@ -27,12 +27,17 @@ class DashRecipes extends Component {
         <div className="dashPopItemWrapper">
           {this.state.recipes.slice(0, 3).map((item) => {
             return (
-              <DashRecipeItem
+              <Link
+                to={`/recipe/${item.RECIPE_IDENTIFIER}`}
                 key={item.RECIPE_ID}
-                title={item.RECIPE_NAME}
-                description={item.DESCRIPTION}
-                image={item.PHOTO_NAME}
-              />
+                style={{ color: "black" }}
+              >
+                <DashRecipeItem
+                  title={item.RECIPE_NAME}
+                  description={item.DESCRIPTION}
+                  image={item.PHOTO_NAME}
+                />
+              </Link>
             );
           })}
         </div>

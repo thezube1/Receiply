@@ -23,7 +23,7 @@ class NavbarMain extends Component {
           <span className="navitem">My Recipies</span>
 
           <span id="accountitemswrapper">
-            <NavbarSearch />
+            <NavbarSearch searchDefault={this.props.searchDefault} />
             <Link to="/" style={{ textDecoration: "none" }}>
               <span className="navitem accountitems" id="signup">
                 Settings

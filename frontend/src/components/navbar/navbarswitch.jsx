@@ -25,12 +25,12 @@ class NavbarSwitch extends Component {
   }
   render() {
     if (this.state.valid === undefined) {
-      return <Navbar />;
+      return <Navbar searchDefault={this.props.searchDefault} />;
     }
     if (this.state.valid === false) {
-      return <Navbar />;
+      return <Navbar searchDefault={this.props.searchDefault} />;
     } else {
-      return <NavbarMain />;
+      return <NavbarMain searchDefault={this.props.searchDefault} />;
     }
   }
 }

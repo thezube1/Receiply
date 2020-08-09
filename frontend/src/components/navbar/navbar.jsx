@@ -18,7 +18,7 @@ class Navbar extends Component {
           <span className="navitem">About</span>
 
           <div id="accountitemswrapper">
-            <NavbarSearch />
+            <NavbarSearch searchDefault={this.props.searchDefault} />
             <Link to="/signup" style={{ textDecoration: "none" }}>
               <span className="navitem accountitems" id="signup">
                 Sign up

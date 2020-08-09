@@ -20,15 +20,20 @@ app.post("/api/search", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     connection.query(
-      `SELECT RECIPE_ID FROM Recipes WHERE RECIPE_ID LIKE '%${params[0]}%'`,
+      `SELECT RECIPE_ID FROM Recipes WHERE (RECIPE_NAME LIKE '%${params}%')`,
       (err, data) => {
         if (err) throw err;
-        console.log(data);
+        if (data.length === 0) {
+          res.send(false);
+          res.end();
+        } else {
+          res.send(data);
+          res.end();
+        }
       }
     );
+    connection.release();
   });
-  console.log(params);
-  res.end();
 });
 
 module.exports = app;

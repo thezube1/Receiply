@@ -13,12 +13,17 @@ class NavbarSearch extends Component {
   };
 
   handleSubmit = () => {
-    const searchValue = this.state.search.split(" ").join("&foo=");
-    this.setState({ redirect: `foo=${searchValue}` });
+    const searchValue = this.state.search.split(" ").join("+");
+    this.setState({ redirect: `s=${searchValue}` });
   };
 
   render() {
     if (this.state.redirect !== undefined) {
+      if (this.state.search === "") {
+        window.location.reload(false);
+        return <Redirect to={"/search"} />;
+      }
+      window.location.reload(false);
       return <Redirect to={`/search?${this.state.redirect}`} />;
     }
     return (
@@ -28,6 +33,7 @@ class NavbarSearch extends Component {
           placeholder="Search"
           id="navSearchInput"
           onChange={this.handleChange("search")}
+          defaultValue={this.props.searchDefault}
         />
         <button id="navSearchButton" onClick={this.handleSubmit}>
           <FaSearch id="navSearchButtonIcon " />

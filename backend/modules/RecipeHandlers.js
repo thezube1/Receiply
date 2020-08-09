@@ -168,7 +168,7 @@ app.get("/api/myrecipes/card", (req, res) => {
     jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, user) => {
       const USER_ID = user.user_id;
       connection.query(
-        `SELECT RECIPE_ID, RECIPE_NAME, DESCRIPTION, TTM, DATE_CREATED, PHOTO_NAME FROM Recipes WHERE CREATOR_ID = '${USER_ID}'`,
+        `SELECT RECIPE_ID, RECIPE_NAME, RECIPE_IDENTIFIER, DESCRIPTION, TTM, DATE_CREATED, PHOTO_NAME FROM Recipes WHERE CREATOR_ID = '${USER_ID}'`,
         (err, response) => {
           if (err) throw err;
           if (response.length === 0) {
