@@ -76,21 +76,10 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
             } else {
               SHARING = "public";
             }
+            console.log(recipe);
 
             connection.query(
-              `INSERT INTO Recipes VALUES (uuid(), uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), '${
-                recipe.TTM
-              }', '${recipe.name}', '${
-                recipe.description
-              }', '{"ingredients": ${JSON.stringify(
-                recipe.ingredients
-              )}}', '{"prep": ${JSON.stringify(
-                recipe.prep
-              )}}', '{"cooking": ${JSON.stringify(
-                recipe.steps
-              )}}', '{"tags": ${JSON.stringify(
-                recipe.tags
-              )}}', '${SHARING}', '${newPath}')`,
+              `INSERT INTO Recipes VALUES (uuid(), uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), '${recipe.TTM}', '${recipe.name}', '${recipe.description}', '{"ingredients": ${recipe.ingredients}}', '{"prep": ${recipe.prep}}', '{"cooking": ${recipe.steps}}', '{"tags": ${recipe.tags}}', '${SHARING}', '${newPath}')`,
               (err, response) => {
                 if (err) {
                   throw err;
@@ -154,6 +143,27 @@ app.get("/api/recipe/:id", (req, res) => {
           res.send(recipe);
           res.end();
         }
+      }
+    );
+    connection.release();
+  });
+});
+
+app.get("/api/recipe/:id/creator", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query(
+      `SELECT CREATOR_ID FROM Recipes WHERE RECIPE_IDENTIFIER='${req.params.id}'`,
+      (err, creator) => {
+        if (err) throw err;
+        connection.query(
+          `SELECT FIRST_NAME, LAST_NAME FROM Accounts WHERE USER_ID='${creator[0].CREATOR_ID}'`,
+          (err, user) => {
+            if (err) throw err;
+            res.send(user);
+            res.end();
+          }
+        );
       }
     );
     connection.release();

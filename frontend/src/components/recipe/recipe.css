@@ -1,0 +1,178 @@
+.recipeBorderBox {
+  border: rgb(236, 236, 236);
+  border-style: solid;
+  border-radius: 5px;
+}
+
+#recipePhotoWrapper {
+  width: 500px;
+  height: 300px;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+
+#recipePhoto {
+  max-height: 280px;
+}
+
+#recipeFactsWrapper {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 70px;
+}
+
+.recipeFactsHeader {
+  font-family: "Source Sans Pro";
+  font-size: 23px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.recipeFactsText {
+  font-family: "Source Sans Pro";
+  font-size: 27px;
+  font-weight: 300;
+}
+
+#recipeTitle {
+  font-family: "Roboto";
+  font-size: 70px;
+  font-weight: 900;
+  background-color: rgb(131, 226, 133);
+  padding: 0px 5px 0px 5px;
+  color: white;
+}
+
+.recipeHeader {
+  font-family: "Source Sans Pro";
+  font-weight: 900;
+  font-size: 30px;
+}
+
+#recipeCreator {
+  font-family: "Source Sans Pro";
+  font-size: 25px;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+#recipeDescription {
+  font-family: "Source Sans Pro";
+  font-size: 29px;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-top: 10px;
+}
+
+#recipeInfoPreps {
+  display: flex;
+  gap: 50px;
+  margin-top: 30px;
+}
+
+#recipePrep {
+  width: 250px;
+}
+
+#recipePrepItemWrapper {
+  padding-left: 20px;
+}
+
+.recipePrepItem {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 22px;
+}
+
+#recipeIngredientsItemWrapper {
+  padding-left: 20px;
+}
+
+#recipeCookingHeader {
+  font-size: 42px;
+}
+
+#recipeCookingItemsWrapper {
+  padding-left: 20px;
+}
+
+.recipeCookingItem {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 27px;
+  margin-bottom: 10px;
+}
+
+#recipeCommentBarrier {
+  width: 100%;
+  height: 2px;
+  background-color: rgb(212, 212, 212);
+}
+
+#recipeCommentHeader {
+  margin-top: 10px;
+}
+
+#recipeCommentInput {
+  border: none;
+}
+
+.recipeCommentBorder {
+  width: 300px;
+  height: 2px;
+  background-color: rgb(212, 212, 212);
+}
+
+#recipeWrapper {
+  left: 50%;
+  transform: translate(-50%);
+  position: absolute;
+}
+
+#recipeContent {
+  margin-top: 120px;
+  display: grid;
+  grid-template-columns: 500px 600px;
+  grid-auto-rows: max-content;
+  grid-row-gap: 30px;
+  grid-column-gap: 100px;
+}
+
+#recipeCookingWrapper {
+  grid-column: 1/3;
+}
+
+#recipeCommentsWrapper {
+  grid-column: 1/3;
+}
+
+@media screen and (max-width: 1260px) {
+  #recipeContent {
+    grid-template-columns: 400px 400px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  #recipeContent {
+    grid-template-columns: 600px;
+  }
+  #recipePhotoWrapper {
+    grid-row: 2/3;
+  }
+  #recipeCookingWrapper {
+    grid-row: 3/4;
+    grid-column: 1/2;
+  }
+  #recipeCommentsWrapper {
+    grid-row: 4/5;
+    grid-column: 1/2;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #recipeContent {
+    grid-template-columns: 350px;
+  }
+}

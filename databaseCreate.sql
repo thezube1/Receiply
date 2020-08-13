@@ -34,3 +34,10 @@ CREATE TABLE Receiply.Families (
     FAMILY_CREATED varchar(100), 
     FAMILY_CREATOR varchar(200) 
 ); 
+
+CREATE TABLE Receiply.Comments (
+    COMMENT_ID varchar(36), 
+    COMMENTER_ID varchar(36), 
+    RECIPE varchar(36), 
+    COMMENT_CONTENT text
+);

@@ -26,10 +26,10 @@ class uploadManual extends Component {
       name: this.state.name,
       TTM: this.state.TTM,
       description: this.state.description,
-      ingredients: this.state.ingredientCount,
-      prep: this.state.prepCount,
-      steps: this.state.cookingCount,
-      tags: this.state.tags,
+      ingredients: JSON.stringify(this.state.ingredientCount),
+      prep: JSON.stringify(this.state.prepCount),
+      steps: JSON.stringify(this.state.cookingCount),
+      tags: JSON.stringify(this.state.tags),
       sharing: this.state.sharing,
     };
 
@@ -47,6 +47,8 @@ class uploadManual extends Component {
       window.scrollTo(0, 0);
       this.setState({ check: false });
     } else {
+      console.log(formData);
+
       axios
         .post("/api/recipe", formData)
         .then((res) => this.setState({ complete: res.data }));
