@@ -41,3 +41,9 @@ CREATE TABLE Receiply.Comments (
     RECIPE varchar(36), 
     COMMENT_CONTENT text
 );
+
+CREATE TABLE Receiply.Likes (
+    USER_ID varchar(36),
+    LIKE_TYPE varchar(100),
+    ITEM varchar(36)
+)
