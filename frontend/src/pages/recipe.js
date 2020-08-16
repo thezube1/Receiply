@@ -69,6 +69,7 @@ class RecipePage extends Component {
                   description={this.state.recipe[0].DESCRIPTION}
                   prep={prep.prep}
                   ingredients={ingredients.ingredients}
+                  likes={this.state.recipe[0].LIKES}
                 />
               </div>
               <div id="recipeCookingWrapper">

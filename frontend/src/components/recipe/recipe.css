@@ -36,6 +36,14 @@
   font-weight: 300;
 }
 
+#recipeTitleWrapper {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: space-between;
+  width: 400px;
+}
+
 #recipeTitle {
   font-family: "Roboto";
   font-size: 70px;
@@ -43,6 +51,38 @@
   background-color: rgb(131, 226, 133);
   padding: 0px 5px 0px 5px;
   color: white;
+  line-height: 1;
+}
+
+#recipeTitleDivider {
+  width: 1px;
+  height: 60px;
+  background-color: rgb(212, 212, 212);
+}
+
+#recipeLikesWrapper {
+  display: grid;
+  justify-items: center;
+}
+
+#recipeLikeButton {
+  background-color: white;
+  border: none;
+  outline: none;
+}
+
+#recipeLikeButton:hover {
+  color: rgb(49, 49, 49);
+}
+
+#recipeLikeButton:active {
+  color: rgb(91, 93, 255);
+}
+
+#recipeLikeIcon {
+  width: 35px;
+  height: 35px;
+  margin-bottom: 10px;
 }
 
 .recipeHeader {

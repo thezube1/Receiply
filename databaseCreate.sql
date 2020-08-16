@@ -18,13 +18,14 @@ CREATE TABLE Receiply.Recipes (
     DATE_CREATED date, 
     TTM varchar(36), 
     RECIPE_NAME varchar(200), 
-    DESCRIPTION varchar(1000), 
+    DESCRIPTION varchar(2000), 
     INGREDIENTS json, 
     PREP_INSTRUCTIONS json, 
     COOKING_INSTRUCTIONS json, 
     TAGS json,
     PUBLISH_STATE varchar(50),
-    PHOTO_NAME varchar(200)
+    PHOTO_NAME varchar(200),
+    LIKES int
 );
 
 CREATE TABLE Receiply.Families (
@@ -43,6 +44,7 @@ CREATE TABLE Receiply.Comments (
 );
 
 CREATE TABLE Receiply.Likes (
+    LIKE_ID varchar(36),
     USER_ID varchar(36),
     LIKE_TYPE varchar(100),
     ITEM varchar(36)

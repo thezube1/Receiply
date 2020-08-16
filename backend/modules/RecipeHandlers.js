@@ -79,7 +79,7 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
             console.log(recipe);
 
             connection.query(
-              `INSERT INTO Recipes VALUES (uuid(), uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), '${recipe.TTM}', '${recipe.name}', '${recipe.description}', '{"ingredients": ${recipe.ingredients}}', '{"prep": ${recipe.prep}}', '{"cooking": ${recipe.steps}}', '{"tags": ${recipe.tags}}', '${SHARING}', '${newPath}')`,
+              `INSERT INTO Recipes VALUES (uuid(), uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), '${recipe.TTM}', '${recipe.name}', '${recipe.description}', '{"ingredients": ${recipe.ingredients}}', '{"prep": ${recipe.prep}}', '{"cooking": ${recipe.steps}}', '{"tags": ${recipe.tags}}', '${SHARING}', '${newPath}', 0)`,
               (err, response) => {
                 if (err) {
                   throw err;

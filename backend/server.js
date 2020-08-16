@@ -6,6 +6,7 @@ const FamilyHandlers = require("./modules/FamilyHandlers");
 const InviteHandlers = require("./modules/InviteHandlers");
 const RecipeHandlers = require("./modules/RecipeHandlers");
 const SearchHandlers = require("./modules/SearchHandlers");
+const LikeHandlers = require("./modules/LikeHandlers");
 const bodyParser = require("body-parser");
 const PORT = 8080;
 
@@ -16,6 +17,7 @@ app.use(GetInfo);
 app.use(FamilyHandlers);
 app.use(RecipeHandlers);
 app.use(InviteHandlers);
+app.use(LikeHandlers);
 app.use(SearchHandlers);
 app.use("/uploads", express.static("uploads"));
 
