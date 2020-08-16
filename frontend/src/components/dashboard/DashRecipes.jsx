@@ -17,7 +17,7 @@ class DashRecipes extends Component {
       return (
         <div className="dashRecipeContent">
           <div>You don't have any recipes!</div>
-          <Link to="/dashboard/upload" style={{ textDecoration: "none" }}>
+          <Link to="/upload" style={{ textDecoration: "none" }}>
             <span className="dashRecipeCreate">Create recipe</span>
           </Link>
         </div>
