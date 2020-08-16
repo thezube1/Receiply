@@ -1,0 +1,9 @@
+#uploadPhotoWrapper {
+  left: 50%;
+  transform: translate(-50%);
+  position: absolute;
+}
+
+#uploadPhotoContent {
+  margin-top: 200px;
+}
