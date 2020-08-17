@@ -7,6 +7,7 @@ class RecipeInfo extends Component {
     name: [{ FIRST_NAME: "", LAST_NAME: "" }],
     color: "black",
     liked: undefined,
+    likes: this.props.likes,
   };
 
   componentDidMount() {
@@ -25,19 +26,27 @@ class RecipeInfo extends Component {
 
   handleLike() {
     this.state.color === "black"
-      ? this.setState({ color: "rgb(131, 226, 133)" })
-      : this.setState({ color: "black" });
-    this.state.liked === true
-      ? console.log("unlike")
-      : axios.get(`/api/recipe/${this.props.recipeid}/like`);
+      ? this.setState({
+          color: "rgb(131, 226, 133)",
+          likes: this.state.likes + 1,
+        })
+      : this.setState({ color: "black", likes: this.state.likes - 1 });
+    if (this.state.liked === true) {
+      axios.get(`/api/recipe/${this.props.recipeid}/unlike`);
+      this.setState({ liked: false });
+    } else {
+      axios.get(`/api/recipe/${this.props.recipeid}/like`);
+      this.setState({ liked: true });
+    }
   }
 
   render() {
-    console.log(this.state.liked);
     return (
       <React.Fragment>
         <div id="recipeTitleWrapper">
-          <span id="recipeTitle">{this.props.title}</span>
+          <div>
+            <span id="recipeTitle">{this.props.title}</span>
+          </div>
           <div id="recipeTitleDivider"></div>
           <div id="recipeLikesWrapper">
             <button
@@ -47,7 +56,7 @@ class RecipeInfo extends Component {
             >
               <FaThumbsUp id="recipeLikeIcon" />
             </button>
-            <div>Likes: {this.props.likes}</div>
+            <div>Likes: {this.state.likes}</div>
           </div>
         </div>
         <div id="recipeCreator">

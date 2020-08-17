@@ -49,7 +49,6 @@ class RecipePage extends Component {
       let prep = JSON.parse(this.state.recipe[0].PREP_INSTRUCTIONS);
       let ingredients = JSON.parse(this.state.recipe[0].INGREDIENTS);
       let cooking = JSON.parse(this.state.recipe[0].COOKING_INSTRUCTIONS);
-      console.log(JSON.parse(this.state.recipe[0].PREP_INSTRUCTIONS));
       return (
         <React.Fragment>
           <NavbarSwitch />

@@ -40,8 +40,6 @@
   display: flex;
   margin-bottom: 20px;
   align-items: center;
-  justify-content: space-between;
-  width: 400px;
 }
 
 #recipeTitle {
@@ -58,11 +56,13 @@
   width: 1px;
   height: 60px;
   background-color: rgb(212, 212, 212);
+  margin-left: 20px;
 }
 
 #recipeLikesWrapper {
   display: grid;
   justify-items: center;
+  margin-left: 10px;
 }
 
 #recipeLikeButton {
