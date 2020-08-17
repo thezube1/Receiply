@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 
 class NavbarSearch extends Component {
@@ -17,17 +17,19 @@ class NavbarSearch extends Component {
     this.setState({ redirect: `s=${searchValue}` });
   };
 
-  render() {
+  handleCheck = () => {
     if (this.state.redirect !== undefined) {
       if (this.state.search === "") {
-        window.location.reload(false);
         return <Redirect to={"/search"} />;
       }
-      window.location.reload(false);
       return <Redirect to={`/search?${this.state.redirect}`} />;
     }
+  };
+
+  render() {
     return (
       <div className="navitem" id="navsearchwrapper">
+        {this.handleCheck}
         <input
           type="text"
           placeholder="Search"
@@ -43,4 +45,4 @@ class NavbarSearch extends Component {
   }
 }
 
-export default NavbarSearch;
+export default withRouter(NavbarSearch);
