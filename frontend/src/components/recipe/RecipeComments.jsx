@@ -3,6 +3,7 @@ import React, { Component } from "react";
 class RecipeComments extends Component {
   state = {
     comment: "",
+    comments: [""],
   };
 
   handleChange = (inputType) => (event) => {
@@ -13,8 +14,18 @@ class RecipeComments extends Component {
     if (this.state.comment !== "") {
       return (
         <React.Fragment>
-          <br />
-          <input type="button" id="recipeCommentSubmit" value="Comment" />
+          <input
+            type="button"
+            className="recipeCommentButton"
+            id="recipeCommentSubmit"
+            value="Comment"
+          />
+          <input
+            type="button"
+            className="recipeCommentButton"
+            id="recipeCommentCancel"
+            value="Cancel"
+          />
         </React.Fragment>
       );
     }
@@ -32,8 +43,11 @@ class RecipeComments extends Component {
           id="recipeCommentInput"
           onChange={this.handleChange("comment")}
         ></input>
-        {this.handleButtonVisible()}
         <div className="recipeCommentBorder"></div>
+        {this.handleButtonVisible()}
+        {this.state.comments.map((item) => {
+          return <div>item</div>;
+        })}
       </div>
     );
   }

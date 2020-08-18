@@ -5,7 +5,7 @@ class RecipePhoto extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="recipeBorderBox" id="recipePhotoWrapper">
+        <div className="recipeBorderBox" id="recipePhotoContent">
           <img src={`/${this.props.image}`} alt="food" id="recipePhoto" />
         </div>
         <div id="recipeFactsWrapper">

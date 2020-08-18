@@ -20,7 +20,6 @@ class SearchPage extends Component {
   }
 
   render() {
-    console.log(this.state.recipes);
     if (this.state.recipes === undefined) {
       return <LoadingPage />;
     } else if (this.props.location.search === "") {
@@ -40,7 +39,6 @@ class SearchPage extends Component {
         </React.Fragment>
       );
     }
-    console.log(this.state.query.s);
     return (
       <div id="searchWrapper">
         <NavbarSwitch searchDefault={this.state.query.s} />

@@ -4,7 +4,7 @@
   border-radius: 5px;
 }
 
-#recipePhotoWrapper {
+#recipePhotoContent {
   width: 500px;
   height: 300px;
   display: grid;
@@ -157,12 +157,26 @@
 
 #recipeCommentInput {
   border: none;
+  margin-bottom: 5px;
 }
 
 .recipeCommentBorder {
-  width: 300px;
+  width: 500px;
   height: 2px;
   background-color: rgb(212, 212, 212);
+}
+
+#recipeCommentSubmit {
+  margin-top: 5px;
+  border: none;
+  margin-right: 10px;
+  background-color: rgb(131, 226, 133);
+}
+
+.recipeCommentButton {
+  border: none;
+  height: 30px;
+  font-family: "Source Sans Pro";
 }
 
 #recipeWrapper {

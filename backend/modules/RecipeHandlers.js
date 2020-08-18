@@ -76,10 +76,27 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
             } else {
               SHARING = "public";
             }
-            console.log(recipe);
+
+            let prep = JSON.parse(recipe.ingredients);
+            //prep = prep.map((x, index) => x.substr(1, x.length - 1));
+            //.replace(/\`/g, "")
+            prep = JSON.stringify(prep.map((x, index) => mysql.escape(x)));
+            console.log(prep);
+
+            /*
+
+            
 
             connection.query(
-              `INSERT INTO Recipes VALUES (uuid(), uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), '${recipe.TTM}', '${recipe.name}', '${recipe.description}', '{"ingredients": ${recipe.ingredients}}', '{"prep": ${recipe.prep}}', '{"cooking": ${recipe.steps}}', '{"tags": ${recipe.tags}}', '${SHARING}', '${newPath}', 0)`,
+              `INSERT INTO Recipes VALUES (uuid(), uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), ${connection.escape(
+                recipe.TTM
+              )}, ${connection.escape(recipe.name)}, ${connection.escape(
+                recipe.description
+              )}, '{"ingredients": ${recipe.ingredients}}', '{"prep": ${
+                recipe.prep
+              }}', '{"cooking": ${recipe.steps}}', '{"tags": ${
+                recipe.tags
+              }}', '${SHARING}', '${newPath}', 0)`,
               (err, response) => {
                 if (err) {
                   throw err;
@@ -88,7 +105,7 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
                   res.end();
                 }
               }
-            );
+            ); */
           } else {
             console.log("No family present");
           }
