@@ -20,7 +20,7 @@ app.post("/api/search", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     connection.query(
-      `SELECT RECIPE_ID FROM Recipes WHERE (RECIPE_NAME LIKE '%${params}%')`,
+      `SELECT * FROM Recipes WHERE (RECIPE_NAME LIKE '%${params}%')`,
       (err, data) => {
         if (err) throw err;
         if (data.length === 0) {

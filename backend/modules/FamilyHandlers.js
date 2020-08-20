@@ -70,36 +70,34 @@ app.post("/api/addfamily", (req, res) => {
 app.get("/api/findfamily", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
-    const userCookie = req.cookies.userAuth;
-    if (!userCookie) return res.status(200).send(false);
-    jwt.verify(
-      req.cookies.userAuth,
-      process.env.ACCESS_TOKEN_KEY,
-      (err, result) => {
-        if (err) throw err;
-        connection.query(
-          `SELECT LAST_NAME FROM Accounts WHERE USER_ID = '${result.user_id}'`,
-          (err, data) => {
-            if (err) throw err;
-            const lastName = data[0].LAST_NAME;
-            connection.query(
-              `SELECT a.FAMILY_ID, a.FAMILY_NAME, a.FAMILY_IDENTIFIER, a.FAMILY_CREATOR, Accounts.FIRST_NAME, 
+    const token = req.cookies.userAuth;
+    if (!token) return res.status(200).send(false);
+    jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, result) => {
+      if (err) throw err;
+
+      connection.query(
+        `SELECT LAST_NAME FROM Accounts WHERE USER_ID = '${result.user_id}'`,
+        (err, data) => {
+          if (err) throw err;
+
+          const lastName = data[0].LAST_NAME;
+          connection.query(
+            `SELECT a.FAMILY_ID, a.FAMILY_NAME, a.FAMILY_IDENTIFIER, a.FAMILY_CREATOR, Accounts.FIRST_NAME, 
               Accounts.LAST_NAME FROM (SELECT FAMILY_ID, FAMILY_NAME, FAMILY_CREATOR, FAMILY_IDENTIFIER FROM Receiply.Families 
               WHERE Families.FAMILY_NAME LIKE '%${lastName}%') a INNER JOIN Receiply.Accounts ON a.FAMILY_CREATOR=Accounts.USER_ID`,
-              (err, family) => {
-                if (err) throw err;
-                if (family.length === 0) {
-                  res.end();
-                } else {
-                  res.send(family);
-                  res.end();
-                }
+            (err, family) => {
+              if (err) throw err;
+              if (family.length === 0) {
+                res.end();
+              } else {
+                res.send(family);
+                res.end();
               }
-            );
-          }
-        );
-      }
-    );
+            }
+          );
+        }
+      );
+    });
     connection.release();
   });
 });

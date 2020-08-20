@@ -5,11 +5,12 @@ import CreateFamilyPage from "./createfamily";
 import FamilyNav from "../components/family/FamilyNav";
 import FamilyMain from "../components/family/familyMain";
 
+import LoadingPage from "../Loading";
 import "../components/family/family.css";
 
 class FamilyPage extends Component {
   state = {
-    family: "",
+    family: undefined,
   };
   CancelToken = axios.CancelToken;
   source = this.CancelToken.source();
@@ -28,23 +29,26 @@ class FamilyPage extends Component {
   }
 
   render() {
-    if (this.state.family === false) {
+    if (this.state.family === undefined) {
+      return <LoadingPage />;
+    } else if (this.state.family === false) {
       return <CreateFamilyPage />;
-    }
-    return (
-      <React.Fragment>
+    } else {
+      return (
         <React.Fragment>
-          <div id="familyWrapper">
-            <div>
-              <FamilyNav />
+          <React.Fragment>
+            <div id="familyWrapper">
+              <div>
+                <FamilyNav />
+              </div>
+              <div>
+                <FamilyMain />
+              </div>
             </div>
-            <div>
-              <FamilyMain />
-            </div>
-          </div>
+          </React.Fragment>
         </React.Fragment>
-      </React.Fragment>
-    );
+      );
+    }
   }
 }
 

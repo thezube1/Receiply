@@ -75,7 +75,7 @@ class RecipePage extends Component {
                 <RecipeCooking cooking={cooking.cooking} />
               </div>
               <div id="recipeCommentsWrapper">
-                <RecipeComments />
+                <RecipeComments recipeid={this.props.match.params.recipeid} />
               </div>
             </div>
           </div>

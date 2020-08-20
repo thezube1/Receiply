@@ -158,6 +158,8 @@
 #recipeCommentInput {
   border: none;
   margin-bottom: 5px;
+  width: 500px;
+  outline: none;
 }
 
 .recipeCommentBorder {
@@ -173,10 +175,65 @@
   background-color: rgb(131, 226, 133);
 }
 
+#recipeCommentSubmit:hover {
+  background-color: rgb(112, 192, 113);
+}
+
 .recipeCommentButton {
   border: none;
   height: 30px;
   font-family: "Source Sans Pro";
+  border-radius: 3px;
+}
+
+.recipeCommentButton:hover {
+  background-color: rgb(182, 182, 182);
+}
+
+#recipeCommentItemWrapper {
+  margin-top: 10px;
+}
+
+#recipeCommentItemContent {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+#recipeCommentItemUserWrapper {
+  display: flex;
+  align-items: center;
+}
+
+#recipeCommentItemUser {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 18px;
+}
+
+#recipeCommentItemProfile {
+  width: 40px;
+  height: 40px;
+  border-width: 1px;
+  border-radius: 50px;
+  border: rgb(236, 236, 236);
+  border-style: solid;
+  margin-left: 5px;
+}
+
+#recipeCommentItem {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 20px;
+}
+
+#recipeCommentItemDivider {
+  width: 1px;
+  height: 35px;
+  background-color: rgb(190, 190, 190);
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 #recipeWrapper {
@@ -200,6 +257,7 @@
 
 #recipeCommentsWrapper {
   grid-column: 1/3;
+  margin-bottom: 100px;
 }
 
 @media screen and (max-width: 1260px) {

@@ -50,9 +50,6 @@ class DashFamily extends Component {
     } else {
       return [0, 3];
     }
-
-    //const recipeAmount = this.state.family_recipe.length;
-    //console.log(Math.floor(Math.random() * Math.floor(recipeAmount)));
   };
 
   handleRecipes = () => {
@@ -64,12 +61,18 @@ class DashFamily extends Component {
         <div>
           {this.state.family_recipe.slice(num[0], num[1]).map((item) => {
             return (
-              <DashFamilyItem
+              <Link
+                to={`/recipe/${item.RECIPE_IDENTIFIER}`}
                 key={item.RECIPE_ID}
-                title={item.RECIPE_NAME}
-                description={item.DESCRIPTION}
-                image={item.PHOTO_NAME}
-              />
+                style={{ color: "black" }}
+              >
+                <DashFamilyItem
+                  key={item.RECIPE_ID}
+                  title={item.RECIPE_NAME}
+                  description={item.DESCRIPTION}
+                  image={item.PHOTO_NAME}
+                />
+              </Link>
             );
           })}
         </div>

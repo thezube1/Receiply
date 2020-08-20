@@ -1,13 +1,27 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 class RecipeComments extends Component {
   state = {
     comment: "",
-    comments: [""],
+    comments: undefined,
+    commented: undefined,
   };
 
   handleChange = (inputType) => (event) => {
     this.setState({ [inputType]: event.target.value });
+  };
+
+  handleCancel = () => {
+    this.setState({ comment: "" });
+  };
+
+  handleSubmit = () => {
+    const comment = this.state.comment;
+    const recipeid = this.props.recipeid;
+    axios
+      .post("/api/comment", { comment: comment, recipeid: recipeid })
+      .then((res) => this.setState({ commented: res.data }));
   };
 
   handleButtonVisible = () => {
@@ -19,18 +33,56 @@ class RecipeComments extends Component {
             className="recipeCommentButton"
             id="recipeCommentSubmit"
             value="Comment"
+            onClick={this.handleSubmit}
           />
           <input
             type="button"
             className="recipeCommentButton"
             id="recipeCommentCancel"
             value="Cancel"
+            onClick={this.handleCancel}
           />
         </React.Fragment>
       );
     }
   };
+
+  handleComments = () => {
+    if (this.state.comments === undefined) {
+      return <div>Loading comments...</div>;
+    } else if (this.state.comments === false) {
+      return <div>This recipe has no comments!</div>;
+    } else {
+      return this.state.comments.map((item) => {
+        return (
+          <div key={item.COMMENT_ID} id="recipeCommentItemWrapper">
+            <div id="recipeCommentItemContent">
+              <div id="recipeCommentItemUserWrapper">
+                <div id="recipeCommentItemUser">
+                  {item.FIRST_NAME + " " + item.LAST_NAME}
+                </div>
+                <div id="recipeCommentItemProfile"></div>
+                <div id="recipeCommentItemDivider"></div>
+              </div>
+              <div id="recipeCommentItem">{item.COMMENT_CONTENT}</div>
+            </div>
+            <div className="recipeCommentBorder"></div>
+          </div>
+        );
+      });
+    }
+  };
+
+  componentDidMount() {
+    axios
+      .get(`/api/comment/${this.props.recipeid}`)
+      .then((res) => this.setState({ comments: res.data }));
+  }
+
   render() {
+    if (this.state.commented === true) {
+      window.location.reload(false);
+    }
     return (
       <div>
         <div id="recipeCommentBarrier"></div>
@@ -42,12 +94,11 @@ class RecipeComments extends Component {
           placeholder="Write a comment"
           id="recipeCommentInput"
           onChange={this.handleChange("comment")}
+          value={this.state.comment}
         ></input>
         <div className="recipeCommentBorder"></div>
         {this.handleButtonVisible()}
-        {this.state.comments.map((item) => {
-          return <div>item</div>;
-        })}
+        {this.handleComments()}
       </div>
     );
   }

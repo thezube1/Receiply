@@ -7,6 +7,7 @@ const InviteHandlers = require("./modules/InviteHandlers");
 const RecipeHandlers = require("./modules/RecipeHandlers");
 const SearchHandlers = require("./modules/SearchHandlers");
 const LikeHandlers = require("./modules/LikeHandlers");
+const CommentHandlers = require("./modules/CommentHandlers");
 const bodyParser = require("body-parser");
 const PORT = 8080;
 
@@ -19,6 +20,7 @@ app.use(RecipeHandlers);
 app.use(InviteHandlers);
 app.use(LikeHandlers);
 app.use(SearchHandlers);
+app.use(CommentHandlers);
 app.use("/uploads", express.static("uploads"));
 
 app.listen(PORT, () => {

@@ -1,0 +1,64 @@
+#searchBarWrapper {
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%);
+  top: 100px;
+}
+
+#searchBarHeaderWrapper {
+  display: flex;
+  align-items: center;
+}
+
+#searchBarSubmit {
+  align-items: center;
+  display: flex;
+  background: none;
+  outline: none;
+  border: none;
+}
+
+#searchBarSubmit:hover {
+  border: rgb(197, 197, 197);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+}
+
+#searchBarHeader {
+  font-family: "Roboto";
+  font-size: 30px;
+  color: rgb(70, 70, 70);
+  font-weight: 300;
+}
+
+#searchBarIcon {
+  width: 25px;
+  height: 25px;
+  color: rgb(70, 70, 70);
+  margin-top: 6px;
+  margin-left: 3px;
+}
+
+#searchBarInputWrapper {
+  margin-left: 5px;
+}
+
+#searchBarInput {
+  border: none;
+  outline: none;
+  margin-top: 7px;
+  color: rgb(70, 70, 70);
+  font-family: "Roboto";
+  font-weight: 300;
+}
+
+#searchBarInput:focus + #searchBarBottom {
+  background-color: rgb(145, 145, 145);
+}
+
+#searchBarBottom {
+  width: 400px;
+  height: 1px;
+  background-color: rgb(224, 224, 224);
+}

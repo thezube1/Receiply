@@ -77,15 +77,11 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
               SHARING = "public";
             }
 
-            let prep = JSON.parse(recipe.ingredients);
+            //let prep = JSON.parse(recipe.ingredients);
             //prep = prep.map((x, index) => x.substr(1, x.length - 1));
             //.replace(/\`/g, "")
-            prep = JSON.stringify(prep.map((x, index) => mysql.escape(x)));
-            console.log(prep);
-
-            /*
-
-            
+            //prep = JSON.stringify(prep.map((x, index) => mysql.escape(x)));
+            //console.log(prep);
 
             connection.query(
               `INSERT INTO Recipes VALUES (uuid(), uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), ${connection.escape(
@@ -105,7 +101,7 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
                   res.end();
                 }
               }
-            ); */
+            );
           } else {
             console.log("No family present");
           }
@@ -233,7 +229,7 @@ app.get("/api/familyrecipes/card", (req, res) => {
             res.end();
           } else {
             connection.query(
-              `SELECT RECIPE_ID, RECIPE_NAME, DESCRIPTION, TTM, DATE_CREATED, PHOTO_NAME FROM Recipes WHERE FAMILY_ID = '${family[0].FAMILY}' AND PUBLISH_STATE = "family"`,
+              `SELECT RECIPE_ID, RECIPE_IDENTIFIER, RECIPE_NAME, DESCRIPTION, TTM, DATE_CREATED, PHOTO_NAME FROM Recipes WHERE FAMILY_ID = '${family[0].FAMILY}' AND PUBLISH_STATE = "family"`,
               (err, response) => {
                 if (err) throw err;
                 if (response.length === 0) {
