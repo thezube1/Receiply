@@ -47,10 +47,10 @@
 #searchBarInput {
   border: none;
   outline: none;
-  margin-top: 7px;
   color: rgb(70, 70, 70);
   font-family: "Roboto";
   font-weight: 300;
+  font-size: 20px;
 }
 
 #searchBarInput:focus + #searchBarBottom {

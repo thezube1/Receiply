@@ -29,7 +29,7 @@ class SearchPage extends Component {
       return (
         <React.Fragment>
           <NavbarSwitch searchDefault={this.state.query.s} />
-          <SearchBar />
+          <SearchBar value={this.state.query.s} />
           <div id="searchWrapper">
             No search parameters provided. Showing most popular recipes.
           </div>
@@ -39,7 +39,7 @@ class SearchPage extends Component {
       return (
         <React.Fragment>
           <NavbarSwitch searchDefault={this.state.query.s} />
-          <SearchBar />
+          <SearchBar value={this.state.query.s} />
           <div id="searchWrapper">Your search yielded no results.</div>
         </React.Fragment>
       );
@@ -48,7 +48,7 @@ class SearchPage extends Component {
     return (
       <div id="searchWrapper">
         <NavbarSwitch searchDefault={this.state.query.s} />
-        <SearchBar />
+        <SearchBar value={this.state.query.s} />
         <div id="searchContentWrapper">
           {this.state.recipes.map((item) => {
             return (

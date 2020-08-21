@@ -6,6 +6,12 @@ import { Link } from "react-router-dom";
 
 class NavbarMain extends Component {
   state = {};
+
+  handleSearch = () => {
+    if (window.location.pathname !== "/search") {
+      return <NavbarSearch searchDefault={this.props.searchDefault} />;
+    }
+  };
   render() {
     return (
       <div id="navWrapper">
@@ -23,7 +29,8 @@ class NavbarMain extends Component {
           <span className="navitem">My Recipies</span>
 
           <span id="accountitemswrapper">
-            <NavbarSearch searchDefault={this.props.searchDefault} />
+            {this.handleSearch()}
+
             <Link to="/" style={{ textDecoration: "none" }}>
               <span className="navitem accountitems" id="signup">
                 Settings

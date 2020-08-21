@@ -26,7 +26,7 @@ app.get("/api/comment/:recipeid", (req, res) => {
         if (err) throw err;
         const RECIPE_ID = recipe[0].RECIPE_ID;
         connection.query(
-          `SELECT COMMENT_ID, RECIPE_ID, COMMENTER_ID, FIRST_NAME, LAST_NAME, COMMENT_CONTENT, LIKES FROM Receiply.Comments INNER JOIN Receiply.Accounts ON Comments.COMMENTER_ID = Accounts.USER_ID WHERE RECIPE_ID='${RECIPE_ID}'`,
+          `SELECT COMMENT_ID, RECIPE, COMMENTER_ID, FIRST_NAME, LAST_NAME, COMMENT_CONTENT, LIKES FROM Receiply.Comments INNER JOIN Receiply.Accounts ON Comments.COMMENTER_ID = Accounts.USER_ID WHERE RECIPE='${RECIPE_ID}'`,
           (err, data) => {
             if (err) throw err;
             if (data.length === 0) {

@@ -1,10 +1,10 @@
 #searchWrapper {
-  margin-top: 100px;
+  margin-top: 180px;
 }
 
 #searchContentWrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 200px);
+  grid-template-columns: repeat(auto-fit, 290px);
   grid-column-gap: 20px;
   margin-left: 20px;
 }
@@ -21,7 +21,25 @@
   justify-content: center;
 }
 
+#searchItemTitle {
+  font-family: "Source Sans Pro";
+  font-weight: 900;
+  font-size: 25 px;
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 #searchItemImage {
   max-width: 240px;
   justify-self: center;
+}
+
+#searchItemDescription {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 18px;
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -44,7 +44,8 @@ CREATE TABLE Receiply.Comments
     COMMENT_ID varchar(36),
     COMMENTER_ID varchar(36),
     RECIPE varchar(36),
-    COMMENT_CONTENT text
+    COMMENT_CONTENT text,
+    LIKES int
 );
 
 CREATE TABLE Receiply.Likes

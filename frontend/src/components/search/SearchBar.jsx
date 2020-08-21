@@ -6,6 +6,7 @@ class SearchBar extends Component {
   state = {
     searchValue: "",
     redirect: undefined,
+    refresh: false,
   };
 
   handleChange = (type) => (event) => {
@@ -20,8 +21,10 @@ class SearchBar extends Component {
   render() {
     if (this.state.redirect !== undefined) {
       if (this.state.searchValue === "") {
+        window.location.reload(false);
         return <Redirect to={"/search"} />;
       } else {
+        window.location.reload(false);
         return <Redirect to={`/search?${this.state.redirect}`} />;
       }
     }
@@ -37,6 +40,7 @@ class SearchBar extends Component {
               type="text"
               id="searchBarInput"
               onChange={this.handleChange("searchValue")}
+              defaultValue={this.props.value}
             />
             <div id="searchBarBottom"></div>
           </div>
