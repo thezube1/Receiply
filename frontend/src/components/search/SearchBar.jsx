@@ -41,6 +41,7 @@ class SearchBar extends Component {
               id="searchBarInput"
               onChange={this.handleChange("searchValue")}
               defaultValue={this.props.value}
+              x
             />
             <div id="searchBarBottom"></div>
           </div>

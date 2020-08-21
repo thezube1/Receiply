@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import SearchItem from "../components/search/SearchItem";
 import SearchBar from "../components/search/SearchBar";
 import NavbarSwitch from "../components/navbar/navbarswitch";
+import SearchFilters from "../components/search/searchFilters";
 
 class SearchPage extends Component {
   state = {
@@ -46,25 +47,28 @@ class SearchPage extends Component {
     }
 
     return (
-      <div id="searchWrapper">
+      <div>
         <NavbarSwitch searchDefault={this.state.query.s} />
-        <SearchBar value={this.state.query.s} />
-        <div id="searchContentWrapper">
-          {this.state.recipes.map((item) => {
-            return (
-              <Link
-                key={item.RECIPE_ID}
-                to={`/recipe/${item.RECIPE_IDENTIFIER}`}
-                style={{ color: "black", textDecoration: "none" }}
-              >
-                <SearchItem
-                  title={item.RECIPE_NAME}
-                  image={item.PHOTO_NAME}
-                  description={item.DESCRIPTION}
-                />
-              </Link>
-            );
-          })}
+        <div id="searchContent">
+          <SearchBar value={this.state.query.s} />
+          <SearchFilters />
+          <div id="searchContentWrapper">
+            {this.state.recipes.map((item) => {
+              return (
+                <Link
+                  key={item.RECIPE_ID}
+                  to={`/recipe/${item.RECIPE_IDENTIFIER}`}
+                  style={{ color: "black", textDecoration: "none" }}
+                >
+                  <SearchItem
+                    title={item.RECIPE_NAME}
+                    image={item.PHOTO_NAME}
+                    description={item.DESCRIPTION}
+                  />
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
     );

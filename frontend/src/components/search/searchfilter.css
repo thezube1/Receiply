@@ -1,0 +1,25 @@
+.searchFilterHeader {
+  font-family: "Roboto";
+  font-weight: 300;
+  font-size: 20px;
+}
+
+#searchFilterWrapper {
+  height: 100vh;
+  grid-row: 3/4;
+  grid-column: 1/2;
+}
+
+#searchFilterContent {
+  margin-left: 30px;
+}
+
+#searchFilterTitle {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 30px;
+}
+
+#searchFilterShareWrapper {
+  margin-top: 50px;
+}
