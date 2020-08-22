@@ -48,7 +48,7 @@ app.post("/api/search", (req, res) => {
               } else if (req.body.shr === "pub") {
                 return `AND PUBLISH_STATE='public'`;
               } else {
-                return `AND PUBLISH_STATE='public' AND PUBLISH_STATE='family'`;
+                return `AND (PUBLISH_STATE='family' AND FAMILY_ID='${user[0].FAMILY}') OR PUBLISH_STATE='public' OR (CREATOR_ID='${result.user_id}' AND PUBLISH_STATE='private')`;
               }
             };
 

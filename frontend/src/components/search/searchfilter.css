@@ -1,4 +1,5 @@
 .searchFilterHeader {
+  margin-top: 20px;
   font-family: "Roboto";
   font-weight: 300;
   font-size: 20px;
@@ -39,4 +40,58 @@
 
 #searchFilterShareWrapper {
   margin-top: 50px;
+}
+
+#searchFilterIngredientInputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#searchFilterIngreidentInput {
+  border: rgb(219, 219, 219);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  outline: none;
+  font-family: "Source Sans Pro";
+  height: 30px;
+  width: 200px;
+  font-size: 15px;
+}
+
+#searchFilterIngreidentInput:focus {
+  border: rgb(184, 184, 184);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+}
+
+.searchFilterIngredientButton {
+  border: none;
+  border-radius: 50px;
+  background-color: rgb(136, 228, 138);
+  color: white;
+  width: 25px;
+  height: 25px;
+  font-size: 30px;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
+.searchFilterIngredientButton:hover {
+  background-color: rgb(114, 194, 115);
+}
+
+#searchFilterIngredientAddIcon {
+  margin-bottom: 1px;
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+}
+
+#searchFilterIngredientRemoveIcon {
+  margin-bottom: 5px;
+  font-family: "Source Sans Pro";
+  font-weight: 300;
 }

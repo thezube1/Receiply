@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./searchfilter.css";
 import SearchFilterShare from "./Filters/SearchFilterShare";
+import SearchFilterIngredients from "./Filters/SearchFilterIngredients";
 
 class SearchFilter extends Component {
   state = {};
@@ -10,6 +11,7 @@ class SearchFilter extends Component {
         <div id="searchFilterContent">
           <div id="searchFilterTitle">Search filters</div>
           <SearchFilterShare query={this.props.query} />
+          <SearchFilterIngredients />
           <div id="searchFilterShareWrapper"></div>
         </div>
       </div>
