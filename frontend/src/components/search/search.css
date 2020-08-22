@@ -39,6 +39,7 @@
 
 #searchItemImage {
   max-width: 240px;
+  height: 100%;
   justify-self: center;
 }
 

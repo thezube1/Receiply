@@ -4,6 +4,23 @@
   font-size: 20px;
 }
 
+.searchFilterCheckWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.searchFilterCheckbox {
+  width: 50px;
+  height: 50px;
+  background-color: aqua;
+}
+
+.searchFilterLabel {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 20px;
+}
+
 #searchFilterWrapper {
   height: 100vh;
   grid-row: 3/4;
