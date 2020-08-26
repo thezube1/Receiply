@@ -52,6 +52,8 @@ app.post("/api/search", (req, res) => {
               }
             };
 
+            const filterIngredients = () => {};
+
             connection.query(
               `SELECT * FROM Recipes WHERE (RECIPE_NAME LIKE '%${params}%') ${filterPrivacy()}`,
               (err, data) => {
