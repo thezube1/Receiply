@@ -19,20 +19,23 @@ class SearchPage extends Component {
   };
 
   componentDidMount() {
-    const parsed = queryString.parse(this.props.location.search);
+    const parsed = queryString.parse(this.props.location.search, {
+      arrayFormat: "comma",
+    });
     if (this.state.check === false) {
       this.setState({ query: parsed, check: true });
     }
   }
 
   componentDidUpdate(previousProps, previousState) {
-    const parsed = queryString.parse(this.props.location.search);
+    const parsed = queryString.parse(this.props.location.search, {
+      arrayFormat: "comma",
+    });
     if (isEqual(parsed, previousState.query) === false) {
+      this.setState({ query: parsed });
       axios
         .post("/api/search", parsed)
-        .then((result) =>
-          this.setState({ query: parsed, recipes: result.data })
-        )
+        .then((result) => this.setState({ recipes: result.data }))
         .catch((err) => console.log(err));
     }
   }
@@ -68,16 +71,22 @@ class SearchPage extends Component {
   };
 
   render() {
-    return (
-      <div>
-        <NavbarSwitch searchDefault={this.state.query.s} />
-        <div id="searchContent">
-          <SearchBar value={this.state.query.s} />
-          <SearchFilters query={this.state.query} />
-          <div id="searchContentWrapper">{this.renderResult()}</div>
+    if (this.state.recipes === undefined) {
+      return <LoadingPage />;
+    } else {
+      return (
+        <div>
+          <NavbarSwitch searchDefault={this.state.query.s} />
+          <div id="searchContent">
+            <SearchBar query={this.state.query.s} />
+            <div style={{ gridRow: "3/4", gridColumn: "1/2" }}>
+              <SearchFilters query={this.state.query} />
+            </div>
+            <div id="searchContentWrapper">{this.renderResult()}</div>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 

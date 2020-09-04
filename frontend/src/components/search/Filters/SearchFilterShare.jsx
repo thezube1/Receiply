@@ -22,10 +22,15 @@ class SearchFilterShare extends Component {
   handleUndefined = () => {
     if (this.state.share === undefined) {
       if (window.location.href.includes("shr") === true) {
-        const newQuery = window.location.search.replace(
-          `&shr=${this.props.query.shr}`,
-          ""
-        );
+        let newQuery = window.location.search;
+        newQuery = newQuery.replace(`?shr=${this.props.query.shr}`, "");
+        newQuery = newQuery.replace(`&shr=${this.props.query.shr}`, "");
+        const urlLength = window.location.pathname.length + newQuery;
+        if (urlLength > 1) {
+          if (window.location.search.includes("?") === false) {
+            newQuery = `?${newQuery}`;
+          }
+        }
         return <Redirect to={window.location.pathname + newQuery} />;
       }
     }
@@ -35,21 +40,37 @@ class SearchFilterShare extends Component {
     if (this.state.share === type) {
       if (window.location.href.includes(`shr=${type}`) === false) {
         if (window.location.href.includes("shr") === true) {
-          const newQuery = window.location.search.replace(
+          let newQuery = window.location.search.replace(
             `&shr=${this.props.query.shr}`,
             `&shr=${type}`
           );
+          if (window.location.href.includes(`?`) === false) {
+            newQuery = `?${newQuery}`;
+          }
           return <Redirect to={window.location.pathname + newQuery} />;
         } else {
-          return (
-            <Redirect
-              to={
-                window.location.pathname +
-                window.location.search +
-                `&shr=${type}`
-              }
-            />
-          );
+          if (window.location.href.includes(`?`) === false) {
+            return (
+              <Redirect
+                to={
+                  window.location.pathname +
+                  "?" +
+                  window.location.search +
+                  `shr=${type}`
+                }
+              />
+            );
+          } else {
+            return (
+              <Redirect
+                to={
+                  window.location.pathname +
+                  window.location.search +
+                  `&shr=${type}`
+                }
+              />
+            );
+          }
         }
       }
     }

@@ -3,6 +3,7 @@ const app = express();
 const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const e = require("express");
 require("dotenv").config();
 
 const pool = mysql.createPool({
@@ -52,10 +53,22 @@ app.post("/api/search", (req, res) => {
               }
             };
 
-            const filterIngredients = () => {};
+            const filterIngredients = () => {
+              let ingredientFilter;
+              if (typeof req.body.ingr === "string") {
+                ingredientFilter = [req.body.ingr];
+              } else if (typeof req.body.ingr === "object") {
+                ingredientFilter = req.body.ingr;
+              } else {
+                return "";
+              }
+              const ingredientChecks = ingredientFilter.join(" ");
+              console.log(ingredientChecks);
+              return `AND INGREDIENTS LIKE '%${ingredientChecks}%'`;
+            };
 
             connection.query(
-              `SELECT * FROM Recipes WHERE (RECIPE_NAME LIKE '%${params}%') ${filterPrivacy()}`,
+              `SELECT * FROM Recipes WHERE (RECIPE_NAME LIKE '%${params}%') ${filterPrivacy()} ${filterIngredients()}`,
               (err, data) => {
                 if (err) throw err;
                 if (data.length === 0) {

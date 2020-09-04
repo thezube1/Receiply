@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
+app.use(cookieParser());
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./uploads");
@@ -248,28 +249,5 @@ app.get("/api/familyrecipes/card", (req, res) => {
     connection.release();
   });
 });
-
-app.get("/api/userrecipes/public/:user", (req, res) => {
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(
-      `SELECT USER_ID FROM Accounts WHERE USERNAME='${req.params.user}'`,
-      (err, user) => {
-        if (err) throw err;
-        connection.query(
-          `SELECT RECIPE_ID, RECIPE_NAME, DESCRIPTION, TTM, DATE_CREATED, PHOTO_NAME FROM Recipes WHERE CREATOR_ID = '${user[0].USER_ID}' AND PUBLISH_STATE = "public"`,
-          (err, recipes) => {
-            if (err) throw err;
-            res.send(recipes);
-            res.end();
-          }
-        );
-      }
-    );
-    connection.release();
-  });
-});
-
-app.use(cookieParser());
 
 module.exports = app;

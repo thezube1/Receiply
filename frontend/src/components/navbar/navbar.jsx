@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 class Navbar extends Component {
   state = {};
+
   render() {
     return (
       <div id="navWrapper">
@@ -13,8 +14,9 @@ class Navbar extends Component {
           <Link to="/" style={{ textDecoration: "none" }}>
             <span id="title">Receiply</span>
           </Link>
-
-          <span className="navitem">Browse</span>
+          <Link to="/browse" style={{ textDecoration: "none" }}>
+            <span className="navitem">Browse</span>
+          </Link>
           <span className="navitem">About</span>
 
           <div id="accountitemswrapper">

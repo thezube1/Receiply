@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { isEqual } from "lodash";
 class SearchFilterIngredients extends Component {
   state = {
     value: "",
     ingredients: [],
     error: false,
+    redirect: false,
+    check: false,
   };
 
   handleAdd = (type, value) => {
@@ -12,6 +15,17 @@ class SearchFilterIngredients extends Component {
       const array = this.state[type];
       array.push(value);
       this.setState({ [type]: array, value: "", error: false });
+      if (window.location.search.includes("&ingr=") === false) {
+        let query =
+          window.location.search + `&ingr=${this.state.ingredients.join(",")}`;
+        this.setState({ redirect: query });
+      } else {
+        let query = window.location.search.replace(
+          `&ingr=${this.props.query.ingr}`,
+          `&ingr=${this.state.ingredients.join(",")}`
+        );
+        this.setState({ redirect: query });
+      }
     } else {
       this.setState({ error: true });
     }
@@ -19,8 +33,63 @@ class SearchFilterIngredients extends Component {
 
   handleDelete = (index, type) => {
     let array = type;
-    this.setState({ ingredients: array.splice(index, index) });
+    array.splice(index, 1);
+    //let newArray = array.splice(index, index);
+    this.setState({ ingredients: array });
+    if (array.length === 0) {
+      if (typeof this.props.query.ingr === "string") {
+        let query = window.location.search.replace(
+          `&ingr=${this.props.query.ingr}`,
+          ""
+        );
+        this.setState({ redirect: query });
+      } else {
+        let query = window.location.search.replace(
+          `&ingr=${this.props.query.ingr.join(",")}`,
+          ""
+        );
+        this.setState({ redirect: query });
+      }
+    } else {
+      let query = window.location.search.replace(
+        `&ingr=${this.props.query.ingr}`,
+        `&ingr=${array.join(",")}`
+      );
+      this.setState({ redirect: query });
+    }
   };
+
+  handleFilter = () => {
+    if (this.state.redirect !== false) {
+      return <Redirect to={window.location.pathname + this.state.redirect} />;
+    }
+  };
+
+  defaultIngredients = () => {
+    if (this.props.query.ingr !== undefined) {
+      if (typeof this.props.query.ingr === "string") {
+        this.setState({ ingredients: [this.props.query.ingr] });
+      } else {
+        this.setState({ ingredients: this.props.query.ingr });
+      }
+    }
+  };
+
+  componentDidUpdate() {
+    if (this.state.redirect !== false) {
+      this.setState({ redirect: false });
+    }
+
+    if (typeof this.props.query.ingr === "string") {
+      if (this.state.ingredients[0] !== this.props.query.ingr) {
+        this.defaultIngredients();
+      }
+    } else {
+      if (isEqual(this.state.ingredients, this.props.query.ingr) === false) {
+        this.defaultIngredients();
+      }
+    }
+  }
 
   handleChange = (type) => (event) => {
     this.setState({ [type]: event.target.value });
@@ -43,35 +112,12 @@ class SearchFilterIngredients extends Component {
     }
   };
 
-  handleFilter = (type) => {
-    if (this.state.ingredients.length !== 0) {
-      if (window.location.href.includes(`ingr=${type}`) === false) {
-        if (window.location.href.includes("ingr") === true) {
-          const newQuery = window.location.search.replace(
-            `&ingr=${this.props.query.ingr}`,
-            `&ingr=${type}`
-          );
-          return <Redirect to={window.location.pathname + newQuery} />;
-        } else {
-          return (
-            <Redirect
-              to={
-                window.location.pathname +
-                window.location.search +
-                `&ingr=${type}`
-              }
-            />
-          );
-        }
-      }
-    }
-  };
-
   render() {
     return (
       <React.Fragment>
         <div className="searchFilterHeader">Ingredient filter:</div>
         {this.handleError()}
+        {this.handleFilter()}
         <div id="searchFilterIngredientInputWrapper">
           <input
             type="text"

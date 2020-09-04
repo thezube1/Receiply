@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import "./searchbar.css";
 import { IoIosSearch } from "react-icons/io";
 import { Redirect } from "react-router-dom";
+import queryString from "query-string";
 class SearchBar extends Component {
   state = {
     searchValue: "",
     redirect: undefined,
-    refresh: false,
+    default: undefined,
   };
 
   handleChange = (type) => (event) => {
@@ -18,13 +19,23 @@ class SearchBar extends Component {
     this.setState({ redirect: `s=${params}` });
   };
 
+  componentDidUpdate() {
+    if (this.state.redirect !== undefined) {
+      this.setState({ redirect: undefined });
+    }
+    const query = queryString.parse(window.location.search, {
+      arrayFormat: "comma",
+    });
+    if (this.state.default !== query.s) {
+      this.setState({ default: query.s });
+    }
+  }
+
   render() {
     if (this.state.redirect !== undefined) {
       if (this.state.searchValue === "") {
-        window.location.reload(false);
         return <Redirect to={"/search"} />;
       } else {
-        window.location.reload(false);
         return <Redirect to={`/search?${this.state.redirect}`} />;
       }
     }
@@ -40,7 +51,7 @@ class SearchBar extends Component {
               type="text"
               id="searchBarInput"
               onChange={this.handleChange("searchValue")}
-              defaultValue={this.props.value}
+              defaultValue={this.state.default}
             />
             <div id="searchBarBottom"></div>
           </div>

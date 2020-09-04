@@ -4,6 +4,9 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./privateroute";
 import RouterFork from "./RouteFork";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import allReducer from "./reducers";
 
 //pages
 import App from "./App";
@@ -16,23 +19,32 @@ import UploadPage from "./pages/upload";
 import FamilyPage from "./pages/family";
 import RecipePage from "./pages/recipe";
 import SearchPage from "./pages/search";
+import BrowsePage from "./pages/browse";
 import NotFoundPage from "./pages/404page";
 
+const store = createStore(
+  allReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
 ReactDOM.render(
-  <Router>
-    <Switch>
-      <Route path="/signup" component={SignupPage} />
-      <Route path="/login" component={LoginPage} />
-      <Route path="/search" component={SearchPage} />
-      <PrivateRoute path="/inviteurl/" component={InviteRouter} />
-      <PrivateRoute path="/upload" component={UploadPage} />
-      <PrivateRoute path="/family" component={FamilyPage} />
-      <Route path="/users/:user" component={PublicUser} />
-      <Route exact path="/:recipe/:recipeid" component={RecipePage} />
-      <RouterFork Route1={App} Route2={DashboardPage} />
-      <Route component={NotFoundPage} />
-    </Switch>
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <Switch>
+        <Route path="/signup" component={SignupPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/search" component={SearchPage} />
+        <Route path="/browse" component={BrowsePage} />
+        <PrivateRoute path="/inviteurl/" component={InviteRouter} />
+        <PrivateRoute path="/upload" component={UploadPage} />
+        <PrivateRoute path="/family" component={FamilyPage} />
+        <Route path="/users/:user" component={PublicUser} />
+        <Route exact path="/:recipe/:recipeid" component={RecipePage} />
+        <RouterFork Route1={App} Route2={DashboardPage} />
+        <Route component={NotFoundPage} />
+      </Switch>
+    </Router>
+  </Provider>,
   document.getElementById("root")
 );
 

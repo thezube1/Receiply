@@ -19,7 +19,10 @@ class NavbarMain extends Component {
           <Link to="/" style={{ textDecoration: "none" }}>
             <span id="title">Receiply</span>
           </Link>
-          <span className="navitem">Browse</span>
+          <Link to="/browse" style={{ textDecoration: "none" }}>
+            <span className="navitem">Browse</span>
+          </Link>
+
           <Link to="/upload" style={{ textDecoration: "none" }}>
             <span className="navitem">Upload</span>
           </Link>
