@@ -11,6 +11,9 @@ import SearchBar from "../components/search/SearchBar";
 import NavbarSwitch from "../components/navbar/navbarswitch";
 import SearchFilters from "../components/search/searchFilters";
 
+import { connect } from "react-redux";
+import { search_query } from "../actions/actions";
+
 class SearchPage extends Component {
   state = {
     query: "",
@@ -24,6 +27,7 @@ class SearchPage extends Component {
     });
     if (this.state.check === false) {
       this.setState({ query: parsed, check: true });
+      this.props.write_search(parsed);
     }
   }
 
@@ -33,6 +37,7 @@ class SearchPage extends Component {
     });
     if (isEqual(parsed, previousState.query) === false) {
       this.setState({ query: parsed });
+      this.props.write_search(parsed);
       axios
         .post("/api/search", parsed)
         .then((result) => this.setState({ recipes: result.data }))
@@ -90,4 +95,16 @@ class SearchPage extends Component {
   }
 }
 
-export default SearchPage;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    write_search: (event) => dispatch(search_query(event)),
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    search: state.search_query,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

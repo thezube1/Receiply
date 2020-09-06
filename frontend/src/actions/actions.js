@@ -4,3 +4,10 @@ export const search = (input) => {
     payload: input,
   };
 };
+
+export const search_query = (input) => {
+  return {
+    type: "SEARCH_QUERY",
+    payload: input,
+  };
+};

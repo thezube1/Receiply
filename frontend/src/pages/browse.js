@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 
-import axios from "axios";
 import queryString from "query-string";
 import { isEqual } from "lodash";
 
-import LoadingPage from "../Loading";
 import NavbarSwitch from "../components/navbar/navbarswitch";
 import SearchFilter from "../components/search/searchFilters";
 import "../components/browse/browse.css";
