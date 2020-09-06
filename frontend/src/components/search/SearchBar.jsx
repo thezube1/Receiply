@@ -3,6 +3,10 @@ import "./searchbar.css";
 import { IoIosSearch } from "react-icons/io";
 import { Redirect } from "react-router-dom";
 import queryString from "query-string";
+
+import { search } from "../../actions/actions";
+import { connect } from "react-redux";
+
 class SearchBar extends Component {
   state = {
     searchValue: "",
@@ -10,12 +14,8 @@ class SearchBar extends Component {
     default: undefined,
   };
 
-  handleChange = (type) => (event) => {
-    this.setState({ [type]: event.target.value });
-  };
-
   handleSubmit = () => {
-    const params = this.state.searchValue.split(" ").join("+");
+    const params = this.props.search.split(" ").join("+");
     this.setState({ redirect: `s=${params}` });
   };
 
@@ -33,12 +33,13 @@ class SearchBar extends Component {
 
   render() {
     if (this.state.redirect !== undefined) {
-      if (this.state.searchValue === "") {
+      if (this.props.search === "") {
         return <Redirect to={"/search"} />;
       } else {
         return <Redirect to={`/search?${this.state.redirect}`} />;
       }
     }
+
     return (
       <div id="searchBarWrapper">
         <div id="searchBarHeaderWrapper">
@@ -50,8 +51,8 @@ class SearchBar extends Component {
             <input
               type="text"
               id="searchBarInput"
-              onChange={this.handleChange("searchValue")}
-              defaultValue={this.state.default}
+              onChange={(event) => this.props.write_search(event.target.value)}
+              defaultValue={this.props.search}
             />
             <div id="searchBarBottom"></div>
           </div>
@@ -61,4 +62,16 @@ class SearchBar extends Component {
   }
 }
 
-export default SearchBar;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    write_search: (event) => dispatch(search(event)),
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    search: state.search,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
