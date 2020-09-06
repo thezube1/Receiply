@@ -1,20 +1,16 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
-
+import { connect } from "react-redux";
+import { search } from "../../actions/actions";
 class NavbarSearch extends Component {
   state = {
-    search: "",
     redirect: undefined,
     updated: false,
   };
 
-  handleChange = (type) => (event) => {
-    this.setState({ [type]: event.target.value });
-  };
-
   handleSubmit = () => {
-    const searchValue = this.state.search.split(" ").join("+");
+    const searchValue = this.props.search.split(" ").join("+");
     this.setState({ redirect: `s=${searchValue}` });
   };
 
@@ -36,8 +32,8 @@ class NavbarSearch extends Component {
           type="text"
           placeholder="Search"
           id="navSearchInput"
-          onChange={this.handleChange("search")}
-          defaultValue={this.props.searchDefault}
+          onChange={(event) => this.props.write_search(event.target.value)}
+          defaultValue={this.props.search}
         />
         <button id="navSearchButton" onClick={this.handleSubmit}>
           <FaSearch id="navSearchButtonIcon " />
@@ -47,4 +43,16 @@ class NavbarSearch extends Component {
   }
 }
 
-export default NavbarSearch;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    write_search: (event) => dispatch(search(event)),
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    search: state.search,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavbarSearch);
