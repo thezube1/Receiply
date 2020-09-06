@@ -10,7 +10,7 @@ class SearchFilter extends Component {
       <div id="searchFilterWrapper">
         <div id="searchFilterContent">
           <div id="searchFilterTitle">Filters</div>
-          <SearchFilterShare query={this.props.query} />
+          <SearchFilterShare />
           <SearchFilterIngredients query={this.props.query} />
           <div id="searchFilterShareWrapper"></div>
         </div>

@@ -81,11 +81,11 @@ class SearchPage extends Component {
     } else {
       return (
         <div>
-          <NavbarSwitch searchDefault={this.state.query.s} />
+          <NavbarSwitch />
           <div id="searchContent">
-            <SearchBar query={this.state.query.s} />
+            <SearchBar />
             <div style={{ gridRow: "3/4", gridColumn: "1/2" }}>
-              <SearchFilters query={this.state.query} />
+              <SearchFilters query={this.props.query} />
             </div>
             <div id="searchContentWrapper">{this.renderResult()}</div>
           </div>
@@ -103,7 +103,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    search: state.search_query,
+    search_query: state.search_query,
   };
 };
 

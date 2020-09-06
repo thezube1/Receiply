@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { Checkbox } from "@material-ui/core/";
 
+import { connect } from "react-redux";
+
 class SearchFilterShare extends Component {
   state = {
     share: undefined,
@@ -23,8 +25,8 @@ class SearchFilterShare extends Component {
     if (this.state.share === undefined) {
       if (window.location.href.includes("shr") === true) {
         let newQuery = window.location.search;
-        newQuery = newQuery.replace(`?shr=${this.props.query.shr}`, "");
-        newQuery = newQuery.replace(`&shr=${this.props.query.shr}`, "");
+        newQuery = newQuery.replace(`?shr=${this.props.search_query.shr}`, "");
+        newQuery = newQuery.replace(`&shr=${this.props.search_query.shr}`, "");
         const urlLength = window.location.pathname.length + newQuery;
         if (urlLength > 1) {
           if (window.location.search.includes("?") === false) {
@@ -36,12 +38,14 @@ class SearchFilterShare extends Component {
     }
   };
 
+  /*
+
   handleFilter = (type) => {
     if (this.state.share === type) {
       if (window.location.href.includes(`shr=${type}`) === false) {
         if (window.location.href.includes("shr") === true) {
           let newQuery = window.location.search.replace(
-            `&shr=${this.props.query.shr}`,
+            `&shr=${this.props.search_query.shr}`,
             `&shr=${type}`
           );
           if (window.location.href.includes(`?`) === false) {
@@ -72,6 +76,15 @@ class SearchFilterShare extends Component {
             );
           }
         }
+      }
+    }
+  };
+  */
+
+  handleFilter = () => {
+    if (this.props.search_query.shr) {
+    } else {
+      if (this.props.search_query.length > 0) {
       }
     }
   };
@@ -122,4 +135,10 @@ class SearchFilterShare extends Component {
   }
 }
 
-export default SearchFilterShare;
+const mapStateToProps = (state) => {
+  return {
+    search_query: state.search_query,
+  };
+};
+
+export default connect(mapStateToProps)(SearchFilterShare);
