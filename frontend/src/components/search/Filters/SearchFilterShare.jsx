@@ -21,78 +21,40 @@ class SearchFilterShare extends Component {
     }
   };
 
-  handleUndefined = () => {
-    if (this.state.share === undefined) {
-      if (window.location.href.includes("shr") === true) {
-        let newQuery = window.location.search;
-        newQuery = newQuery.replace(`?shr=${this.props.search_query.shr}`, "");
-        newQuery = newQuery.replace(`&shr=${this.props.search_query.shr}`, "");
-        const urlLength = window.location.pathname.length + newQuery;
-        if (urlLength > 1) {
-          if (window.location.search.includes("?") === false) {
-            newQuery = `?${newQuery}`;
-          }
-        }
-        return <Redirect to={window.location.pathname + newQuery} />;
-      }
-    }
-  };
-
-  /*
-
   handleFilter = (type) => {
     if (this.state.share === type) {
-      if (window.location.href.includes(`shr=${type}`) === false) {
-        if (window.location.href.includes("shr") === true) {
-          let newQuery = window.location.search.replace(
+      let newQuery;
+      if (this.props.search_query.shr) {
+        newQuery = window.location.search.replace(
+          `&shr=${this.props.search_query.shr}`,
+          `&shr=${type}`
+        );
+        return <Redirect to={window.location.pathname + newQuery} />;
+      } else if (Object.keys(this.props.search_query).length > 0) {
+        newQuery = `${window.location.search}&shr=${type}`;
+        return <Redirect to={window.location.pathname + newQuery} />;
+      } else {
+        newQuery = `?shr=${type}`;
+        return <Redirect to={window.location.pathname + newQuery} />;
+      }
+    } else if (this.state.share === undefined && this.props.search_query.shr) {
+      let newQuery = window.location.search;
+      Object.keys(this.props.search_query).length > 1
+        ? (newQuery = newQuery.replace(
             `&shr=${this.props.search_query.shr}`,
-            `&shr=${type}`
-          );
-          if (window.location.href.includes(`?`) === false) {
-            newQuery = `?${newQuery}`;
-          }
-          return <Redirect to={window.location.pathname + newQuery} />;
-        } else {
-          if (window.location.href.includes(`?`) === false) {
-            return (
-              <Redirect
-                to={
-                  window.location.pathname +
-                  "?" +
-                  window.location.search +
-                  `shr=${type}`
-                }
-              />
-            );
-          } else {
-            return (
-              <Redirect
-                to={
-                  window.location.pathname +
-                  window.location.search +
-                  `&shr=${type}`
-                }
-              />
-            );
-          }
-        }
-      }
-    }
-  };
-  */
-
-  handleFilter = () => {
-    if (this.props.search_query.shr) {
-    } else {
-      if (this.props.search_query.length > 0) {
-      }
+            ""
+          ))
+        : (newQuery = newQuery.replace(
+            `?shr=${this.props.search_query.shr}`,
+            ""
+          ));
+      return <Redirect to={window.location.pathname + newQuery} />;
     }
   };
 
   render() {
     return (
       <React.Fragment>
-        {this.handleUndefined()}
         {this.handleFilter("prv")}
         {this.handleFilter("fam")}
         {this.handleFilter("pub")}
