@@ -184,6 +184,10 @@ app.get("/api/recipe/:id/creator", (req, res) => {
   });
 });
 
+app.get("/api/recipes/family", (req, res) => {
+  console.log(req.query);
+});
+
 app.get("/api/myrecipes/card", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;

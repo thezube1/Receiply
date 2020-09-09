@@ -24,7 +24,16 @@ class SearchFilterShare extends Component {
   handleFilter = (type) => {
     if (this.state.share === type) {
       let newQuery;
-      if (this.props.search_query.shr) {
+      if (
+        this.props.search_query.shr &&
+        Object.keys(this.props.search_query).length === 1
+      ) {
+        newQuery = window.location.search.replace(
+          `?shr=${this.props.search_query.shr}`,
+          `?shr=${type}`
+        );
+        return <Redirect to={window.location.pathname + newQuery} />;
+      } else if (this.props.search_query.shr) {
         newQuery = window.location.search.replace(
           `&shr=${this.props.search_query.shr}`,
           `&shr=${type}`

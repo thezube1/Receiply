@@ -1,17 +1,32 @@
-#browseWrapper {
-  margin-top: 100px;
-  display: grid;
-  grid-template-columns: 300px 1fr 10px;
-}
-
-#browseContent {
+.contentOutline {
   border: rgb(216, 216, 216);
   border-style: solid;
   border-width: 2px;
   border-radius: 5px;
-  grid-row: 2/3;
   grid-column: 2/3;
-  height: 500px;
+}
+
+.browseHeader {
+  font-family: "Source Sans Pro";
+  font-weight: 900;
+  font-size: 30px;
+  color: rgb(53, 53, 53);
+}
+
+#browseWrapper {
+  margin-top: 100px;
+  display: grid;
+  grid-template-columns: 300px 1fr 10px;
+  grid-template-rows: 0px 500px 500px;
+  grid-row-gap: 20px;
+}
+
+#familyContent {
+  height: 450px;
+}
+
+#publicContent {
+  height: 450px;
 }
 
 #browseFilters {
