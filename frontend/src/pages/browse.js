@@ -23,7 +23,7 @@ class BrowsePage extends Component {
       arrayFormat: "comma",
     });
     if (this.state.check === false) {
-      axios.get("/api/recipes/family", { params: { query: parsed } });
+      //axios.get("/api/recipes/family", { params: { query: parsed } });
       this.props.write_search(parsed);
       this.setState({ query: parsed, check: true });
     }
@@ -47,7 +47,7 @@ class BrowsePage extends Component {
         <NavbarSwitch />
         <div id="browseWrapper">
           <div id="browseFilters">
-            <SearchFilter query={this.state.query} />
+            <SearchFilter />
           </div>
           <div style={{ gridRow: "2/3" }}>
             <div className="browseHeader">Family recipes</div>
