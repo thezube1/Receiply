@@ -23,17 +23,19 @@ class BrowsePage extends Component {
       arrayFormat: "comma",
     });
     if (this.state.check === false) {
+      axios.get("/api/recipes/family", { params: { query: parsed } });
       this.props.write_search(parsed);
       this.setState({ query: parsed, check: true });
     }
   }
 
   componentDidUpdate(previousProps, previousState) {
-    axios.get("/api/recipes/family", { params: { ID: window.location.href } });
     const parsed = queryString.parse(this.props.location.search, {
       arrayFormat: "comma",
     });
     if (isEqual(parsed, previousState.query) === false) {
+      console.log(parsed);
+      //axios.get("/api/recipes/family", { params: { query: parsed } });
       this.props.write_search(parsed);
       this.setState({ query: parsed });
     }
