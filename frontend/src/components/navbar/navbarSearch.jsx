@@ -3,10 +3,12 @@ import { Redirect } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { connect } from "react-redux";
 import { search } from "../../actions/actions";
+import { motion } from "framer-motion";
 class NavbarSearch extends Component {
   state = {
     redirect: undefined,
     updated: false,
+    active: false,
   };
 
   handleSubmit = () => {
@@ -24,18 +26,30 @@ class NavbarSearch extends Component {
     }
   };
 
+  handleOpacity = () => {
+    return this.state.active === true ? "visible" : "hidden";
+  };
+
   render() {
     return (
-      <div className="navitem" id="navsearchwrapper">
+      <div id="navsearchwrapper">
         {this.handleCheck()}
         <input
+          style={{
+            visibility: this.handleOpacity(),
+            transition: "visiblity 1s",
+          }}
           type="text"
           placeholder="Search"
           id="navSearchInput"
           onChange={(event) => this.props.write_search(event.target.value)}
           defaultValue={this.props.search}
         />
-        <button id="navSearchButton" onClick={this.handleSubmit}>
+        <button
+          id="navSearchButton"
+          onClick={this.handleSubmit}
+          onMouseEnter={() => this.setState({ active: true })}
+        >
           <FaSearch id="navSearchButtonIcon " />
         </button>
       </div>
