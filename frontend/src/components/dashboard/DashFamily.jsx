@@ -23,7 +23,7 @@ class DashFamily extends Component {
       .catch((err) => console.log(err));
 
     axios
-      .get("/api/familyrecipes/card")
+      .get("/api/recipes/family")
       .then((res) => this.setState({ family_recipe: res.data }))
       .catch((err) => console.log(err));
   }

@@ -11,3 +11,17 @@ export const search_query = (input) => {
     payload: input,
   };
 };
+
+export const family_recipes = (input) => {
+  return {
+    type: "FAMILY_RECIPES",
+    payload: input,
+  };
+};
+
+export const public_recipes = (input) => {
+  return {
+    type: "PUBLIC_RECIPES",
+    payload: input,
+  };
+};

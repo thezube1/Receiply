@@ -184,11 +184,7 @@ app.get("/api/recipe/:id/creator", (req, res) => {
   });
 });
 
-app.get("/api/recipes/family", (req, res) => {
-  console.log(req.query);
-});
-
-app.get("/api/myrecipes/card", (req, res) => {
+app.get("/api/recipes/user", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     const token = req.cookies.userAuth;
@@ -213,7 +209,7 @@ app.get("/api/myrecipes/card", (req, res) => {
   });
 });
 
-app.get("/api/familyrecipes/card", (req, res) => {
+app.get("/api/recipes/family", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     const token = req.cookies.userAuth;
@@ -250,6 +246,21 @@ app.get("/api/familyrecipes/card", (req, res) => {
         }
       );
     });
+    connection.release();
+  });
+});
+
+app.get("/api/recipes/public", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query(
+      `SELECT * FROM Recipes WHERE PUBLISH_STATE='public'`,
+      (err, data) => {
+        if (err) throw err;
+        res.send(data);
+        res.end();
+      }
+    );
     connection.release();
   });
 });

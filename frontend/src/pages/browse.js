@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { search_query } from "../actions/actions";
+import {
+  family_recipes,
+  search_query,
+  public_recipes,
+} from "../actions/actions";
 
 import axios from "axios";
 
@@ -9,35 +13,35 @@ import { isEqual } from "lodash";
 
 import NavbarSwitch from "../components/navbar/navbarswitch";
 import SearchFilter from "../components/search/searchFilters";
+import FamilyContent from "../components/browse/FamilyContent";
+import PublicContent from "../components/browse/PublicContent";
 import "../components/browse/browse.css";
 
 class BrowsePage extends Component {
-  state = {
-    query: "",
-    recipes: undefined,
-    check: false,
-  };
+  state = {};
 
   componentDidMount() {
     const parsed = queryString.parse(this.props.location.search, {
       arrayFormat: "comma",
     });
-    if (this.state.check === false) {
-      //axios.get("/api/recipes/family", { params: { query: parsed } });
-      this.props.write_search(parsed);
-      this.setState({ query: parsed, check: true });
-    }
+    Promise.all([
+      axios
+        .get("/api/recipes/family", { params: { query: parsed } })
+        .then((data) => this.props.write_family_recipes(data.data)),
+      axios
+        .get("/api/recipes/public", { params: { query: parsed } })
+        .then((data) => this.props.write_public_recipes(data.data)),
+    ]);
+
+    this.props.write_query(parsed);
   }
 
   componentDidUpdate(previousProps, previousState) {
     const parsed = queryString.parse(this.props.location.search, {
       arrayFormat: "comma",
     });
-    if (isEqual(parsed, previousState.query) === false) {
-      console.log(parsed);
-      //axios.get("/api/recipes/family", { params: { query: parsed } });
-      this.props.write_search(parsed);
-      this.setState({ query: parsed });
+    if (isEqual(parsed, previousProps.search_query) === false) {
+      this.props.write_query(parsed);
     }
   }
 
@@ -49,13 +53,13 @@ class BrowsePage extends Component {
           <div id="browseFilters">
             <SearchFilter />
           </div>
-          <div style={{ gridRow: "2/3" }}>
-            <div className="browseHeader">Family recipes</div>
-            <div id="familyContent" className="contentOutline"></div>
-          </div>
-          <div style={{ gridRow: "3/4", gridColumn: "2/3" }}>
-            <div className="browseHeader">Public recipes</div>
-            <div id="publicContent" className="contentOutline"></div>
+          <div>
+            <div>
+              <FamilyContent />
+            </div>
+            <div>
+              <PublicContent />
+            </div>
           </div>
         </div>
       </React.Fragment>
@@ -65,13 +69,17 @@ class BrowsePage extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    write_search: (event) => dispatch(search_query(event)),
+    write_family_recipes: (data) => dispatch(family_recipes(data)),
+    write_query: (data) => dispatch(search_query(data)),
+    write_public_recipes: (data) => dispatch(public_recipes(data)),
   };
 };
 
 const mapStateToProps = (state) => {
   return {
+    family_recipes: state.family_recipes,
     search_query: state.search_query,
+    public_recipes: state.public_recipes,
   };
 };
 
