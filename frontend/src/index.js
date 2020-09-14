@@ -21,6 +21,7 @@ import FamilyPage from "./pages/family";
 import RecipePage from "./pages/recipe";
 import SearchPage from "./pages/search";
 import BrowsePage from "./pages/browse";
+import SettingsPage from "./pages/settings";
 import NotFoundPage from "./pages/404page";
 
 const store = createStore(
@@ -40,6 +41,7 @@ ReactDOM.render(
           <PrivateRoute path="/inviteurl/" component={InviteRouter} />
           <PrivateRoute path="/upload" component={UploadPage} />
           <PrivateRoute path="/family" component={FamilyPage} />
+          <PrivateRoute path="/settings" component={SettingsPage} />
           <Route path="/users/:user" component={PublicUser} />
           <Route exact path="/:recipe/:recipeid" component={RecipePage} />
           <RouterFork Route1={App} Route2={DashboardPage} />

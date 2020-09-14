@@ -34,7 +34,7 @@ class NavbarMain extends Component {
 
           <span id="accountitemswrapper">
             {this.handleSearch()}
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link to="/settings" style={{ textDecoration: "none" }}>
               <span className="navitem accountitems" id="signup">
                 Settings
               </span>

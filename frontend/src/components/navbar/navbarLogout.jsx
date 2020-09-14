@@ -36,7 +36,10 @@ class NavbarLogout extends Component {
                 <button id="logout" onClick={this.handleLogout}>
                   <span className="navitem accountitems">Logout</span>
                 </button>
-                <button id="logout">
+                <button
+                  id="logout"
+                  onClick={() => this.setState({ active: false })}
+                >
                   <span
                     className="navitem accountitems"
                     style={{ backgroundColor: "#D5D5D5" }}
