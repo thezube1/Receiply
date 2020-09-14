@@ -67,6 +67,13 @@ app.post("/api/login", (req, res) => {
   });
 });
 
+app.get("/api/logout", (req, res) => {
+  const token = req.cookies.userAuth;
+  if (!token) return res.send(false).end();
+  res.clearCookie("userAuth").send(true);
+  res.end();
+});
+
 app.post("/api/adduser", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;

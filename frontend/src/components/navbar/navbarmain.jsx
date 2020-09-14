@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./navbar.css";
 import NavbarSearch from "./navbarSearch";
 
+import NavbarLogout from "./navbarLogout";
 import { Link } from "react-router-dom";
 
 class NavbarMain extends Component {
@@ -38,11 +39,7 @@ class NavbarMain extends Component {
                 Settings
               </span>
             </Link>
-            <Link to="/" style={{ textDecoration: "none" }}>
-              <span className="navitem accountitems" id="login">
-                Logout
-              </span>
-            </Link>
+            <NavbarLogout />
           </span>
         </div>
       </div>

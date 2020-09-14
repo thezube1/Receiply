@@ -3,7 +3,6 @@ import { Redirect } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { connect } from "react-redux";
 import { search } from "../../actions/actions";
-import { motion } from "framer-motion";
 class NavbarSearch extends Component {
   state = {
     redirect: undefined,

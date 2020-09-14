@@ -7,6 +7,7 @@ import RouterFork from "./RouteFork";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import allReducer from "./reducers";
+import { CookiesProvider } from "react-cookie";
 
 //pages
 import App from "./App";
@@ -28,23 +29,25 @@ const store = createStore(
 );
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router>
-      <Switch>
-        <Route path="/signup" component={SignupPage} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/search" component={SearchPage} />
-        <Route path="/browse" component={BrowsePage} />
-        <PrivateRoute path="/inviteurl/" component={InviteRouter} />
-        <PrivateRoute path="/upload" component={UploadPage} />
-        <PrivateRoute path="/family" component={FamilyPage} />
-        <Route path="/users/:user" component={PublicUser} />
-        <Route exact path="/:recipe/:recipeid" component={RecipePage} />
-        <RouterFork Route1={App} Route2={DashboardPage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-    </Router>
-  </Provider>,
+  <CookiesProvider>
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route path="/signup" component={SignupPage} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/search" component={SearchPage} />
+          <Route path="/browse" component={BrowsePage} />
+          <PrivateRoute path="/inviteurl/" component={InviteRouter} />
+          <PrivateRoute path="/upload" component={UploadPage} />
+          <PrivateRoute path="/family" component={FamilyPage} />
+          <Route path="/users/:user" component={PublicUser} />
+          <Route exact path="/:recipe/:recipeid" component={RecipePage} />
+          <RouterFork Route1={App} Route2={DashboardPage} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </Router>
+    </Provider>
+  </CookiesProvider>,
   document.getElementById("root")
 );
 
