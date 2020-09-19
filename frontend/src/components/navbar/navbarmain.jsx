@@ -17,20 +17,34 @@ class NavbarMain extends Component {
     return (
       <div id="navWrapper">
         <div id="navContent">
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/" style={{ textDecoration: "none", outline: "none" }}>
             <span id="title">Receiply</span>
           </Link>
-          <Link to="/browse" style={{ textDecoration: "none" }}>
-            <span className="navitem">BROWSE</span>
+          <Link
+            to="/browse"
+            style={{ textDecoration: "none", outline: "none" }}
+          >
+            <span className="navitem">Browse</span>
           </Link>
 
-          <Link to="/upload" style={{ textDecoration: "none" }}>
-            <span className="navitem">UPLOAD</span>
+          <Link
+            to="/upload"
+            style={{ textDecoration: "none", outline: "none" }}
+          >
+            <span className="navitem">Upload</span>
           </Link>
-          <Link to="/family" style={{ textDecoration: "none" }}>
-            <span className="navitem">FAMILY</span>
+          <Link
+            to="/family"
+            style={{ textDecoration: "none", outline: "none" }}
+          >
+            <span className="navitem">Family</span>
           </Link>
-          <span className="navitem">MY RECIPES</span>
+          <Link
+            to="/myrecipes"
+            style={{ textDecoration: "none", outline: "none" }}
+          >
+            <span className="navitem">My Recipes</span>
+          </Link>
 
           <span id="accountitemswrapper">
             {this.handleSearch()}

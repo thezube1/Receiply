@@ -64,7 +64,7 @@ class DashFamily extends Component {
               <Link
                 to={`/recipe/${item.RECIPE_IDENTIFIER}`}
                 key={item.RECIPE_ID}
-                style={{ color: "black" }}
+                className="recipeCardLink"
               >
                 <DashFamilyItem
                   key={item.RECIPE_ID}
@@ -90,7 +90,7 @@ class DashFamily extends Component {
         return (
           <div className="dashRecipeContent">
             <div>You're not apart of a family!</div>
-            <Link to="/dashboard/family" style={{ textDecoration: "none" }}>
+            <Link to="/family" style={{ textDecoration: "none" }}>
               <span className="dashRecipeCreate">Join family</span>
             </Link>
           </div>

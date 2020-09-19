@@ -30,7 +30,7 @@ class DashRecipes extends Component {
               <Link
                 to={`/recipe/${item.RECIPE_IDENTIFIER}`}
                 key={item.RECIPE_ID}
-                style={{ color: "black" }}
+                className="recipeCardLink"
               >
                 <DashRecipeItem
                   title={item.RECIPE_NAME}

@@ -12,7 +12,7 @@ class App extends Component {
           <div id="backgroundImage">
             <div id="mainTitle">Receiply</div>
           </div>
-          <div>Welcome to Receiply</div>
+          <div id="mainHeader">Receiply is family recipe sharing made easy</div>
         </div>
       </React.Fragment>
     );

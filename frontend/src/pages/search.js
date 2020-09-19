@@ -61,12 +61,13 @@ class SearchPage extends Component {
             <Link
               key={item.RECIPE_ID}
               to={`/recipe/${item.RECIPE_IDENTIFIER}`}
-              style={{ color: "black", textDecoration: "none" }}
+              className="recipeCardLink"
             >
               <SearchItem
                 title={item.RECIPE_NAME}
                 image={item.PHOTO_NAME}
                 description={item.DESCRIPTION}
+                likes={item.LIKES}
               />
             </Link>
           );

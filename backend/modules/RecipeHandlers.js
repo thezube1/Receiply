@@ -128,11 +128,9 @@ app.get("/api/recipe/:id", (req, res) => {
           res.end();
         } else if (recipe[0].PUBLISH_STATE === "private") {
           if (token.user_id === recipe.CREATOR_ID) {
-            console.log("This is users own recipe");
             res.send(recipe);
             res.end();
           } else {
-            console.log("Not a public recipe!");
             res.send(false);
             res.end();
           }
@@ -143,10 +141,8 @@ app.get("/api/recipe/:id", (req, res) => {
               if (err) throw err;
               if (response.FAMILY_AUTH === 1) {
                 if (response.FAMILY === recipe.FAMILY_ID) {
-                  console.log("Family recipe is ok!");
                   res.send(recipe).end();
                 } else {
-                  console.log("No access to family recipe!");
                   res.send(false).end();
                 }
               }
@@ -171,7 +167,7 @@ app.get("/api/recipe/:id/creator", (req, res) => {
       (err, creator) => {
         if (err) throw err;
         connection.query(
-          `SELECT FIRST_NAME, LAST_NAME FROM Accounts WHERE USER_ID='${creator[0].CREATOR_ID}'`,
+          `SELECT FIRST_NAME, LAST_NAME, USERNAME FROM Accounts WHERE USER_ID='${creator[0].CREATOR_ID}'`,
           (err, user) => {
             if (err) throw err;
             res.send(user);
@@ -184,6 +180,29 @@ app.get("/api/recipe/:id/creator", (req, res) => {
   });
 });
 
+app.get("/api/recipe/:id/edit/authenticate", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    const token = req.cookies.userAuth;
+    if (!token) return res.status(200).send(false);
+    jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, user) => {
+      if (err) throw err;
+      const USER_ID = user.user_id;
+      connection.query(
+        `SELECT CREATOR_ID FROM Recipes WHERE RECIPE_IDENTIFIER='${req.params.id}'`,
+        (err, data) => {
+          if (err) throw err;
+          if (data[0].CREATOR_ID === USER_ID) {
+            res.send(true).end();
+          } else {
+            res.send(false).end();
+          }
+        }
+      );
+    });
+  });
+});
+
 app.get("/api/recipes/user", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
@@ -192,7 +211,7 @@ app.get("/api/recipes/user", (req, res) => {
     jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, user) => {
       const USER_ID = user.user_id;
       connection.query(
-        `SELECT RECIPE_ID, RECIPE_NAME, RECIPE_IDENTIFIER, DESCRIPTION, TTM, DATE_CREATED, PHOTO_NAME FROM Recipes WHERE CREATOR_ID = '${USER_ID}'`,
+        `SELECT * FROM Recipes WHERE CREATOR_ID = '${USER_ID}'`,
         (err, response) => {
           if (err) throw err;
           if (response.length === 0) {
@@ -230,7 +249,7 @@ app.get("/api/recipes/family", (req, res) => {
             res.end();
           } else {
             connection.query(
-              `SELECT RECIPE_ID, RECIPE_IDENTIFIER, RECIPE_NAME, DESCRIPTION, TTM, DATE_CREATED, PHOTO_NAME FROM Recipes WHERE FAMILY_ID = '${family[0].FAMILY}' AND PUBLISH_STATE = "family"`,
+              `SELECT * FROM Recipes WHERE FAMILY_ID = '${family[0].FAMILY}' AND PUBLISH_STATE = "family"`,
               (err, response) => {
                 if (err) throw err;
                 if (response.length === 0) {
@@ -254,7 +273,7 @@ app.get("/api/recipes/public", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     connection.query(
-      `SELECT * FROM Recipes WHERE PUBLISH_STATE='public'`,
+      `SELECT * FROM receiply.recipes WHERE PUBLISH_STATE='public' ORDER BY LIKES DESC`,
       (err, data) => {
         if (err) throw err;
         res.send(data);

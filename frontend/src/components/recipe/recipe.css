@@ -4,6 +4,40 @@
   border-radius: 5px;
 }
 
+#recipeUserWrapper {
+  margin-bottom: 30px;
+}
+
+#recipeUserCheck {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 20px;
+}
+
+#recipeEditButton {
+  margin-left: 10px;
+  font-size: 15px;
+  font-family: "Source Sans Pro";
+  font-weight: 500;
+  color: white;
+  background-color: rgb(255, 110, 120);
+  padding: 7px 15px;
+  border-radius: 3px;
+  position: relative;
+  bottom: 0px;
+  transition: bottom 0.1s;
+  border: none;
+}
+
+#recipeEditButton:hover {
+  color: white;
+  bottom: 2px;
+  text-decoration: none;
+  border: rgb(179, 179, 179);
+  border-bottom-style: solid;
+  border-width: 1px;
+}
+
 #recipePhotoContent {
   width: 500px;
   height: 300px;
@@ -238,13 +272,13 @@
 }
 
 #recipeWrapper {
+  margin-top: 120px;
   left: 50%;
   transform: translate(-50%);
   position: absolute;
 }
 
 #recipeContent {
-  margin-top: 120px;
   display: grid;
   grid-template-columns: 500px 600px;
   grid-auto-rows: max-content;

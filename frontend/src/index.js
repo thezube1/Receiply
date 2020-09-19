@@ -21,12 +21,16 @@ import FamilyPage from "./pages/family";
 import RecipePage from "./pages/recipe";
 import SearchPage from "./pages/search";
 import BrowsePage from "./pages/browse";
+import MyRecipesPage from "./pages/myrecipes";
 import SettingsPage from "./pages/settings";
 import NotFoundPage from "./pages/404page";
 
 const store = createStore(
   allReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  window.__REDUX_DEVTOOLS_EXTENSION__ &&
+    window.__REDUX_DEVTOOLS_EXTENSION__({
+      latency: 0,
+    })
 );
 
 ReactDOM.render(
@@ -42,7 +46,8 @@ ReactDOM.render(
           <PrivateRoute path="/upload" component={UploadPage} />
           <PrivateRoute path="/family" component={FamilyPage} />
           <PrivateRoute path="/settings" component={SettingsPage} />
-          <Route path="/users/:user" component={PublicUser} />
+          <PrivateRoute path="/myrecipes" component={MyRecipesPage} />
+          <Route path="/user/:user" component={PublicUser} />
           <Route exact path="/:recipe/:recipeid" component={RecipePage} />
           <RouterFork Route1={App} Route2={DashboardPage} />
           <Route component={NotFoundPage} />

@@ -53,3 +53,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+#searchItemLikes {
+  margin-top: 10px;
+}

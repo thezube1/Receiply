@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { FaThumbsUp } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 class RecipeInfo extends Component {
   state = {
@@ -59,9 +60,14 @@ class RecipeInfo extends Component {
             <div>Likes: {this.state.likes}</div>
           </div>
         </div>
-        <div id="recipeCreator">
-          by {this.state.name[0].FIRST_NAME} {this.state.name[0].LAST_NAME}
-        </div>
+        <Link
+          to={`/user/${this.state.name[0].USERNAME}`}
+          style={{ textDecoration: "none", outline: "none" }}
+        >
+          <div id="recipeCreator">
+            by {this.state.name[0].FIRST_NAME} {this.state.name[0].LAST_NAME}
+          </div>
+        </Link>
         <div id="recipeDescription">{this.props.description}</div>
         <div id="recipeInfoPreps">
           <div id="recipePrep">

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class SearchItem extends Component {
+class MyRecipeItem extends Component {
   state = {};
   render() {
     return (
@@ -18,4 +18,4 @@ class SearchItem extends Component {
   }
 }
 
-export default SearchItem;
+export default MyRecipeItem;

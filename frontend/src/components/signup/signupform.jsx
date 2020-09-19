@@ -46,7 +46,7 @@ class SignupForm extends Component {
       console.log("Please enter a valid email address!");
     } else {
       axios
-        .post("/api/adduser", data, {
+        .post("/api/user/create", data, {
           headers: {
             "Content-Type": "application/json",
             cancelToken: this.source.token,

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import "../components/recipe/recipe.css";
 
 import NavbarSwitch from "../components/navbar/navbarswitch";
@@ -15,6 +15,7 @@ import RecipeComments from "../components/recipe/RecipeComments";
 class RecipePage extends Component {
   state = {
     recipe: undefined,
+    isUsers: undefined,
   };
 
   convertURL = () => {
@@ -33,15 +34,31 @@ class RecipePage extends Component {
     }
   };
 
+  canEdit = () => {
+    if (this.state.isUsers === true) {
+      return (
+        <div id="recipeUserWrapper">
+          <span id="recipeUserCheck">This is your recipe</span>
+          <Link to="/" id="recipeEditButton">
+            Edit
+          </Link>
+        </div>
+      );
+    }
+  };
+
   componentDidMount() {
     axios
       .get(`/api/recipe/${this.props.match.params.recipeid}`)
       .then((response) => this.setState({ recipe: response.data }))
       .catch((err) => console.log(err));
+    axios
+      .get(`/api/recipe/${this.props.match.params.recipeid}/edit/authenticate`)
+      .then((response) => this.setState({ isUsers: response.data }));
   }
 
   render() {
-    if (this.state.recipe === undefined) {
+    if (this.state.recipe === undefined || this.state.isUsers === undefined) {
       return <Loading />;
     } else if (this.state.recipe === false) {
       return <NotFoundPage />;
@@ -53,6 +70,7 @@ class RecipePage extends Component {
         <React.Fragment>
           <NavbarSwitch />
           <div id="recipeWrapper">
+            {this.canEdit()}
             <div id="recipeContent">
               {this.checkURL()}
               <div id="recipePhotoWrapper">

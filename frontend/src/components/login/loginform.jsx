@@ -3,7 +3,8 @@ import validator from "email-validator";
 import { Redirect } from "react-router";
 import axios from "axios";
 import "./login.css";
-
+import { connect } from "react-redux";
+import { user_id } from "../../actions/actions";
 import Navbar from "../navbar/navbar";
 
 class LoginForm extends Component {
@@ -11,6 +12,7 @@ class LoginForm extends Component {
     email: "",
     pass: "",
     check: undefined,
+    error: undefined,
   };
 
   CancelToken = axios.CancelToken;
@@ -26,10 +28,11 @@ class LoginForm extends Component {
       account: [this.state.email, this.state.pass],
     };
     if (this.state.email.length === 0 || this.state.pass.length === 0) {
+      this.setState({ error: "fields" });
       console.log("One or more fields is empty");
     } else {
       if (validator.validate(this.state.email) === false) {
-        console.log("Please enter a valid email address!");
+        this.setState({ error: "email" });
       } else {
         axios
           .post("/api/login", data, {
@@ -48,10 +51,25 @@ class LoginForm extends Component {
     this.source.cancel();
   }
 
+  handleError = () => {
+    if (this.state.check === "badpass") {
+      return <div id="loginError">Incorrect password</div>;
+    } else {
+      switch (this.state.error) {
+        case "email":
+          return <div id="loginError">Please enter a valid email</div>;
+        case "fields":
+          return <div id="loginError">One or more fields is empty</div>;
+        default:
+      }
+    }
+  };
+
   render() {
     if (this.state.check === true) {
       return <Redirect to="/" />;
     }
+
     return (
       <div id="loginBody" className="mainColor">
         <Navbar />
@@ -59,6 +77,7 @@ class LoginForm extends Component {
           <div id="loginFormContainer">
             <div id="loginHeader">Login</div>
             <div id="loginBar"></div>
+            {this.handleError()}
             <div className="loginDescription">Email</div>
             <input
               type="text"
@@ -91,4 +110,16 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    write_user_id: (data) => dispatch(user_id(data)),
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    user_id: state.user_id,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

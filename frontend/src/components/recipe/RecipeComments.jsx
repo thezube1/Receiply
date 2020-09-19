@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 class RecipeComments extends Component {
   state = {
@@ -57,13 +58,17 @@ class RecipeComments extends Component {
         return (
           <div key={item.COMMENT_ID} id="recipeCommentItemWrapper">
             <div id="recipeCommentItemContent">
-              <div id="recipeCommentItemUserWrapper">
+              <Link
+                style={{ color: "black", textDecoration: "none" }}
+                id="recipeCommentItemUserWrapper"
+                to={`/user/${item.USERNAME}`}
+              >
                 <div id="recipeCommentItemUser">
                   {item.FIRST_NAME + " " + item.LAST_NAME}
                 </div>
                 <div id="recipeCommentItemProfile"></div>
                 <div id="recipeCommentItemDivider"></div>
-              </div>
+              </Link>
               <div id="recipeCommentItem">{item.COMMENT_CONTENT}</div>
             </div>
             <div className="recipeCommentBorder"></div>

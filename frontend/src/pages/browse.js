@@ -1,18 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  family_recipes,
-  search_query,
-  public_recipes,
-} from "../actions/actions";
-
-import axios from "axios";
-
+import { search_query } from "../actions/actions";
+import { Switch, Route, Link } from "react-router-dom";
 import queryString from "query-string";
 import { isEqual } from "lodash";
 
+import BrowseFilters from "../components/browse/BrowseFilters";
 import NavbarSwitch from "../components/navbar/navbarswitch";
-import SearchFilter from "../components/search/searchFilters";
+import FamilyContentPage from "../components/browse/FamilyContentPage";
+import PublicContentPage from "../components/browse/PublicContentPage";
 import FamilyContent from "../components/browse/FamilyContent";
 import PublicContent from "../components/browse/PublicContent";
 import "../components/browse/browse.css";
@@ -24,14 +20,6 @@ class BrowsePage extends Component {
     const parsed = queryString.parse(this.props.location.search, {
       arrayFormat: "comma",
     });
-    Promise.all([
-      axios
-        .get("/api/recipes/family", { params: { query: parsed } })
-        .then((data) => this.props.write_family_recipes(data.data)),
-      axios
-        .get("/api/recipes/public", { params: { query: parsed } })
-        .then((data) => this.props.write_public_recipes(data.data)),
-    ]);
 
     this.props.write_query(parsed);
   }
@@ -47,39 +35,49 @@ class BrowsePage extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <NavbarSwitch />
-        <div id="browseWrapper">
-          <div id="browseFilters">
-            <SearchFilter />
-          </div>
-          <div>
-            <div>
-              <FamilyContent />
+      <Switch>
+        <Route path="/browse/family" component={FamilyContentPage} />
+        <Route path="/browse/public" component={PublicContentPage} />
+        <React.Fragment>
+          <NavbarSwitch />
+          <div id="browseWrapper">
+            <div id="browseFilters">
+              <BrowseFilters />
             </div>
             <div>
-              <PublicContent />
+              <div style={{ marginBottom: 50 }}>
+                <FamilyContent splice1={0} splice2={5} />
+                <div className="browserMoreWrapper">
+                  <Link to="/browse/family" className="browseMore">
+                    View more
+                  </Link>
+                </div>
+              </div>
+              <div>
+                <PublicContent splice1={0} splice2={5} />
+                <div className="browserMoreWrapper">
+                  <Link to="/browse/public" className="browseMore">
+                    View more
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </React.Fragment>
+        </React.Fragment>
+      </Switch>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    write_family_recipes: (data) => dispatch(family_recipes(data)),
     write_query: (data) => dispatch(search_query(data)),
-    write_public_recipes: (data) => dispatch(public_recipes(data)),
   };
 };
 
 const mapStateToProps = (state) => {
   return {
-    family_recipes: state.family_recipes,
     search_query: state.search_query,
-    public_recipes: state.public_recipes,
   };
 };
 

@@ -15,3 +15,12 @@ export const publicRecipesReducer = (state = [], action) => {
       return state;
   }
 };
+
+export const userRecipesReducer = (state = [], action) => {
+  switch (action.type) {
+    case "USER_RECIPES":
+      return action.payload;
+    default:
+      return state;
+  }
+};

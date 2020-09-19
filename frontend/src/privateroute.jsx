@@ -12,7 +12,7 @@ class PrivateRoute extends Component {
   abortController = new AbortController();
   componentDidMount() {
     axios
-      .get("/api/authorize", { cancelToken: this.source.token })
+      .get("/api/user/authorize", { cancelToken: this.source.token })
       .then((result) => this.setState({ authorized: result.data }))
       .catch((error) => {
         console.log(error.response);

@@ -56,7 +56,7 @@ app.post("/api/login", (req, res) => {
               );
             } else {
               console.log("Incorrect password!");
-              res.send(false);
+              res.send("badpass");
               res.end();
             }
           });
@@ -74,7 +74,7 @@ app.get("/api/logout", (req, res) => {
   res.end();
 });
 
-app.post("/api/adduser", (req, res) => {
+app.post("/api/user/create", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     const email = req.body.account[0];
@@ -133,7 +133,7 @@ app.post("/api/adduser", (req, res) => {
   });
 });
 
-app.get("/api/authorize", (req, res) => {
+app.get("/api/user/authorize", (req, res) => {
   const token = req.cookies.userAuth;
   if (!token) return res.send(false).end();
   jwt.verify(
@@ -153,11 +153,11 @@ app.get("/api/authorize", (req, res) => {
   );
 });
 
-app.get("/api/getuserinfo/:user", (req, res) => {
+app.get("/api/user/:user", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     connection.query(
-      `SELECT USERNAME, FIRST_NAME, LAST_NAME, FAMILY FROM Accounts WHERE USERNAME='${req.params.user}'`,
+      `SELECT USER_ID, USERNAME, FIRST_NAME, LAST_NAME, FAMILY FROM Accounts WHERE USERNAME='${req.params.user}'`,
       (err, data) => {
         if (err) throw err;
         if (data.length === 0) {

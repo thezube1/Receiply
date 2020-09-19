@@ -13,7 +13,7 @@ class RouterFork extends Component {
 
   componentDidMount() {
     axios
-      .get("/api/authorize", { cancelToken: this.source.token })
+      .get("/api/user/authorize", { cancelToken: this.source.token })
       .then((response) => this.setState({ valid: response.data }))
       .catch((err) => console.log(err));
   }

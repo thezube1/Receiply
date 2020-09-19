@@ -21,7 +21,7 @@ class PublicUser extends Component {
   abortController = new AbortController();
   componentDidMount() {
     axios
-      .get(`/api/getuserinfo/${this.props.match.params.user}`, {
+      .get(`/api/user/${this.props.match.params.user}`, {
         cancelToken: this.source.token,
       })
       .then((response) => this.setState({ user: response.data }));

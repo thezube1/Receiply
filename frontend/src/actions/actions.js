@@ -25,3 +25,17 @@ export const public_recipes = (input) => {
     payload: input,
   };
 };
+
+export const user_recipes = (input) => {
+  return {
+    type: "USER_RECIPES",
+    payload: input,
+  };
+};
+
+export const user_id = (input) => {
+  return {
+    type: "USER_ID",
+    payload: input,
+  };
+};
