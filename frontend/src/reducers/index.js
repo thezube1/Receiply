@@ -7,6 +7,8 @@ import {
 } from "./recipeReducer";
 import { userReducer } from "./userReducer";
 
+console.log(window.location.pathname);
+
 const allReducers = combineReducers({
   search: searchReducer,
   search_query: queryReducer,

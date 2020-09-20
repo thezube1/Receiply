@@ -45,14 +45,8 @@ class BrowsePage extends Component {
               <BrowseFilters />
             </div>
             <div>
-              <div style={{ marginBottom: 50 }}>
-                <FamilyContent splice1={0} splice2={5} />
-                <div className="browserMoreWrapper">
-                  <Link to="/browse/family" className="browseMore">
-                    View more
-                  </Link>
-                </div>
-              </div>
+              <FamilyContent splice1={0} splice2={5} />
+
               <div>
                 <PublicContent splice1={0} splice2={5} />
                 <div className="browserMoreWrapper">

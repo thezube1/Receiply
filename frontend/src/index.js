@@ -12,6 +12,7 @@ import { CookiesProvider } from "react-cookie";
 //pages
 import App from "./App";
 import SignupPage from "./pages/signup";
+import EditPage from "./pages/edit";
 import LoginPage from "./pages/login";
 import DashboardPage from "./pages/dashboard";
 import PublicUser from "./pages/publicuser";
@@ -49,6 +50,7 @@ ReactDOM.render(
           <PrivateRoute path="/myrecipes" component={MyRecipesPage} />
           <Route path="/user/:user" component={PublicUser} />
           <Route exact path="/:recipe/:recipeid" component={RecipePage} />
+          <Route exact path="/:recipe/:recipeid/edit" component={EditPage} />
           <RouterFork Route1={App} Route2={DashboardPage} />
           <Route component={NotFoundPage} />
         </Switch>

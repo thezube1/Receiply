@@ -14,32 +14,49 @@ class FamilyContent extends Component {
       .then((data) => this.props.write_family_recipes(data.data));
   }
 
-  render() {
-    return (
-      <React.Fragment>
-        <div className="browseHeader">Family recipes</div>
-        <div id="familyContent" className="contentOutline">
-          {this.props.family_recipes
-            .splice(this.props.splice1, this.props.splice2)
-            .map((item) => {
-              return (
-                <Link
-                  to={`/recipe/${item.RECIPE_IDENTIFIER}`}
-                  key={item.RECIPE_ID}
-                  className="recipeCardLink"
-                >
-                  <SearchItem
-                    title={item.RECIPE_NAME}
-                    image={item.PHOTO_NAME}
-                    description={item.DESCRIPTION}
-                    likes={item.LIKES}
-                  />
-                </Link>
-              );
-            })}
+  viewMoreVisible = () => {
+    if (window.location.pathname.includes("/browse/family") === false) {
+      return (
+        <div className="browserMoreWrapper">
+          <Link to="/browse/family" className="browseMore">
+            View more
+          </Link>
         </div>
-      </React.Fragment>
-    );
+      );
+    }
+  };
+
+  render() {
+    if (this.props.family_recipes !== false) {
+      return (
+        <div style={{ marginBottom: 50 }}>
+          <div className="browseHeader">Family recipes</div>
+          <div id="familyContent" className="contentOutline">
+            {this.props.family_recipes
+              .splice(this.props.splice1, this.props.splice2)
+              .map((item) => {
+                return (
+                  <Link
+                    to={`/recipe/${item.RECIPE_IDENTIFIER}`}
+                    key={item.RECIPE_ID}
+                    className="recipeCardLink"
+                  >
+                    <SearchItem
+                      title={item.RECIPE_NAME}
+                      image={item.PHOTO_NAME}
+                      description={item.DESCRIPTION}
+                      likes={item.LIKES}
+                    />
+                  </Link>
+                );
+              })}
+          </div>
+          {this.viewMoreVisible()}
+        </div>
+      );
+    } else {
+      return <React.Fragment></React.Fragment>;
+    }
   }
 }
 

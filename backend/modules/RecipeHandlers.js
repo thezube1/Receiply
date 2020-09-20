@@ -200,6 +200,7 @@ app.get("/api/recipe/:id/edit/authenticate", (req, res) => {
         }
       );
     });
+    connection.release();
   });
 });
 
@@ -239,6 +240,7 @@ app.get("/api/recipes/family", (req, res) => {
         `SELECT FAMILY, FAMILY_AUTH FROM Accounts WHERE USER_ID = '${USER_ID}'`,
         (err, family) => {
           if (err) throw err;
+
           if (
             family.length === 0 ||
             family[0].FAMILY === "NULL" ||

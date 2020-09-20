@@ -39,7 +39,7 @@ class RecipePage extends Component {
       return (
         <div id="recipeUserWrapper">
           <span id="recipeUserCheck">This is your recipe</span>
-          <Link to="/" id="recipeEditButton">
+          <Link to={`${window.location.pathname}/edit`} id="recipeEditButton">
             Edit
           </Link>
         </div>
