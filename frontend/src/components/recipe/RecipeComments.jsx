@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 class RecipeComments extends Component {
   state = {
@@ -85,6 +86,9 @@ class RecipeComments extends Component {
   }
 
   render() {
+    if (this.state.commented === false) {
+      return <Redirect to="/login" />;
+    }
     if (this.state.commented === true) {
       window.location.reload(false);
     }

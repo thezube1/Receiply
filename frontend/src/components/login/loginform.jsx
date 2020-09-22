@@ -3,8 +3,6 @@ import validator from "email-validator";
 import { Redirect } from "react-router";
 import axios from "axios";
 import "./login.css";
-import { connect } from "react-redux";
-import { user_id } from "../../actions/actions";
 import Navbar from "../navbar/navbar";
 
 class LoginForm extends Component {
@@ -110,16 +108,4 @@ class LoginForm extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    write_user_id: (data) => dispatch(user_id(data)),
-  };
-};
-
-const mapStateToProps = (state) => {
-  return {
-    user_id: state.user_id,
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default LoginForm;

@@ -3,7 +3,9 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import LoadingPage from "../Loading";
 import NotFoundPage from "./404page";
-import Upload from "../components/upload/uploadManual/uploadManual";
+import EditForm from "../components/edit/EditForm";
+import "../components/edit/edit.css";
+
 class EditPage extends Component {
   state = {
     auth: undefined,
@@ -27,24 +29,31 @@ class EditPage extends Component {
   };
 
   componentDidMount() {
-    axios
-      .get(`/api/recipe/${this.props.match.params.recipeid}/edit/authenticate`)
-      .then((response) => this.setState({ auth: response.data }))
-      .catch((err) => console.log(err));
-    axios
-      .get(`/api/recipe/${this.props.match.params.recipeid}`)
-      .then((response) => this.setState({ recipe: response.data }))
-      .catch((err) => console.log(err));
+    document.body.style.backgroundColor = "rgb(136, 228, 138)";
+    Promise.all([
+      axios
+        .get(
+          `/api/recipe/${this.props.match.params.recipeid}/edit/authenticate`
+        )
+        .then((response) => this.setState({ auth: response.data }))
+        .catch((err) => console.log(err)),
+      axios
+        .get(`/api/recipe/${this.props.match.params.recipeid}`)
+        .then((response) => this.setState({ recipe: response.data }))
+        .catch((err) => console.log(err)),
+    ]);
+  }
+  componentWillUnmount() {
+    document.body.style.backgroundColor = "white";
   }
 
   render() {
-    console.log(this.state.auth, this.state.recipe);
     if (this.state.auth === undefined || this.state.recipe === undefined) {
       return <LoadingPage />;
     } else if (this.state.auth === false) {
       return <NotFoundPage />;
     } else {
-      return <Upload />;
+      return <EditForm recipe={this.props.match.params.recipeid} />;
     }
   }
 }

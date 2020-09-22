@@ -117,7 +117,6 @@ app.get("/api/recipe/:id", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     const token = req.cookies.userAuth;
-    if (!token) return res.send(false).end();
     connection.query(
       `SELECT * FROM Recipes WHERE RECIPE_IDENTIFIER='${req.params.id}'`,
       (err, recipe) => {

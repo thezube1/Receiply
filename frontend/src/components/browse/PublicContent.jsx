@@ -14,7 +14,6 @@ class PublicContent extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <React.Fragment>
         <div className="browseHeader">Public recipes</div>

@@ -5,9 +5,7 @@ import {
   publicRecipesReducer,
   userRecipesReducer,
 } from "./recipeReducer";
-import { userReducer } from "./userReducer";
-
-console.log(window.location.pathname);
+import { EditReducer } from "./editReducer";
 
 const allReducers = combineReducers({
   search: searchReducer,
@@ -15,7 +13,7 @@ const allReducers = combineReducers({
   user_recipes: userRecipesReducer,
   family_recipes: familyRecipesReducer,
   public_recipes: publicRecipesReducer,
-  user_id: userReducer,
+  edit_reducer: EditReducer,
 });
 
 export default allReducers;

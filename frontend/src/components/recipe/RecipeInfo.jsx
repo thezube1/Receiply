@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { FaThumbsUp } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 class RecipeInfo extends Component {
   state = {
@@ -9,6 +10,7 @@ class RecipeInfo extends Component {
     color: "black",
     liked: undefined,
     likes: this.props.likes,
+    isLogged: undefined,
   };
 
   componentDidMount() {
@@ -33,70 +35,78 @@ class RecipeInfo extends Component {
         })
       : this.setState({ color: "black", likes: this.state.likes - 1 });
     if (this.state.liked === true) {
-      axios.get(`/api/recipe/${this.props.recipeid}/unlike`);
+      axios
+        .get(`/api/recipe/${this.props.recipeid}/unlike`)
+        .then((res) => this.setState({ isLogged: res.data }));
       this.setState({ liked: false });
     } else {
-      axios.get(`/api/recipe/${this.props.recipeid}/like`);
+      axios
+        .get(`/api/recipe/${this.props.recipeid}/like`)
+        .then((res) => this.setState({ isLogged: res.data }));
       this.setState({ liked: true });
     }
   }
 
   render() {
-    return (
-      <React.Fragment>
-        <div id="recipeTitleWrapper">
-          <div>
-            <span id="recipeTitle">{this.props.title}</span>
+    if (this.state.isLogged === false) {
+      return <Redirect to="/login" />;
+    } else {
+      return (
+        <React.Fragment>
+          <div id="recipeTitleWrapper">
+            <div>
+              <span id="recipeTitle">{this.props.title}</span>
+            </div>
+            <div id="recipeTitleDivider"></div>
+            <div id="recipeLikesWrapper">
+              <button
+                id="recipeLikeButton"
+                onClick={() => this.handleLike()}
+                style={{ color: this.state.color }}
+              >
+                <FaThumbsUp id="recipeLikeIcon" />
+              </button>
+              <div>Likes: {this.state.likes}</div>
+            </div>
           </div>
-          <div id="recipeTitleDivider"></div>
-          <div id="recipeLikesWrapper">
-            <button
-              id="recipeLikeButton"
-              onClick={() => this.handleLike()}
-              style={{ color: this.state.color }}
-            >
-              <FaThumbsUp id="recipeLikeIcon" />
-            </button>
-            <div>Likes: {this.state.likes}</div>
+          <Link
+            to={`/user/${this.state.name[0].USERNAME}`}
+            style={{ textDecoration: "none", outline: "none" }}
+          >
+            <div id="recipeCreator">
+              by {this.state.name[0].FIRST_NAME} {this.state.name[0].LAST_NAME}
+            </div>
+          </Link>
+          <div id="recipeDescription">{this.props.description}</div>
+          <div id="recipeInfoPreps">
+            <div id="recipePrep">
+              <div className="recipeHeader">Prep instructions</div>
+              <ol id="recipePrepItemWrapper">
+                {this.props.prep.map((item, index) => {
+                  return (
+                    <li className="recipePrepItem" key={index}>
+                      {item}
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+            <div>
+              <div className="recipeHeader">Ingredients</div>
+              <ul id="recipeIngredientsItemWrapper">
+                {this.props.ingredients.map((item, index) => {
+                  return (
+                    <li className="recipePrepItem" key={index}>
+                      {item}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </div>
-        </div>
-        <Link
-          to={`/user/${this.state.name[0].USERNAME}`}
-          style={{ textDecoration: "none", outline: "none" }}
-        >
-          <div id="recipeCreator">
-            by {this.state.name[0].FIRST_NAME} {this.state.name[0].LAST_NAME}
-          </div>
-        </Link>
-        <div id="recipeDescription">{this.props.description}</div>
-        <div id="recipeInfoPreps">
-          <div id="recipePrep">
-            <div className="recipeHeader">Prep instructions</div>
-            <ol id="recipePrepItemWrapper">
-              {this.props.prep.map((item, index) => {
-                return (
-                  <li className="recipePrepItem" key={index}>
-                    {item}
-                  </li>
-                );
-              })}
-            </ol>
-          </div>
-          <div>
-            <div className="recipeHeader">Ingredients</div>
-            <ul id="recipeIngredientsItemWrapper">
-              {this.props.ingredients.map((item, index) => {
-                return (
-                  <li className="recipePrepItem" key={index}>
-                    {item}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
-      </React.Fragment>
-    );
+        </React.Fragment>
+      );
+    }
   }
 }
 

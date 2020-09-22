@@ -1,0 +1,17 @@
+#editWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 100px;
+}
+
+#editContentWrapper {
+  margin-top: 100px;
+  background-color: white;
+  width: 1000px;
+  display: grid;
+  justify-content: center;
+}
+
+#editContent {
+  margin-top: 50px;
+}
