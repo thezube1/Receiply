@@ -5,9 +5,12 @@ import EditShare from "./EditShare";
 import { connect } from "react-redux";
 import NavbarMain from "../navbar/navbarmain";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 class EditForm extends Component {
-  state = {};
+  state = {
+    check: undefined,
+  };
 
   componentDidMount() {
     axios.get(`/api/recipe/${this.props.recipe}`).then((res) => {
@@ -17,104 +20,118 @@ class EditForm extends Component {
   }
 
   handleSave = () => {
-    axios.put(`/api/recipe/${this.props.recipe}`, {
-      recipe: {
-        ...this.props.editReducer,
-        recipe_identifier: this.props.recipe,
-      },
-    });
+    axios
+      .put(`/api/recipe/${this.props.recipe}`, {
+        recipe: {
+          ...this.props.editReducer,
+          recipe_identifier: this.props.recipe,
+        },
+      })
+      .then((res) => this.setState({ check: res.data }));
   };
 
   render() {
-    return (
-      <React.Fragment>
-        <NavbarMain />
-        <div id="editWrapper">
-          <div id="editContentWrapper">
-            <div id="editContent">
-              <div id="uploadManualTitleWrapper">
-                <div id="uploadManualTitle">Edit recipe</div>
-                <div className="uploadManualRequired">
-                  Items with * are required fields
+    if (this.state.check === true) {
+      return <Redirect to={`/recipe/${this.props.recipe}`} />;
+    } else {
+      return (
+        <React.Fragment>
+          <NavbarMain />
+          <div id="editWrapper">
+            <div id="editContentWrapper">
+              <div id="editContent">
+                <div id="uploadManualTitleWrapper">
+                  <div id="uploadManualTitle">Edit recipe</div>
+                  <div className="uploadManualRequired">
+                    Items with * are required fields
+                  </div>
                 </div>
-              </div>
-              <EditItem
-                title="Time to make"
-                isRequired={true}
-                reducer={this.props.write_ttm}
-                defaultValue={this.props.editReducer.ttm}
-                placeholder="Enter estimated time to make"
-                width={300}
-              />
-              <EditItem
-                title="Name of Recipe"
-                isRequired={true}
-                reducer={this.props.write_recipe_name}
-                defaultValue={this.props.editReducer.recipe_name}
-                placeholder="Enter name of Recipe"
-                width={900}
-              />
-              <EditItem
-                title="Description"
-                isRequired={true}
-                reducer={this.props.write_recipe_description}
-                defaultValue={this.props.editReducer.recipe_description}
-                placeholder="Enter description of Recipe"
-                width={900}
-                height={200}
-              />
-              <EditItemArray
-                title="Ingredients:"
-                reducer={this.props.write_recipe_ingredient}
-                defaultValue={this.props.editReducer.recipe_ingredients}
-                placeholder="Enter ingredient"
-                addReducer={this.props.add_recipe_ingredient}
-                removeReducer={this.props.remove_recipe_ingredient}
-              />
-              <EditItemArray
-                title="Prep instructions:"
-                reducer={this.props.write_prep_instruction}
-                defaultValue={this.props.editReducer.prep_instructions}
-                placeholder="Enter step"
-                addReducer={this.props.add_prep_instruction}
-                removeReducer={this.props.remove_prep_instruction}
-              />
-              <EditItemArray
-                title="Cooking instructions:"
-                reducer={this.props.write_cooking_instruction}
-                defaultValue={this.props.editReducer.cooking_instructions}
-                placeholder="Enter step"
-                addReducer={this.props.add_cooking_instruction}
-                removeReducer={this.props.remove_cooking_instruction}
-                isRequired={true}
-              />
-              <EditItemArray
-                title="Tags:"
-                reducer={this.props.write_tags}
-                defaultValue={this.props.editReducer.tags}
-                placeholder="Enter tag"
-                addReducer={this.props.add_tag}
-                removeReducer={this.props.remove_tag}
-                width={300}
-              />
-              <EditShare
-                reducer={this.props.share}
-                defaultValue={this.props.editReducer.share}
-              />
-              <div className="uploadManualInputWrapper">
-                <button
-                  id="uploadManualSave"
-                  className="uploadManualButton"
-                  onClick={this.handleSave}
-                >
-                  Save edits
-                </button>
+                <EditItem
+                  title="Time to make"
+                  isRequired={true}
+                  reducer={this.props.write_ttm}
+                  defaultValue={this.props.editReducer.ttm}
+                  placeholder="Enter estimated time to make"
+                  width={300}
+                />
+                <EditItem
+                  title="Name of Recipe"
+                  isRequired={true}
+                  reducer={this.props.write_recipe_name}
+                  defaultValue={this.props.editReducer.recipe_name}
+                  placeholder="Enter name of Recipe"
+                  width={900}
+                />
+                <EditItem
+                  title="Description"
+                  isRequired={true}
+                  reducer={this.props.write_recipe_description}
+                  defaultValue={this.props.editReducer.recipe_description}
+                  placeholder="Enter description of Recipe"
+                  width={900}
+                  height={200}
+                />
+                <EditItemArray
+                  title="Ingredients:"
+                  reducer={this.props.write_recipe_ingredient}
+                  defaultValue={this.props.editReducer.recipe_ingredients}
+                  placeholder="Enter ingredient"
+                  addReducer={this.props.add_recipe_ingredient}
+                  removeReducer={this.props.remove_recipe_ingredient}
+                />
+                <EditItemArray
+                  title="Prep instructions:"
+                  reducer={this.props.write_prep_instruction}
+                  defaultValue={this.props.editReducer.prep_instructions}
+                  placeholder="Enter step"
+                  addReducer={this.props.add_prep_instruction}
+                  removeReducer={this.props.remove_prep_instruction}
+                />
+                <EditItemArray
+                  title="Cooking instructions:"
+                  reducer={this.props.write_cooking_instruction}
+                  defaultValue={this.props.editReducer.cooking_instructions}
+                  placeholder="Enter step"
+                  addReducer={this.props.add_cooking_instruction}
+                  removeReducer={this.props.remove_cooking_instruction}
+                  isRequired={true}
+                />
+                <EditItemArray
+                  title="Tags:"
+                  reducer={this.props.write_tags}
+                  defaultValue={this.props.editReducer.tags}
+                  placeholder="Enter tag"
+                  addReducer={this.props.add_tag}
+                  removeReducer={this.props.remove_tag}
+                  width={300}
+                />
+                <EditShare
+                  reducer={this.props.share}
+                  defaultValue={this.props.editReducer.share}
+                />
+                <div className="uploadManualInputWrapper">
+                  <button
+                    id="uploadManualSave"
+                    className="uploadManualButton"
+                    onClick={this.handleSave}
+                  >
+                    Save edits
+                  </button>
+                  <button
+                    id="uploadManualSave"
+                    className="uploadManualButton"
+                    style={{ marginLeft: 20, backgroundColor: "gray" }}
+                    onClick={() => this.setState({ check: true })}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </React.Fragment>
-    );
+        </React.Fragment>
+      );
+    }
   }
 }
 

@@ -30,27 +30,30 @@ app.put(`/api/recipe/:id`, (req, res) => {
           return "private";
       }
     };
+    const ingredients = JSON.stringify(recipe.recipe_ingredients);
+
     connection.query(
       `UPDATE Recipes SET TTM='${recipe.ttm}', RECIPE_NAME=${connection.escape(
         recipe.recipe_name
       )}, DESCRIPTION=${connection.escape(
         recipe.recipe_description
-      )}, INGREDIENTS='{"ingredients": ${
+      )}, INGREDIENTS='{"ingredients": ${JSON.stringify(
         recipe.recipe_ingredients
-      }}', PREP_INSTRUCTIONS='{"prep": ${
-        recipe.recipe_ingredients
-      }}, COOKING_INSTRUCTIONS='{"cooking": ${
+      )}}', PREP_INSTRUCTIONS='{"prep": ${JSON.stringify(
+        recipe.prep_instructions
+      )}}', COOKING_INSTRUCTIONS='{"cooking": ${JSON.stringify(
         recipe.cooking_instructions
-      }}, TAGS='{"tags": ${JSON.stringify(
+      )}}', TAGS='{"tags": ${JSON.stringify(
         recipe.tags
-      )}}, PUBLISH_STATE=${checkShare()} WHERE RECIPE_IDENTIFIER='${
+      )}}', PUBLISH_STATE='${checkShare()}' WHERE RECIPE_IDENTIFIER='${
         recipe.recipe_identifier
       }'`,
-      (err, res) => {
+      (err, response) => {
         if (err) throw err;
-        console.log(res);
+        res.send(true).end();
       }
     );
+    connection.release();
   });
 });
 
