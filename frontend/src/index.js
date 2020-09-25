@@ -25,6 +25,7 @@ import BrowsePage from "./pages/browse";
 import MyRecipesPage from "./pages/myrecipes";
 import SettingsPage from "./pages/settings";
 import NotFoundPage from "./pages/404page";
+import Loading from "./Loading";
 
 const store = createStore(
   allReducer,
@@ -40,6 +41,7 @@ ReactDOM.render(
       <Router>
         <Switch>
           <Route path="/signup" component={SignupPage} />
+          <Route path="/loading" component={Loading} />
           <Route path="/login" component={LoginPage} />
           <Route path="/search" component={SearchPage} />
           <Route path="/browse" component={BrowsePage} />

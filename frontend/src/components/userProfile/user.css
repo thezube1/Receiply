@@ -28,7 +28,7 @@
 
 #userContent {
   display: grid;
-  grid-template-columns: 550px 1fr;
+  grid-template-columns: 600px 1fr;
   grid-row-gap: 20px;
   grid-template-rows: 200px;
   position: relative;
@@ -46,13 +46,12 @@
   border-width: 2px;
   border-radius: 3px;
   max-width: 1000px;
-  width: 97%;
   height: max-content;
 }
 
 #userRecipeContent {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 200px);
+  grid-template-columns: repeat(auto-fit, 290px);
   grid-gap: 10px;
   justify-content: center;
   margin: 20px;

@@ -18,7 +18,7 @@ class DashPop extends Component {
 
   render() {
     return (
-      <div className="dashOutlineWrapper">
+      <div className="dashOutlineWrapper" id="dashPopWrapper">
         <div className="dashOutlineHeader">Popular Recipes</div>
         <Carousel indicators={false}>
           <Carousel.Item>
@@ -53,6 +53,9 @@ class DashPop extends Component {
             </div>
           </Carousel.Item>
         </Carousel>
+        <Link to="/browse/popular" className="browseMore" id="dashFamilyView">
+          View more
+        </Link>
       </div>
     );
   }

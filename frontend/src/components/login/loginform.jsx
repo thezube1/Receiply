@@ -33,7 +33,7 @@ class LoginForm extends Component {
         this.setState({ error: "email" });
       } else {
         axios
-          .post("/api/login", data, {
+          .post("/api/user/login", data, {
             headers: {
               "Content-Type": "application/json",
               cancelToken: this.source.token,

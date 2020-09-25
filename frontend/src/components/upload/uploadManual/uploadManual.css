@@ -96,14 +96,21 @@
   height: 50px;
   border: rgb(236, 236, 236);
   border-style: solid;
-  border-radius: 5px;
-  border-width: 2px;
+  border-radius: 3px;
+  border-width: 1px;
   padding: 10px;
   color: rgb(56, 56, 56);
   font-size: 16px;
   display: grid;
   display: inline-block;
   outline: none;
+  transition: 0.2s;
+}
+
+.uploadManualInput:focus {
+  border: rgb(167, 167, 167);
+  border-style: solid;
+  border-width: 1px;
 }
 
 .uploadManualInput::placeholder {

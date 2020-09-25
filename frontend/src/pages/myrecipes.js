@@ -28,29 +28,41 @@ class MyRecipesPage extends Component {
   };
 
   render() {
+    console.log(this.props.user_recipes.length < 1);
     return (
       <div>
         <NavbarMain />
         <div id="myrecipesWrapper">
           <div className="contentOutline" id="myrecipesContent">
-            {this.props.user_recipes.map((item) => {
-              return (
-                <React.Fragment>
-                  <Link
-                    key={item.RECIPE_ID}
-                    to={`/recipe/${item.RECIPE_IDENTIFIER}`}
-                    className="recipeCardLink"
-                  >
-                    <MyRecipesItem
-                      title={item.RECIPE_NAME}
-                      description={item.DESCRIPTION}
-                      image={item.PHOTO_NAME}
-                      likes={item.LIKES}
-                    />
-                  </Link>
-                </React.Fragment>
-              );
-            })}
+            {this.props.user_recipes.length > 1 ? (
+              this.props.user_recipes.map((item) => {
+                return (
+                  <div key={item.RECIPE_ID}>
+                    <Link
+                      to={`/recipe/${item.RECIPE_IDENTIFIER}`}
+                      className="recipeCardLink"
+                    >
+                      <MyRecipesItem
+                        title={item.RECIPE_NAME}
+                        description={item.DESCRIPTION}
+                        image={item.PHOTO_NAME}
+                        likes={item.LIKES}
+                      />
+                    </Link>
+                    <div id="myrecipesShare">
+                      Share type: {item.PUBLISH_STATE}
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div id="myrecipeNoneWrapper">
+                <div id="myrecipeText">You have no recipes</div>
+                <Link to="/upload" id="myrecipeUploadButton">
+                  Create recipe
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

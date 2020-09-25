@@ -6,6 +6,7 @@ class UploadPhoto extends Component {
   state = {
     selectedFile: undefined,
     name: "",
+    tesseract: undefined,
   };
 
   onFileChange = (event) => {
@@ -23,10 +24,17 @@ class UploadPhoto extends Component {
   handleProcess = (photo) => {
     Tesseract.recognize(photo, "eng", { logger: (m) => console.log(m) }).then(
       ({ data: { text } }) => {
-        console.log(text);
+        this.setState({ tesseract: text });
       }
     );
   };
+
+  handleOCR = () => {
+    if (typeof this.state.tesseract === "string") {
+      return <div>{this.state.tesseract}</div>;
+    }
+  };
+
   render() {
     return (
       <div id="uploadPhotoWrapper">
@@ -47,6 +55,7 @@ class UploadPhoto extends Component {
               onClick={() => this.handleProcess(this.state.selectedFile)}
             />
           </div>
+          {this.handleOCR()}
         </div>
       </div>
     );

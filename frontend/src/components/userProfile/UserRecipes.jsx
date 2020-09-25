@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import UserRecipeCard from "./UserRecipeCard";
+import SearchItem from "../search/SearchItem";
+import { Link } from "react-router-dom";
 
 class UserRecipes extends Component {
   state = {};
@@ -10,11 +11,18 @@ class UserRecipes extends Component {
     } else {
       return this.props.recipes.map((item) => {
         return (
-          <UserRecipeCard
-            title={item.RECIPE_NAME}
-            description={item.DESCRIPTION}
-            image={item.PHOTO_NAME}
-          />
+          <Link
+            key={item.RECIPE_ID}
+            to={`/recipe/${item.RECIPE_IDENTIFIER}`}
+            className="recipeCardLink"
+          >
+            <SearchItem
+              title={item.RECIPE_NAME}
+              image={item.PHOTO_NAME}
+              description={item.DESCRIPTION}
+              likes={item.LIKES}
+            />
+          </Link>
         );
       });
     }

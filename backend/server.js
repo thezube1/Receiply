@@ -9,6 +9,7 @@ const SearchHandlers = require("./modules/SearchHandlers");
 const LikeHandlers = require("./modules/LikeHandlers");
 const CommentHandlers = require("./modules/CommentHandlers");
 const EditHandlers = require("./modules/EditHandlers");
+const SettingsHandler = require("./modules/SettingsHandler");
 const bodyParser = require("body-parser");
 const PORT = 8080;
 
@@ -23,6 +24,7 @@ app.use(LikeHandlers);
 app.use(SearchHandlers);
 app.use(CommentHandlers);
 app.use(EditHandlers);
+app.use(SettingsHandler);
 app.use("/uploads", express.static("uploads"));
 
 app.listen(PORT, () => {

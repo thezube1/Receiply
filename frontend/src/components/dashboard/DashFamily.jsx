@@ -15,17 +15,18 @@ class DashFamily extends Component {
   abortController = new AbortController();
 
   componentDidMount() {
-    axios
-      .get("/api/getfamily", { cancelToken: this.source.token })
-      .then((result) => {
-        this.setState({ family: result.data });
-      })
-      .catch((err) => console.log(err));
-
-    axios
-      .get("/api/recipes/family")
-      .then((res) => this.setState({ family_recipe: res.data }))
-      .catch((err) => console.log(err));
+    Promise.all([
+      axios
+        .get("/api/getfamily", { cancelToken: this.source.token })
+        .then((result) => {
+          this.setState({ family: result.data });
+        })
+        .catch((err) => console.log(err)),
+      axios
+        .get("/api/recipes/family")
+        .then((res) => this.setState({ family_recipe: res.data }))
+        .catch((err) => console.log(err)),
+    ]);
   }
 
   randomShowRange = () => {
@@ -52,62 +53,60 @@ class DashFamily extends Component {
     }
   };
 
-  handleRecipes = () => {
-    if (this.state.family_recipe === false) {
-      return <div>Your family does not have any recipes yet!</div>;
-    } else {
-      const num = this.randomShowRange();
-      return (
-        <div>
-          {this.state.family_recipe.slice(num[0], num[1]).map((item) => {
-            return (
-              <Link
-                to={`/recipe/${item.RECIPE_IDENTIFIER}`}
-                key={item.RECIPE_ID}
-                className="recipeCardLink"
-              >
-                <DashFamilyItem
-                  key={item.RECIPE_ID}
-                  title={item.RECIPE_NAME}
-                  description={item.DESCRIPTION}
-                  image={item.PHOTO_NAME}
-                />
-              </Link>
-            );
-          })}
-        </div>
-      );
-    }
-  };
-
   componentWillUnmount() {
     this.source.cancel("Operation canceled by the user.");
   }
 
   render() {
-    const checkFamily = () => {
-      if (this.state.family === false) {
-        return (
+    const num = this.randomShowRange();
+    return (
+      <div className="dashOutlineWrapper" id="dashFamilyWrapper">
+        <div className="dashOutlineHeader">Family</div>
+        {this.state.family === false ? (
           <div className="dashRecipeContent">
             <div>You're not apart of a family!</div>
             <Link to="/family" style={{ textDecoration: "none" }}>
               <span className="dashRecipeCreate">Join family</span>
             </Link>
           </div>
-        );
-      } else {
-        return (
+        ) : (
           <div>
             <div id="dashFamilyName">{this.state.family}</div>
-            <div id="dashFamilyContent">{this.handleRecipes()}</div>
+            <div id="dashFamilyContent">
+              {this.state.family_recipe === false ? (
+                <div>Your family does not have any recipes yet!</div>
+              ) : (
+                <div>
+                  {this.state.family_recipe
+                    .slice(num[0], num[1])
+                    .map((item) => {
+                      return (
+                        <Link
+                          to={`/recipe/${item.RECIPE_IDENTIFIER}`}
+                          key={item.RECIPE_ID}
+                          className="recipeCardLink"
+                        >
+                          <DashFamilyItem
+                            key={item.RECIPE_ID}
+                            title={item.RECIPE_NAME}
+                            description={item.DESCRIPTION}
+                            image={item.PHOTO_NAME}
+                          />
+                        </Link>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
           </div>
-        );
-      }
-    };
-    return (
-      <div className="dashOutlineWrapper">
-        <div className="dashOutlineHeader">Family</div>
-        {checkFamily()}
+        )}
+        {this.state.family_recipe !== false ? (
+          <Link to="/browse/family" className="browseMore" id="dashFamilyView">
+            View more
+          </Link>
+        ) : (
+          <React.Fragment></React.Fragment>
+        )}
       </div>
     );
   }

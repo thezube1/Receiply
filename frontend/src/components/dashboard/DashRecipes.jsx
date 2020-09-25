@@ -36,6 +36,7 @@ class DashRecipes extends Component {
                   title={item.RECIPE_NAME}
                   description={item.DESCRIPTION}
                   image={item.PHOTO_NAME}
+                  likes={item.LIKES}
                 />
               </Link>
             );
@@ -58,9 +59,12 @@ class DashRecipes extends Component {
 
   render() {
     return (
-      <div className="dashOutlineWrapper">
+      <div className="dashOutlineWrapper" id="dashRecipeWrapper">
         <div className="dashOutlineHeader">My Recipes</div>
         {this.checkRecipe()}
+        <Link to="/myrecipes" className="browseMore" id="dashFamilyView">
+          View more
+        </Link>
       </div>
     );
   }

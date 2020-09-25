@@ -1,0 +1,123 @@
+#settings {
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  grid-template-columns: 300px 1fr;
+}
+
+#settingsWrapper {
+  display: grid;
+  grid-column-gap: 20px;
+  grid-template-columns: 80px 200px;
+}
+
+#settingsContent {
+  grid-column: 2/3;
+}
+
+#settingsNavbarWrapper {
+  grid-column: 1/2;
+  position: relative;
+  display: flex;
+}
+
+#settingsSeperator {
+  width: 1px;
+  height: 500px;
+  background-color: rgb(209, 209, 209);
+  position: absolute;
+  right: 0;
+}
+
+.settingsNavbarItem {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 17px;
+  bottom: 0px;
+  position: relative;
+  transition: bottom 0.1s;
+}
+
+.settingsNavbarItem:hover {
+  text-decoration: none;
+  bottom: 2px;
+  border-width: 1px;
+  border-bottom-style: solid;
+}
+
+.settingsTitle {
+  font-family: Helvetica;
+  font-weight: 600;
+  font-size: 20px;
+  color: rgb(58, 58, 58);
+  margin-bottom: 20px;
+}
+
+.settingsHeader {
+  font-family: Helvetica;
+  font-size: 17px;
+}
+
+.settingsItemWrapper {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 20px;
+  color: rgb(58, 58, 58);
+  margin-bottom: 20px;
+}
+
+.settingsItemButton {
+  border: none;
+  background-color: rgb(255, 110, 120);
+  color: white;
+  bottom: 0;
+  position: relative;
+  transition: bottom 0.1s;
+  font-size: 14px;
+  border-radius: 2px;
+  padding: 5px;
+  border-width: 1px;
+}
+
+.settingsItemButton:hover {
+  bottom: 2px;
+
+  border: rgb(211, 88, 96);
+  border-bottom-style: solid;
+  border-width: 1px;
+}
+
+.settingsInput {
+  outline: none;
+  border: rgb(226, 226, 226);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  padding: 10px;
+  transition: border 0.2s;
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  color: rgb(68, 68, 68);
+  margin-bottom: 5px;
+}
+
+.settingsInput::placeholder {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+}
+
+.settingsInput:focus {
+  border: rgb(151, 151, 151);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.settingsItemCancel {
+  background-color: rgb(209, 209, 209);
+}
+
+.settingsItemCancel:hover {
+  border: rgb(150, 150, 150);
+  border-bottom-style: solid;
+  border-width: 1px;
+}

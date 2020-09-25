@@ -16,7 +16,7 @@ const pool = mysql.createPool({
 
 app.use(cookieParser());
 
-app.post("/api/login", (req, res) => {
+app.post("/api/user/login", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) return console.log(err);
     const email = req.body.account[0];
@@ -67,7 +67,7 @@ app.post("/api/login", (req, res) => {
   });
 });
 
-app.get("/api/logout", (req, res) => {
+app.get("/api/user/logout", (req, res) => {
   const token = req.cookies.userAuth;
   if (!token) return res.send(false).end();
   res.clearCookie("userAuth").send(true);
@@ -82,7 +82,6 @@ app.post("/api/user/create", (req, res) => {
     const last = req.body.account[2];
     const user = req.body.account[3];
     const pass = req.body.account[4];
-    console.log("Check!");
     connection.query(
       `SELECT EMAIL, PASS FROM Accounts WHERE EMAIL='${email}'`,
       (err, data) => {
@@ -106,9 +105,7 @@ app.post("/api/user/create", (req, res) => {
                         (err, data) => {
                           if (err) {
                             console.log(err);
-                            res.end();
                           } else {
-                            console.log("Success!");
                             res.send(true);
                             res.end();
                           }
@@ -117,13 +114,12 @@ app.post("/api/user/create", (req, res) => {
                     }
                   );
                 } else {
-                  console.log("User with that username already exists!");
+                  res.send("badUser").end();
                 }
               }
             );
           } else {
-            console.log("Account with email has already been created!");
-            res.send(false);
+            res.send("badEmail");
             res.end();
           }
         }
@@ -151,6 +147,29 @@ app.get("/api/user/authorize", (req, res) => {
       }
     }
   );
+});
+
+app.get("/api/user/current", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    const token = req.cookies.userAuth;
+    if (!token) return res.send(false).end();
+    jwt.verify(
+      req.cookies.userAuth,
+      process.env.ACCESS_TOKEN_KEY,
+      (err, result) => {
+        if (err) throw err;
+        connection.query(
+          `SELECT USER_ID, EMAIL, USERNAME, FIRST_NAME, LAST_NAME FROM Accounts WHERE USER_ID='${result.user_id}'`,
+          (err, data) => {
+            if (err) throw err;
+            res.send(data).end();
+          }
+        );
+      }
+    );
+    connection.release();
+  });
 });
 
 app.get("/api/user/:user", (req, res) => {
@@ -186,3 +205,23 @@ app.get("/api/user/:user", (req, res) => {
   });
 });
 module.exports = app;
+
+app.get("/api/user/:user/recipes/public", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query(
+      `SELECT USER_ID FROM Accounts WHERE USERNAME='${req.params.user}'`,
+      (err, data) => {
+        if (err) throw err;
+        connection.query(
+          `SELECT * FROM Recipes WHERE CREATOR_ID='${data[0].USER_ID}' AND PUBLISH_STATE='public'`,
+          (err, response) => {
+            if (err) throw err;
+            res.send(response).end();
+          }
+        );
+      }
+    );
+    connection.release();
+  });
+});

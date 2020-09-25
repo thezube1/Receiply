@@ -60,6 +60,18 @@
   transform: translate(-50%);
 }
 
+#dashFamilyWrapper {
+  height: 850px;
+}
+
+#dashRecipeWrapper {
+  height: 420px;
+}
+
+#dashPopWrapper {
+  height: 420px;
+}
+
 #dashFamilyItemContent {
   grid-template-rows: 40px 100px 55px;
 }
@@ -140,6 +152,12 @@
   font-size: 40px;
   display: grid;
   justify-content: center;
+}
+
+#dashFamilyView {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
 }
 
 @media screen and (max-width: 1100px) {

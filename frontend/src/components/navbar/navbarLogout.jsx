@@ -12,7 +12,9 @@ class NavbarLogout extends Component {
   };
 
   handleLogout = () => {
-    axios.get("/api/logout").then((res) => this.setState({ logout: res.data }));
+    axios
+      .get("/api/user/logout")
+      .then((res) => this.setState({ logout: res.data }));
   };
 
   render() {

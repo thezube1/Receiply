@@ -22,6 +22,7 @@ class DashRecipeItem extends Component {
             />
           </div>
           <div className="dashPopItemDesc">{this.state.description}</div>
+          <div>Likes: {this.props.likes}</div>
         </div>
       </div>
     );

@@ -73,13 +73,20 @@
 #navSearchInput {
   border: rgb(230, 230, 230);
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   border-radius: 2px;
   height: 40px;
   width: 250px;
   font-size: 16px;
   font-weight: 400;
   padding-left: 5px;
+  transition: border 0.2s;
+}
+
+#navSearchInput:focus {
+  border: gray;
+  border-style: solid;
+  border-width: 1px;
 }
 
 #navSearchInput::placeholder {

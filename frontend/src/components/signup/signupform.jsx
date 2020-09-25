@@ -40,9 +40,10 @@ class SignupForm extends Component {
       this.state.user.length === 0 ||
       this.state.pass.length === 0
     )
-      return console.log("One or more fields is missing");
+      return this.setState({ check1: "fieldMissing" });
 
     if (validator.validate(this.state.email) === false) {
+      this.setState({ check1: "unvalidEmail" });
       console.log("Please enter a valid email address!");
     } else {
       axios
@@ -58,11 +59,10 @@ class SignupForm extends Component {
           const datas = {
             account: [this.state.email, this.state.pass],
           };
-          if (result.data === false) {
-            console.log("User already exists!");
+          if (result.data === "badUser" || result.data === "badEmail") {
           } else {
             axios
-              .post("/api/login", datas, {
+              .post("/api/user/login", datas, {
                 headers: {
                   "Content-Type": "application/json",
                   cancelToken: this.source.token,
@@ -71,8 +71,6 @@ class SignupForm extends Component {
               .then((response) => this.setState({ check2: response.data }));
           }
         });
-
-      console.log("User submitted - waiting for response");
     }
   };
 
@@ -96,6 +94,28 @@ class SignupForm extends Component {
           <div id="signupFormContainer">
             <div id="signupHeader">Signup</div>
             <div id="signupBar"></div>
+            {this.state.check1 === "badUser" ? (
+              <div id="loginError">User with that username already exists!</div>
+            ) : (
+              <React.Fragment></React.Fragment>
+            )}
+            {this.state.check1 === "badEmail" ? (
+              <div id="loginError">
+                Account with email has already been created!
+              </div>
+            ) : (
+              <React.Fragment></React.Fragment>
+            )}
+            {this.state.check1 === "unvalidEmail" ? (
+              <div id="loginError">Please enter a valid email address</div>
+            ) : (
+              <React.Fragment></React.Fragment>
+            )}
+            {this.state.check1 === "fieldMissing" ? (
+              <div id="loginError">One or more fields is missing</div>
+            ) : (
+              <React.Fragment></React.Fragment>
+            )}
             <div className="signupDescription">Email</div>
             <input
               type="text"

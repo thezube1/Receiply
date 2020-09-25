@@ -13,25 +13,27 @@ import UserRecipes from "../components/userProfile/UserRecipes";
 class PublicUser extends Component {
   state = {
     user: [{ USERNAME: "", FIRST_NAME: "", LAST_NAME: "", FAMILY: "" }],
-    recipes: [],
+    recipes: undefined,
   };
 
   CancelToken = axios.CancelToken;
   source = this.CancelToken.source();
   abortController = new AbortController();
+
   componentDidMount() {
-    axios
-      .get(`/api/user/${this.props.match.params.user}`, {
-        cancelToken: this.source.token,
-      })
-      .then((response) => this.setState({ user: response.data }));
-    if (this.state.user[0].USERNAME !== "") {
+    Promise.all([
       axios
-        .get(`/api/userrecipes/public/${this.props.match.params.user}`, {
+        .get(`/api/user/${this.props.match.params.user}`, {
           cancelToken: this.source.token,
         })
-        .then((response) => this.setState({ recipes: response.data }));
-    }
+        .then((response) => this.setState({ user: response.data })),
+      axios
+        .get(`/api/user/${this.props.match.params.user}/recipes/public`, {
+          cancelToken: this.source.token,
+        })
+        .then((res) => this.setState({ recipes: res.data }))
+        .catch((err) => console.log(err)),
+    ]);
   }
 
   componentWillUnmount() {
@@ -41,7 +43,10 @@ class PublicUser extends Component {
   render() {
     if (this.state.user === false) {
       return <NotFoundPage />;
-    } else if (this.state.user[0].USERNAME === "") {
+    } else if (
+      this.state.user[0].USERNAME === "" ||
+      this.state.recipes === undefined
+    ) {
       return <LoadingPage />;
     }
     return (

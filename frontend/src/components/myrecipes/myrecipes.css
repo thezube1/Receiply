@@ -12,3 +12,43 @@
   width: 90%;
   height: max-content;
 }
+
+#myrecipesShare {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+}
+
+#myrecipeUploadButton {
+  background-color: rgb(255, 110, 120);
+  border: none;
+  color: white;
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 17px;
+  position: relative;
+  bottom: 0px;
+  transition: bottom 0.1s;
+  padding: 5px;
+  border-radius: 3px;
+  text-align: center;
+}
+
+#myrecipeUploadButton:hover {
+  border: rgb(207, 88, 96);
+  border-width: 2px;
+  border-bottom-style: solid;
+  bottom: 2px;
+  text-align: center;
+  text-decoration: none;
+}
+
+#myrecipeNoneWrapper {
+  display: grid;
+  justify-content: center;
+}
+
+#myrecipeText {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 22px;
+}
