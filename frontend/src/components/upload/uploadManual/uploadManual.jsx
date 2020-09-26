@@ -125,9 +125,18 @@ class uploadManual extends Component {
 
   handleWarning = () => {
     if (this.state.check === false) {
+      window.scrollTo(0, 0);
       return (
         <div className="uploadManualRequired">
           One or more fields is missing!
+        </div>
+      );
+    } else if (this.state.complete === "badFamily") {
+      window.scrollTo(0, 0);
+      return (
+        <div className="uploadManualRequired">
+          Error: You are not apart of a family, so you cannot choose to share
+          with family
         </div>
       );
     }

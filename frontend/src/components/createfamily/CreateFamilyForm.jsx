@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import NavbarMain from "../navbar/navbarmain";
 import { ToggleButtonGroup, ToggleButton } from "react-bootstrap";
+import SearchFamily from "./SearchFamily";
+import { Route, Switch } from "react-router-dom";
 import axios from "axios";
 
 import "./createfamily.css";
@@ -122,55 +124,58 @@ class CreateFamilyForm extends Component {
 
   render() {
     return (
-      <div id="createFam">
-        <NavbarMain />
-        <div id="createFamWrapper">
-          <div>
-            <div id="createFamContent">
-              {this.renderChoice()}
+      <Switch>
+        <Route path="/family/search" component={SearchFamily} />
+        <div id="createFam">
+          <NavbarMain />
+          <div id="createFamWrapper">
+            <div>
+              <div id="createFamContent">
+                {this.renderChoice()}
 
-              <div id="createFamilyBottom">
-                <div>
-                  <div className="createFamThinText">Search for family</div>
-                  <input
-                    className="createFamInput"
-                    type="text"
-                    placeholder="Search for family"
-                  />
+                <div id="createFamilyBottom">
                   <div>
+                    <div className="createFamThinText">Search for family</div>
                     <input
-                      id="createFamilyBottomButton"
-                      className="createFamilyButton"
-                      type="button"
-                      value="Search"
+                      className="createFamInput"
+                      type="text"
+                      placeholder="Search for family"
                     />
+                    <div>
+                      <input
+                        id="createFamilyBottomButton"
+                        className="createFamilyButton"
+                        type="button"
+                        value="Search"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div id="createFamilyBottomSeperator"></div>
-                <div>
-                  <div className="createFamThinText">Create family</div>
-                  <input
-                    className="createFamInput"
-                    type="text"
-                    placeholder="Enter name of family"
-                    defaultValue={this.state.name.LAST_NAME}
-                    onChange={this.handleInput("createName")}
-                  />
+                  <div id="createFamilyBottomSeperator"></div>
                   <div>
+                    <div className="createFamThinText">Create family</div>
                     <input
-                      id="createFamilyBottomButton"
-                      className="createFamilyButton"
-                      type="button"
-                      value="Create"
-                      onClick={this.handleCreate}
+                      className="createFamInput"
+                      type="text"
+                      placeholder="Enter name of family"
+                      defaultValue={this.state.name.LAST_NAME}
+                      onChange={this.handleInput("createName")}
                     />
+                    <div>
+                      <input
+                        id="createFamilyBottomButton"
+                        className="createFamilyButton"
+                        type="button"
+                        value="Create"
+                        onClick={this.handleCreate}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </Switch>
     );
   }
 }

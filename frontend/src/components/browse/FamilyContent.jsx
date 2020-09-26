@@ -55,7 +55,14 @@ class FamilyContent extends Component {
         </div>
       );
     } else {
-      return <React.Fragment></React.Fragment>;
+      return (
+        <div id="myrecipeNoneWrapper">
+          <div id="myrecipeText">You are not apart of a family</div>
+          <Link to="/family" id="myrecipeUploadButton">
+            Join family
+          </Link>
+        </div>
+      );
     }
   }
 }

@@ -23,14 +23,13 @@ class RouterFork extends Component {
   }
 
   render() {
-    if (this.state.valid === undefined) {
-      return <Route exact path="/" component={LoadingPage} />;
-    }
-    if (this.state.valid === false) {
-      return <Route exact path="/" component={this.props.Route1} />;
-    } else {
-      return <Route exact path="/" component={this.props.Route2} />;
-    }
+    return this.state.valid === undefined ? (
+      <Route exact path="/" component={LoadingPage} />
+    ) : this.state.valid === false ? (
+      <Route exact path="/" component={this.props.Route1} />
+    ) : (
+      <Route exact path="/" component={this.props.Route2} />
+    );
   }
 }
 

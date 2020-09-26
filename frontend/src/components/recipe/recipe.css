@@ -38,6 +38,30 @@
   border-width: 1px;
 }
 
+#recipeDeleteButton {
+  margin-left: 10px;
+  font-size: 15px;
+  font-family: "Source Sans Pro";
+  font-weight: 500;
+  color: white;
+  background-color: rgb(255, 110, 120);
+  padding: 5px 10px;
+  border-radius: 3px;
+  position: relative;
+  bottom: 1px;
+  transition: bottom 0.1s;
+  border: none;
+}
+
+#recipeDeleteButton:hover {
+  color: white;
+  bottom: 3px;
+  text-decoration: none;
+  border: rgb(179, 179, 179);
+  border-bottom-style: solid;
+  border-width: 1px;
+}
+
 #recipePhotoContent {
   width: 500px;
   height: 300px;

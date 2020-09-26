@@ -49,6 +49,7 @@ class FamilyMain extends Component {
         <Switch>
           <Route path="/family/invite" component={FamilyInvite} />
           <Route path="/family/members" component={FamilyMembers} />
+
           <React.Fragment>
             <FamilyMemberRequests />
             <div id="familyContentWrapper">

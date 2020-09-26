@@ -36,16 +36,14 @@ class FamilyPage extends Component {
     } else {
       return (
         <React.Fragment>
-          <React.Fragment>
-            <div id="familyWrapper">
-              <div>
-                <FamilyNav />
-              </div>
-              <div>
-                <FamilyMain />
-              </div>
+          <div id="familyWrapper">
+            <div>
+              <FamilyNav />
             </div>
-          </React.Fragment>
+            <div>
+              <FamilyMain />
+            </div>
+          </div>
         </React.Fragment>
       );
     }

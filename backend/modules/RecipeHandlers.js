@@ -56,8 +56,12 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
         `SELECT FAMILY, FAMILY_AUTH FROM Accounts WHERE USER_ID = '${result.user_id}'`,
         (err, family) => {
           if (err) throw err;
-
-          if (family[0].FAMILY_AUTH !== "request") {
+          if (
+            family[0].FAMILY === null ||
+            family[0].FAMILY_AUTH === "request"
+          ) {
+            res.send("badFamily").end();
+          } else {
             let SHARING;
             let FAMILY_ID;
             const USER_ID = result.user_id;
@@ -103,8 +107,6 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
                 }
               }
             );
-          } else {
-            console.log("No family present");
           }
         }
       );
@@ -154,6 +156,35 @@ app.get("/api/recipe/:id", (req, res) => {
         }
       }
     );
+    connection.release();
+  });
+});
+
+app.delete("/api/recipe/:id", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    const token = req.cookies.userAuth;
+    if (!token) return res.status(200).send(false);
+    jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, user) => {
+      if (err) throw err;
+      connection.query(
+        `SELECT CREATOR_ID FROM Recipes WHERE RECIPE_IDENTIFIER='${req.params.id}'`,
+        (err, check) => {
+          if (err) throw err;
+          if (check[0].CREATOR_ID === user.user_id) {
+            connection.query(
+              `DELETE FROM Recipes WHERE RECIPE_IDENTIFIER='${req.params.id}'`,
+              (err, response) => {
+                if (err) throw err;
+                res.send(true).end();
+              }
+            );
+          } else {
+            res.send(false).end();
+          }
+        }
+      );
+    });
     connection.release();
   });
 });
