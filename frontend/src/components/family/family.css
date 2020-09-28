@@ -49,11 +49,30 @@
   grid-template-columns: 300px 1fr;
 }
 
+.familyNavItemWrapper {
+  margin-bottom: 50px;
+}
+
 .familyNavItem {
   font-family: "Source Sans Pro";
-  font-weight: 700;
-  font-size: 30px;
-  margin-top: 15px;
+  font-weight: 300;
+  font-size: 20px;
+  background-color: rgb(250, 106, 106);
+  color: white;
+  padding: 10px;
+  border-radius: 3px;
+  bottom: 0px;
+  position: relative;
+  transition: bottom 0.2s;
+}
+
+.familyNavItem:hover {
+  bottom: 2px;
+  border-width: 1px;
+  border: rgb(196, 82, 82);
+  border-bottom-style: solid;
+  text-decoration: none;
+  color: white;
 }
 
 .familyNavHeader {

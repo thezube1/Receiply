@@ -17,7 +17,9 @@ class Navbar extends Component {
           <Link to="/browse" style={{ textDecoration: "none" }}>
             <span className="navitem">Browse</span>
           </Link>
-          <span className="navitem">About</span>
+          <Link to="/about" style={{ textDecoration: "none" }}>
+            <span className="navitem">About</span>
+          </Link>
 
           <div id="accountitemswrapper">
             <NavbarSearch searchDefault={this.props.searchDefault} />

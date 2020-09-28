@@ -13,6 +13,7 @@ class NavbarMain extends Component {
       return <NavbarSearch />;
     }
   };
+
   render() {
     return (
       <div id="navWrapper">

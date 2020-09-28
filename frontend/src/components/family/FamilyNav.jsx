@@ -9,23 +9,26 @@ class FamilyNav extends Component {
         <Link to="/family" style={{ textDecoration: "none", color: "black" }}>
           <div className="familyNavHeader">Family</div>
         </Link>
-        <div className="familyNavItem">Manage</div>
-        <Link
-          to="/family/members"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <div className="familyNavItem">Members</div>
-        </Link>
-        <Link
-          to="/family/invite"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <div className="familyNavItem">Invite</div>
-        </Link>
-        <div className="familyNavItem">Settings</div>
-        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-          <div className="familyNavItem">Dashboard</div>
-        </Link>
+        <div className="familyNavItemWrapper">
+          <Link to="/family/members" className="familyNavItem">
+            Members
+          </Link>
+        </div>
+        <div className="familyNavItemWrapper">
+          <Link to="/family/invite" className="familyNavItem">
+            Invite
+          </Link>
+        </div>
+        <div className="familyNavItemWrapper">
+          <Link to="/family/settings" className="familyNavItem">
+            Settings
+          </Link>
+        </div>
+        <div className="familyNavItemWrapper">
+          <Link to="/" className="familyNavItem">
+            Dashboard
+          </Link>
+        </div>
       </div>
     );
   }

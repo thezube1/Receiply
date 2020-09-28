@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "./components/navbar/navbar";
+import IndexBar from "./components/indexbar/IndexBar";
 import "./App.css";
 
 class App extends Component {
@@ -12,8 +13,13 @@ class App extends Component {
           <div id="backgroundImage">
             <div id="mainTitle">Receiply</div>
           </div>
-          <div id="mainHeader">Receiply is family recipe sharing made easy</div>
+          <div id="mainPageSecondWrapper">
+            <div className="mainHeader">
+              Receiply is family recipe sharing made easy
+            </div>
+          </div>
         </div>
+        <IndexBar />
       </React.Fragment>
     );
   }

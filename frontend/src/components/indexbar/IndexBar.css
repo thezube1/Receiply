@@ -1,0 +1,57 @@
+#indexBarWrapper {
+  height: 400px;
+  width: 100%;
+  background-color: rgb(116, 207, 117);
+}
+
+#indexBarContent {
+  display: grid;
+  grid-template-columns: 500px 1fr;
+  padding: 10px;
+  position: relative;
+  height: 100%;
+}
+
+#indexBarQuoteWrapper {
+  display: flex;
+  align-items: center;
+}
+
+#indexBarQuote {
+  color: white;
+  font-family: Helvetica;
+  font-size: 35px;
+  font-weight: 300;
+  text-align: center;
+}
+
+#indexBarDivider {
+  background-color: rgb(255, 255, 255);
+  width: 2px;
+  height: 80%;
+}
+
+#indexBarSectionWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 120px);
+  margin-left: 50px;
+}
+
+.indexBarSection {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.indexBarSectionItem {
+  color: white;
+  font-size: 20px;
+  font-weight: 300;
+  font-family: "Source Sans Pro";
+}
+
+.indexBarLink:hover {
+  text-decoration: none;
+  width: max-content;
+}

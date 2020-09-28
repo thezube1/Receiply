@@ -42,3 +42,17 @@ body {
   text-decoration: none;
   bottom: 5px;
 }
+
+#mainPageSecondWrapper {
+  height: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainHeader {
+  font-family: "Source Sans Pro";
+  font-weight: 700;
+  font-size: 35px;
+  color: rgb(44, 44, 44);
+}

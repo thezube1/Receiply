@@ -25,6 +25,7 @@ import BrowsePage from "./pages/browse";
 import MyRecipesPage from "./pages/myrecipes";
 import SettingsPage from "./pages/settings";
 import NotFoundPage from "./pages/404page";
+import AboutPage from "./pages/about";
 import Loading from "./Loading";
 
 const store = createStore(
@@ -45,6 +46,7 @@ ReactDOM.render(
           <Route path="/login" component={LoginPage} />
           <Route path="/search" component={SearchPage} />
           <Route path="/browse" component={BrowsePage} />
+          <Route path="/about" component={AboutPage} />
           <PrivateRoute path="/inviteurl/" component={InviteRouter} />
           <PrivateRoute path="/upload" component={UploadPage} />
           <PrivateRoute path="/family" component={FamilyPage} />
