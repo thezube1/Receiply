@@ -15,7 +15,7 @@ class EditForm extends Component {
   componentDidMount() {
     axios.get(`/api/recipe/${this.props.recipe}`).then((res) => {
       const recipe = res.data;
-      this.props.write_recipe(recipe[0]);
+      this.props.write_recipe(recipe);
     });
   }
 

@@ -12,7 +12,7 @@ class RecipeCooking extends Component {
           {this.props.cooking.map((item, index) => {
             return (
               <li key={index} className="recipeCookingItem">
-                {item}
+                {item.COOKING_INSTRUCTION}
               </li>
             );
           })}

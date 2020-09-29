@@ -3,6 +3,7 @@ const app = express();
 const mysql = require("mysql");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
+const mysqlEscapeArray = require("mysql-escape-array");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
@@ -42,6 +43,7 @@ const pool = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB,
+  multipleStatements: true,
 });
 
 app.post("/api/recipe", upload.single("myImage"), (req, res) => {
@@ -82,12 +84,50 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
               SHARING = "public";
             }
 
-            //let prep = JSON.parse(recipe.ingredients);
-            //prep = prep.map((x, index) => x.substr(1, x.length - 1));
-            //.replace(/\`/g, "")
-            //prep = JSON.stringify(prep.map((x, index) => mysql.escape(x)));
-            //console.log(prep);
+            const handleInserts = (item, type) => {
+              const array = JSON.parse(item);
+              let string = `INSERT INTO ${type} VALUES `;
+              array.map((item, index) => {
+                string = string.concat(
+                  `(@recipe_uuid, ${connection.escape(item)}, ${index}), `
+                );
+              });
+              return string.substr(0, string.length - 2) + ";";
+            };
 
+            connection.query(
+              `SET @recipe_uuid := uuid(); INSERT INTO Recipes (RECIPE_ID, RECIPE_IDENTIFIER, CREATOR_ID, FAMILY_ID, DATE_CREATED, TTM, RECIPE_NAME, DESCRIPTION, PUBLISH_STATE, PHOTO_NAME, LIKES) VALUES (@recipe_uuid, uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), ${connection.escape(
+                recipe.TTM
+              )}, ${connection.escape(recipe.name)}, ${connection.escape(
+                recipe.description
+              )}, '${SHARING}', '${newPath}', 0); ${handleInserts(
+                recipe.ingredients,
+                "Ingredients"
+              )} ${handleInserts(recipe.prep, "Prep")} ${handleInserts(
+                recipe.steps,
+                "Cooking_instructions"
+              )} ${handleInserts(recipe.tags, "Tags")}`,
+              (err, data) => {
+                if (err) throw err;
+                res.send(true).end();
+              }
+            );
+
+            /*
+            connection.query(
+              `INSERT INTO Recipes VALUES (uuid(), uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), ${connection.escape(
+                recipe.TTM
+              )}, ${connection.escape(recipe.name)}, ${connection.escape(
+                recipe.description
+              )}`,
+              (err, data) => {
+                if (err) throw err;
+                connection.query(`INSERT INTO Ingredients VALUES (uuid(), )`)
+              }
+            );
+            
+
+            
             connection.query(
               `INSERT INTO Recipes VALUES (uuid(), uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), ${connection.escape(
                 recipe.TTM
@@ -107,6 +147,7 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
                 }
               }
             );
+            */
           }
         }
       );
@@ -127,32 +168,52 @@ app.get("/api/recipe/:id", (req, res) => {
           console.log("No recipe found!");
           res.send(false);
           res.end();
-        } else if (recipe[0].PUBLISH_STATE === "private") {
-          if (token.user_id === recipe.CREATOR_ID) {
-            res.send(recipe);
-            res.end();
-          } else {
-            res.send(false);
-            res.end();
-          }
-        } else if (recipe[0].PUBLIC_STATE === "family") {
+        } else {
           connection.query(
-            `SELECT FAMILY, FAMILY_AUTH FROM Accounts WHERE USER_ID='${token.user_id}'`,
-            (err, response) => {
+            `SELECT * FROM Ingredients WHERE RECIPE_ID='${recipe[0].RECIPE_ID}' ORDER BY STEP ASC; SELECT * FROM Prep WHERE RECIPE_ID='${recipe[0].RECIPE_ID}' ORDER BY STEP ASC; SELECT * FROM Cooking_instructions WHERE RECIPE_ID='${recipe[0].RECIPE_ID}' ORDER BY STEP ASC; SELECT * FROM Tags WHERE RECIPE_ID='${recipe[0].RECIPE_ID}' ORDER BY STEP ASC`,
+            (err, recipeData) => {
               if (err) throw err;
-              if (response.FAMILY_AUTH === 1) {
-                if (response.FAMILY === recipe.FAMILY_ID) {
-                  res.send(recipe).end();
+              let data = {
+                recipe: recipe[0],
+                ingredients: recipeData[0],
+                prep: recipeData[1],
+                cooking_instructions: recipeData[2],
+                tags: recipeData[3],
+              };
+
+              if (recipe.length === 0) {
+                console.log("No recipe found!");
+                res.send(false);
+                res.end();
+              } else if (recipe[0].PUBLISH_STATE === "private") {
+                if (token.user_id === recipe.CREATOR_ID) {
+                  res.send(data);
+                  res.end();
                 } else {
-                  res.send(false).end();
+                  res.send(false);
+                  res.end();
                 }
+              } else if (recipe[0].PUBLIC_STATE === "family") {
+                connection.query(
+                  `SELECT FAMILY, FAMILY_AUTH FROM Accounts WHERE USER_ID='${token.user_id}'`,
+                  (err, response) => {
+                    if (err) throw err;
+                    if (response.FAMILY_AUTH === 1) {
+                      if (response.FAMILY === recipe.FAMILY_ID) {
+                        res.send(data).end();
+                      } else {
+                        res.send(false).end();
+                      }
+                    }
+                  }
+                );
+              } else {
+                console.log("Sending public recipe!");
+                res.send(data);
+                res.end();
               }
             }
           );
-        } else {
-          console.log("Sending public recipe!");
-          res.send(recipe);
-          res.end();
         }
       }
     );
@@ -173,10 +234,16 @@ app.delete("/api/recipe/:id", (req, res) => {
           if (err) throw err;
           if (check[0].CREATOR_ID === user.user_id) {
             connection.query(
-              `DELETE FROM Recipes WHERE RECIPE_IDENTIFIER='${req.params.id}'`,
-              (err, response) => {
+              `SELECT RECIPE_ID FROM Recipes WHERE RECIPE_IDENTIFIER='${req.params.id}'`,
+              (err, recipe) => {
                 if (err) throw err;
-                res.send(true).end();
+                connection.query(
+                  `DELETE FROM Recipes WHERE RECIPE_IDENTIFIER='${req.params.id}'; DELETE FROM Ingredients WHERE RECIPE_ID='${recipe[0].RECIPE_ID}'; DELETE FROM Prep WHERE RECIPE_ID='${recipe[0].RECIPE_ID}'; DELETE FROM Cooking_instructions WHERE RECIPE_ID='${recipe[0].RECIPE_ID}'; DELETE FROM Tags WHERE RECIPE_ID='${recipe[0].RECIPE_ID}';`,
+                  (err, response) => {
+                    if (err) throw err;
+                    res.send(true).end();
+                  }
+                );
               }
             );
           } else {
@@ -222,7 +289,9 @@ app.get("/api/recipe/:id/edit/authenticate", (req, res) => {
         `SELECT CREATOR_ID FROM Recipes WHERE RECIPE_IDENTIFIER='${req.params.id}'`,
         (err, data) => {
           if (err) throw err;
-          if (data[0].CREATOR_ID === USER_ID) {
+          if (data.length === 0) {
+            res.send(false).end();
+          } else if (data[0].CREATOR_ID === USER_ID) {
             res.send(true).end();
           } else {
             res.send(false).end();

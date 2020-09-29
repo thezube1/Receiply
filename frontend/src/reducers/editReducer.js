@@ -23,14 +23,24 @@ export const EditReducer = (
           return 3;
         }
       };
+      let ingredients = [];
+      let prep = [];
+      let cooking = [];
+      let state_tags = [];
+      recipe.ingredients.map((item) => ingredients.push(item.INGREDIENT));
+      recipe.prep.map((item) => prep.push(item.PREP));
+      recipe.cooking_instructions.map((item) =>
+        cooking.push(item.COOKING_INSTRUCTION)
+      );
+      recipe.tags.map((item) => state_tags.push(item.TAG));
       const editRecipe = {
-        ttm: recipe.TTM,
-        recipe_description: recipe.DESCRIPTION,
-        recipe_name: recipe.RECIPE_NAME,
-        recipe_ingredients: JSON.parse(recipe.INGREDIENTS).ingredients,
-        prep_instructions: JSON.parse(recipe.PREP_INSTRUCTIONS).prep,
-        cooking_instructions: JSON.parse(recipe.COOKING_INSTRUCTIONS).cooking,
-        tags: JSON.parse(recipe.TAGS).tags,
+        ttm: recipe.recipe.TTM,
+        recipe_description: recipe.recipe.DESCRIPTION,
+        recipe_name: recipe.recipe.RECIPE_NAME,
+        recipe_ingredients: ingredients,
+        prep_instructions: prep,
+        cooking_instructions: cooking,
+        tags: state_tags,
         share: checkShare(),
       };
       return editRecipe;

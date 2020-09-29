@@ -11,6 +11,8 @@ class RecipeInfo extends Component {
     liked: undefined,
     likes: this.props.likes,
     isLogged: undefined,
+    ingredients: this.props.ingredients,
+    prep: this.props.prep,
   };
 
   componentDidMount() {
@@ -82,10 +84,10 @@ class RecipeInfo extends Component {
             <div id="recipePrep">
               <div className="recipeHeader">Prep instructions</div>
               <ol id="recipePrepItemWrapper">
-                {this.props.prep.map((item, index) => {
+                {this.state.prep.map((item, index) => {
                   return (
                     <li className="recipePrepItem" key={index}>
-                      {item}
+                      {item.PREP}
                     </li>
                   );
                 })}
@@ -94,10 +96,10 @@ class RecipeInfo extends Component {
             <div>
               <div className="recipeHeader">Ingredients</div>
               <ul id="recipeIngredientsItemWrapper">
-                {this.props.ingredients.map((item, index) => {
+                {this.state.ingredients.map((item, index) => {
                   return (
                     <li className="recipePrepItem" key={index}>
-                      {item}
+                      {item.INGREDIENT}
                     </li>
                   );
                 })}

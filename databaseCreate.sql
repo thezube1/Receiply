@@ -54,7 +54,7 @@ CREATE TABLE Receiply.Likes
     USER_ID varchar(36),
     LIKE_TYPE varchar(100),
     ITEM varchar(36)
-)
+);
 
 CREATE TABLE Receiply.Comments
 (
@@ -64,4 +64,32 @@ CREATE TABLE Receiply.Comments
     COMMENT_CONTENT varchar(2000),
     COMMENT_DATE date,
     LIKES int
-)
+);
+
+CREATE TABLE Receiply.Ingredients 
+(
+    RECIPE_ID varchar(36),
+    INGREDIENT varchar(10000),
+    STEP int
+);
+
+CREATE TABLE Receiply.Prep 
+(
+    RECIPE_ID varchar(36),
+    PREP varchar(10000),
+    STEP int
+);
+
+CREATE TABLE Receiply.Cooking_Instructions 
+(
+    RECIPE_ID varchar(36),
+    COOKING_INSTRUCTION varchar(10000),
+    STEP int
+);
+
+CREATE TABLE Receiply.Tags 
+(
+    RECIPE_ID varchar(36),
+    TAG varchar(10000),
+    STEP int
+);

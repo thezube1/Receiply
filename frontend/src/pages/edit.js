@@ -13,7 +13,7 @@ class EditPage extends Component {
   };
 
   convertURL = () => {
-    const recipeName = this.state.recipe[0].RECIPE_NAME;
+    const recipeName = this.state.recipe.recipe.RECIPE_NAME;
     const newURL = recipeName.toLowerCase().replace(" ", "-");
     return newURL;
   };

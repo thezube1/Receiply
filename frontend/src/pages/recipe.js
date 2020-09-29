@@ -23,7 +23,7 @@ class RecipePage extends Component {
   };
 
   convertURL = () => {
-    const recipeName = this.state.recipe[0].RECIPE_NAME;
+    const recipeName = this.state.recipe.recipe.RECIPE_NAME;
     const newURL = recipeName.toLowerCase().replace(" ", "-");
     return newURL;
   };
@@ -73,9 +73,6 @@ class RecipePage extends Component {
     } else if (this.state.recipe === false) {
       return <NotFoundPage />;
     } else {
-      let prep = JSON.parse(this.state.recipe[0].PREP_INSTRUCTIONS);
-      let ingredients = JSON.parse(this.state.recipe[0].INGREDIENTS);
-      let cooking = JSON.parse(this.state.recipe[0].COOKING_INSTRUCTIONS);
       return (
         <React.Fragment>
           <NavbarSwitch />
@@ -133,22 +130,24 @@ class RecipePage extends Component {
               {this.checkURL()}
               <div id="recipePhotoWrapper">
                 <RecipePhoto
-                  image={this.state.recipe[0].PHOTO_NAME}
-                  TTM={this.state.recipe[0].TTM}
+                  image={this.state.recipe.recipe.PHOTO_NAME}
+                  TTM={this.state.recipe.recipe.TTM}
                 />
               </div>
               <div id="recipeInfoWrapper">
                 <RecipeInfo
                   recipeid={this.props.match.params.recipeid}
-                  title={this.state.recipe[0].RECIPE_NAME}
-                  description={this.state.recipe[0].DESCRIPTION}
-                  prep={prep.prep}
-                  ingredients={ingredients.ingredients}
-                  likes={this.state.recipe[0].LIKES}
+                  title={this.state.recipe.recipe.RECIPE_NAME}
+                  description={this.state.recipe.recipe.DESCRIPTION}
+                  prep={this.state.recipe.prep}
+                  ingredients={this.state.recipe.ingredients}
+                  likes={this.state.recipe.recipe.LIKES}
                 />
               </div>
               <div id="recipeCookingWrapper">
-                <RecipeCooking cooking={cooking.cooking} />
+                <RecipeCooking
+                  cooking={this.state.recipe.cooking_instructions}
+                />
               </div>
               <div id="recipeCommentsWrapper">
                 <RecipeComments recipeid={this.props.match.params.recipeid} />

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../components/dashboard/dashboard.css";
 import NavbarMain from "../components/navbar/navbarmain";
+import IndexBar from "../components/indexbar/IndexBar";
 
 import DashPop from "../components/dashboard/DashPop";
 import DashFamily from "../components/dashboard/DashFamily";
@@ -26,6 +27,7 @@ class DashboardPage extends Component {
             </div>
           </div>
         </div>
+        <IndexBar />
       </React.Fragment>
     );
   }

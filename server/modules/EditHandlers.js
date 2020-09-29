@@ -12,6 +12,7 @@ const pool = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB,
+  multipleStatements: true,
 });
 
 app.put(`/api/recipe/:id`, (req, res) => {
@@ -30,6 +31,72 @@ app.put(`/api/recipe/:id`, (req, res) => {
           return "private";
       }
     };
+
+    const handleInserts = (recipeid, item, type) => {
+      const array = item;
+      let string = `INSERT INTO ${type} VALUES `;
+      array.map((item, index) => {
+        string = string.concat(
+          `('${recipeid}', ${connection.escape(item)}, ${index}), `
+        );
+      });
+      return string.substr(0, string.length - 2) + ";";
+    };
+
+    console.log(
+      handleInserts(
+        "a90d6825-021b-11eb-a0a8-e4b97a23a86a",
+        recipe.recipe_ingredients,
+        "Ingredients"
+      )
+    );
+
+    connection.query(
+      `UPDATE RECIPES SET TTM=${connection.escape(
+        recipe.ttm
+      )}, RECIPE_NAME=${connection.escape(recipe.recipe_name)},
+    DESCRIPTION=${connection.escape(
+      recipe.recipe_description
+    )}, PUBLISH_STATE='${checkShare()}' WHERE RECIPE_IDENTIFIER='${
+        recipe.recipe_identifier
+      }'`,
+      (err, response) => {
+        if (err) throw err;
+        connection.query(
+          `SELECT RECIPE_ID FROM Recipes WHERE RECIPE_IDENTIFIER='${recipe.recipe_identifier}'`,
+          (err, id) => {
+            if (err) throw err;
+            connection.query(
+              `DELETE FROM Ingredients WHERE RECIPE_ID='${id[0].RECIPE_ID}'; DELETE FROM Prep WHERE RECIPE_ID='${id[0].RECIPE_ID}'; DELETE FROM Cooking_instructions WHERE RECIPE_ID='${id[0].RECIPE_ID}'; DELETE FROM Tags WHERE RECIPE_ID='${id[0].RECIPE_ID}';`,
+              (err, response) => {
+                if (err) throw err;
+                connection.query(
+                  `${handleInserts(
+                    id[0].RECIPE_ID,
+                    recipe.recipe_ingredients,
+                    "Ingredients"
+                  )} ${handleInserts(
+                    id[0].RECIPE_ID,
+                    recipe.prep_instructions,
+                    "Prep"
+                  )} ${handleInserts(
+                    id[0].RECIPE_ID,
+                    recipe.cooking_instructions,
+                    "Cooking_instructions"
+                  )} ${handleInserts(id[0].RECIPE_ID, recipe.tags, "Tags")}`,
+                  (err, data) => {
+                    if (err) throw err;
+                    res.send(true).end();
+                  }
+                );
+              }
+            );
+          }
+        );
+      }
+    );
+
+    /*
     const ingredients = JSON.stringify(recipe.recipe_ingredients);
 
     connection.query(
@@ -53,6 +120,7 @@ app.put(`/api/recipe/:id`, (req, res) => {
         res.send(true).end();
       }
     );
+    */
     connection.release();
   });
 });
