@@ -45,6 +45,7 @@
 #myrecipeNoneWrapper {
   display: grid;
   justify-content: center;
+  margin-top: 120px;
 }
 
 #myrecipeText {

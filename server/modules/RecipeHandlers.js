@@ -3,7 +3,6 @@ const app = express();
 const mysql = require("mysql");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
-const mysqlEscapeArray = require("mysql-escape-array");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 

@@ -37,6 +37,7 @@ class uploadManual extends Component {
       formData.append(key, data[key]);
     }
     if (
+      this.state.selectedFile === null ||
       this.state.sharing === undefined ||
       this.state.name === "" ||
       this.state.TTM === "" ||

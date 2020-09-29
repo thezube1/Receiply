@@ -62,9 +62,13 @@ class DashRecipes extends Component {
       <div className="dashOutlineWrapper" id="dashRecipeWrapper">
         <div className="dashOutlineHeader">My Recipes</div>
         {this.checkRecipe()}
-        <Link to="/myrecipes" className="browseMore" id="dashFamilyView">
-          View more
-        </Link>
+        {this.state.recipes !== false ? (
+          <Link to="/myrecipes" className="browseMore" id="dashFamilyView">
+            View more
+          </Link>
+        ) : (
+          <React.Fragment></React.Fragment>
+        )}
       </div>
     );
   }
