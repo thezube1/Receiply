@@ -191,7 +191,7 @@ app.get("/api/user/current", (req, res) => {
       (err, result) => {
         if (err) throw err;
         connection.query(
-          `SELECT USER_ID, EMAIL, USERNAME, FIRST_NAME, LAST_NAME FROM Accounts WHERE USER_ID='${result.user_id}'`,
+          `SELECT USER_ID, EMAIL, USERNAME, FIRST_NAME, LAST_NAME, VERIFIED FROM Accounts WHERE USER_ID='${result.user_id}'`,
           (err, data) => {
             if (err) throw err;
             res.send(data).end();
