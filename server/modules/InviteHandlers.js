@@ -32,7 +32,6 @@ app.get("/api/invite/:familyID", (req, res) => {
                 if (err) {
                   console.log(err);
                 }
-
                 if (check[0].FAMILY === null || check[0].FAMILY === undefined) {
                   console.log("Allowed to add family");
                   connection.query(

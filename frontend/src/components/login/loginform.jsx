@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import validator from "email-validator";
 import { Redirect } from "react-router";
 import axios from "axios";
 import "./login.css";
@@ -29,19 +28,15 @@ class LoginForm extends Component {
       this.setState({ error: "fields" });
       console.log("One or more fields is empty");
     } else {
-      if (validator.validate(this.state.email) === false) {
-        this.setState({ error: "email" });
-      } else {
-        axios
-          .post("/api/user/login", data, {
-            headers: {
-              "Content-Type": "application/json",
-              cancelToken: this.source.token,
-            },
-          })
-          .then((response) => this.setState({ check: response.data }));
-        console.log("Login request submitted");
-      }
+      axios
+        .post("/api/user/login", data, {
+          headers: {
+            "Content-Type": "application/json",
+            cancelToken: this.source.token,
+          },
+        })
+        .then((response) => this.setState({ check: response.data }));
+      console.log("Login request submitted");
     }
   };
 
@@ -52,6 +47,8 @@ class LoginForm extends Component {
   handleError = () => {
     if (this.state.check === "badpass") {
       return <div id="loginError">Incorrect password</div>;
+    } else if (this.state.check === "badUser") {
+      return <div id="loginError">User not found!</div>;
     } else {
       switch (this.state.error) {
         case "email":
@@ -76,7 +73,7 @@ class LoginForm extends Component {
             <div id="loginHeader">Login</div>
             <div id="loginBar"></div>
             {this.handleError()}
-            <div className="loginDescription">Email</div>
+            <div className="loginDescription">Email or username</div>
             <input
               type="text"
               className="loginInput"

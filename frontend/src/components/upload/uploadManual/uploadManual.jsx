@@ -134,6 +134,7 @@ class uploadManual extends Component {
       );
     } else if (this.state.complete === "badFamily") {
       window.scrollTo(0, 0);
+
       return (
         <div className="uploadManualRequired">
           Error: You are not apart of a family, so you cannot choose to share

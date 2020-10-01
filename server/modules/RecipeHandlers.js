@@ -57,11 +57,14 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
         `SELECT FAMILY, FAMILY_AUTH FROM Accounts WHERE USER_ID = '${result.user_id}'`,
         (err, family) => {
           if (err) throw err;
-          if (
-            family[0].FAMILY === null ||
-            family[0].FAMILY_AUTH === "request"
-          ) {
-            res.send("badFamily").end();
+          const recipe = req.body;
+          if (recipe.sharing === "2") {
+            if (
+              family[0].FAMILY === null ||
+              family[0].FAMILY_AUTH === "request"
+            ) {
+              res.send("badFamily").end();
+            }
           } else {
             let SHARING;
             let FAMILY_ID;
@@ -69,7 +72,7 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
             let PHOTO_PATH = req.file.path;
             let newPath = PHOTO_PATH.replace("uploads\\", "");
             newPath = "uploads/" + newPath;
-            const recipe = req.body;
+
             if (family[0].FAMILY === "NULL" || family[0].FAMILY === null) {
               FAMILY_ID = null;
             } else {
@@ -111,42 +114,6 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
                 res.send(true).end();
               }
             );
-
-            /*
-            connection.query(
-              `INSERT INTO Recipes VALUES (uuid(), uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), ${connection.escape(
-                recipe.TTM
-              )}, ${connection.escape(recipe.name)}, ${connection.escape(
-                recipe.description
-              )}`,
-              (err, data) => {
-                if (err) throw err;
-                connection.query(`INSERT INTO Ingredients VALUES (uuid(), )`)
-              }
-            );
-            
-
-            
-            connection.query(
-              `INSERT INTO Recipes VALUES (uuid(), uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), ${connection.escape(
-                recipe.TTM
-              )}, ${connection.escape(recipe.name)}, ${connection.escape(
-                recipe.description
-              )}, '{"ingredients": ${recipe.ingredients}}', '{"prep": ${
-                recipe.prep
-              }}', '{"cooking": ${recipe.steps}}', '{"tags": ${
-                recipe.tags
-              }}', '${SHARING}', '${newPath}', 0)`,
-              (err, response) => {
-                if (err) {
-                  throw err;
-                } else {
-                  res.send(true);
-                  res.end();
-                }
-              }
-            );
-            */
           }
         }
       );

@@ -53,7 +53,7 @@ class DashPop extends Component {
             </div>
           </Carousel.Item>
         </Carousel>
-        <Link to="/browse/popular" className="browseMore" id="dashFamilyView">
+        <Link to="/browse/public" className="browseMore" id="dashFamilyView">
           View more
         </Link>
       </div>

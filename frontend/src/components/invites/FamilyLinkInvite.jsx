@@ -27,7 +27,7 @@ class FamilyLinkInvite extends Component {
     return (
       <div id="famInvWrapper">
         <div>Welcome to the family!</div>
-        <Link to="/dashboard" style={{ textDecoration: "none" }}>
+        <Link to="/" style={{ textDecoration: "none" }}>
           <span id="famInvReturn">Return to dashboard</span>
         </Link>
       </div>

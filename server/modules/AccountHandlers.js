@@ -4,6 +4,7 @@ const mysql = require("mysql");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const pool = mysql.createPool({
@@ -23,13 +24,14 @@ app.post("/api/user/login", (req, res) => {
     const pass = req.body.account[1];
     console.log("Initiating check!");
     connection.query(
-      `SELECT EMAIL, PASS, USER_ID FROM Accounts WHERE EMAIL='${email}'`,
+      `SELECT EMAIL, PASS, USER_ID FROM Accounts WHERE EMAIL='${email}' OR USERNAME='${email}'`,
       (err, data) => {
         if (err) {
           console.log(err);
         }
         if (data[0] === undefined) {
-          console.log("User does not exist!");
+          console.log("User not found!");
+          res.send("badUser").end();
         } else {
           let userPassword = data[0].PASS;
           bcrypt.compare(pass, userPassword, (err, result) => {
@@ -74,6 +76,14 @@ app.get("/api/user/logout", (req, res) => {
   res.end();
 });
 
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "receiply@gmail.com",
+    pass: "LetMeIn1234",
+  },
+});
+
 app.post("/api/user/create", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
@@ -101,13 +111,34 @@ app.post("/api/user/create", (req, res) => {
                       if (err) console.log(err);
                       const hashPass = String(hash);
                       connection.query(
-                        `INSERT INTO Accounts VALUES (UUID(), '${email}', '${user}', '${hashPass}', '${first}', '${last}', NULL, NULL)`,
+                        `INSERT INTO Accounts VALUES (UUID(), '${email}', 0, '${user}', '${hashPass}', '${first}', '${last}', NULL, NULL)`,
                         (err, data) => {
                           if (err) {
                             console.log(err);
                           } else {
-                            res.send(true);
-                            res.end();
+                            jwt.sign(
+                              { username: user },
+                              process.env.ACCESS_TOKEN_KEY,
+                              { expiresIn: 3600 },
+                              (err, token) => {
+                                if (err) throw err;
+                                const mailOptions = {
+                                  from: "receiply@gmail.com",
+                                  to: email,
+                                  subject:
+                                    "Please verify your Receiply account!",
+                                  text: `Verification link: receiply.com/verify/${token}`,
+                                };
+                                transporter.sendMail(
+                                  mailOptions,
+                                  (err, info) => {
+                                    if (err) throw err;
+                                    res.send(true);
+                                    res.end();
+                                  }
+                                );
+                              }
+                            );
                           }
                         }
                       );

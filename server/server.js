@@ -10,6 +10,7 @@ const LikeHandlers = require("./modules/LikeHandlers");
 const CommentHandlers = require("./modules/CommentHandlers");
 const EditHandlers = require("./modules/EditHandlers");
 const SettingsHandler = require("./modules/SettingsHandler");
+const VerifyHandler = require("./modules/VerifyHandlers");
 const bodyParser = require("body-parser");
 const PORT = 8080;
 const os = require("os");
@@ -28,6 +29,7 @@ app.use(SearchHandlers);
 app.use(CommentHandlers);
 app.use(EditHandlers);
 app.use(SettingsHandler);
+app.use(VerifyHandler);
 app.use("/uploads", express.static("uploads"));
 
 /*

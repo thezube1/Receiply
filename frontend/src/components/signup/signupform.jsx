@@ -13,6 +13,8 @@ class SignupForm extends Component {
     last: "",
     user: "",
     pass: "",
+    show: "password",
+    passCheck: "",
     check1: "",
   };
 
@@ -45,6 +47,8 @@ class SignupForm extends Component {
     if (validator.validate(this.state.email) === false) {
       this.setState({ check1: "unvalidEmail" });
       console.log("Please enter a valid email address!");
+    } else if (this.state.pass !== this.state.passCheck) {
+      this.setState({ check1: "notPass" });
     } else {
       axios
         .post("/api/user/create", data, {
@@ -74,8 +78,13 @@ class SignupForm extends Component {
     }
   };
 
+  componentDidMount() {
+    document.body.style.backgroundColor = "rgb(136, 228, 138)";
+  }
+
   componentWillUnmount() {
     this.source.cancel();
+    document.body.style.backgroundColor = "white";
   }
 
   render() {
@@ -116,6 +125,11 @@ class SignupForm extends Component {
             ) : (
               <React.Fragment></React.Fragment>
             )}
+            {this.state.check1 === "notPass" ? (
+              <div id="loginError">Passwords do not match</div>
+            ) : (
+              <React.Fragment></React.Fragment>
+            )}
             <div className="signupDescription">Email</div>
             <input
               type="text"
@@ -150,12 +164,37 @@ class SignupForm extends Component {
             />
             <div className="signupDescription">Password</div>
             <input
-              type="password"
+              type={this.state.show}
               className="signupInput"
               placeholder="Enter password"
               value={this.state.pass}
               onChange={this.handleChange("pass")}
             />
+            <div className="signupDescription">Confirm password</div>
+            <input
+              type={this.state.show}
+              className="signupInput"
+              placeholder="Confirm password"
+              value={this.state.passCheck}
+              onChange={(event) =>
+                this.setState({ passCheck: event.target.value })
+              }
+              style={{ marginBottom: 10 }}
+            />
+            <div
+              className="signupDescription"
+              style={{ display: "flex", gap: 5, marginBottom: 10 }}
+            >
+              <input
+                type="checkbox"
+                onClick={() =>
+                  this.state.show === "password"
+                    ? this.setState({ show: "text" })
+                    : this.setState({ show: "password" })
+                }
+              />
+              Show password
+            </div>
 
             <div style={{ textAlign: "center" }}>
               <input

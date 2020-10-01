@@ -3,6 +3,7 @@ CREATE TABLE Receiply.Accounts
 (
     USER_ID varchar(36),
     EMAIL varchar(200),
+    VERIFIED int,
     USERNAME varchar(200),
     PASS varchar(200),
     FIRST_NAME varchar(200),
@@ -37,15 +38,6 @@ CREATE TABLE Receiply.Families
     FAMILY_NAME varchar(100),
     FAMILY_CREATED varchar(100),
     FAMILY_CREATOR varchar(200)
-);
-
-CREATE TABLE Receiply.Comments
-(
-    COMMENT_ID varchar(36),
-    COMMENTER_ID varchar(36),
-    RECIPE varchar(36),
-    COMMENT_CONTENT text,
-    LIKES int
 );
 
 CREATE TABLE Receiply.Likes
