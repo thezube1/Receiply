@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
-import "../resetPassword/resetpassword.css";
+import "../resetPassword/reset.css";
 
 class ResetPassword extends Component {
   state = {

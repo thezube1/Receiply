@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import "../components/reset/reset.css";
+import "../components/resetPassword/reset.css";
+import ResetPassword from "../components/resetPassword/ResetPassword";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import LoadingPage from "../Loading";
@@ -10,6 +11,7 @@ class ResetPage extends Component {
     reset: undefined,
     oldPassword: "",
     newPassword: "",
+    errors: undefined,
     response: undefined,
   };
 
@@ -20,8 +22,12 @@ class ResetPage extends Component {
   }
 
   handleSubmit = () => {
+    if (this.state.oldPassword === this.state.newPassword) {
+      this.setState({ errors: "samePass" });
+    }
     axios
       .put("/api/user/password/reset", {
+        email: this.state.reset,
         oldPassword: this.state.oldPassword,
         newPassword: this.state.newPassword,
       })
@@ -31,6 +37,20 @@ class ResetPage extends Component {
   render() {
     if (this.state.reset === undefined) {
       return <LoadingPage />;
+    } else if (this.state.response === true) {
+      return (
+        <React.Fragment>
+          <NavbarSwitch />
+          <div id="resetWrapper">
+            <div className="verifyContent">
+              <div className="resetHeader">Password reset successfully</div>
+              <Link to="/" className="verifyButton resetButton">
+                Return to home
+              </Link>
+            </div>
+          </div>
+        </React.Fragment>
+      );
     } else {
       return (
         <React.Fragment>
@@ -41,17 +61,30 @@ class ResetPage extends Component {
                 <div className="verifyContent">
                   <div className="resetHeader">Invalid reset link</div>
                   <Link to="/" className="verifyButton resetButton">
-                    Return to dashboard
+                    Return to home
                   </Link>
                 </div>
               </div>
             ) : (
               <div>
                 <div className="resetHeader">Reset</div>
+                {this.state.response === "badPass" ? (
+                  <div id="loginError">Current password incorrect</div>
+                ) : (
+                  <React.Fragment></React.Fragment>
+                )}
+                {this.state.errors === "samePass" ? (
+                  <div id="loginError">
+                    You cannot use your current password
+                  </div>
+                ) : (
+                  <React.Fragment></React.Fragment>
+                )}
                 <div>
                   <input
                     className="settingsInput resetInput"
-                    type="text"
+                    type="password"
+                    name="oldPassword"
                     placeholder="Enter old password"
                     onChange={(event) =>
                       this.setState({ oldPassword: event.target.value })
@@ -61,14 +94,18 @@ class ResetPage extends Component {
                 <div>
                   <input
                     className="settingsInput resetInput"
-                    type="text"
+                    type="password"
                     placeholder="Enter new password"
+                    name="newPassword"
                     onChange={(event) =>
                       this.setState({ newPassword: event.target.value })
                     }
                   />
                 </div>
-                <button className="verifyButton resetButton">
+                <button
+                  onClick={this.handleSubmit}
+                  className="verifyButton resetButton"
+                >
                   Reset password
                 </button>
               </div>

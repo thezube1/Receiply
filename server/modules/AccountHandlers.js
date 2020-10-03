@@ -172,6 +172,7 @@ app.post("/api/user/password/forgot/:email", (req, res) => {
           jwt.sign(
             { email: data[0].EMAIL },
             process.env.ACCESS_TOKEN_KEY,
+            { expiresIn: 1800 },
             (err, token) => {
               if (err) throw err;
               const mailOptions = {
@@ -180,10 +181,9 @@ app.post("/api/user/password/forgot/:email", (req, res) => {
                 subject: "Reset your Receiply password",
                 text: `Password reset link: receiply.com/reset/${token}`,
               };
-              console.log("Sent");
+              res.send(true).end();
               transporter.sendMail(mailOptions, (err, info) => {
                 if (err) throw err;
-                res.send(true).end();
               });
             }
           );
@@ -203,7 +203,7 @@ app.get("/api/user/password/forgot/:email", (req, res) => {
       if (err) {
         res.send(false).end();
       } else {
-        res.send(true).end();
+        res.send(token.email).end();
       }
     });
     connection.release();
@@ -213,12 +213,33 @@ app.get("/api/user/password/forgot/:email", (req, res) => {
 app.put("/api/user/password/reset", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
-    const token = req.cookies.userAuth;
-    if (!token) return res.send(false).end();
-    jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, user) => {
-      if (err) throw err;
-      console.log(req.params.reset);
-    });
+    connection.query(
+      `SELECT PASS FROM Accounts WHERE EMAIL='${req.body.email}'`,
+      (err, data) => {
+        if (err) throw err;
+        bcrypt.compare(req.body.oldPassword, data[0].PASS, (err, compare) => {
+          if (err) throw err;
+          if (compare === false) {
+            res.send("badPass").end();
+          } else {
+            bcrypt.hash(
+              req.body.newPassword,
+              parseInt(process.env.SALT_ROUNDS),
+              (err, hash) => {
+                if (err) throw err;
+                connection.query(
+                  `UPDATE Accounts SET PASS='${hash}' WHERE EMAIL='${req.body.email}'`,
+                  (err, response) => {
+                    if (err) throw err;
+                    res.send(true).end();
+                  }
+                );
+              }
+            );
+          }
+        });
+      }
+    );
     connection.release();
   });
 });
