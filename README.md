@@ -1,5 +1,5 @@
 # Receiply
-Receiply.com
+<a href="receiply.com">Receiply.com</a>
 
-<div style="color: red">A family recipe sharing website made for everyone - even your grandma!</div>
+<div style="color:red;">A family recipe sharing website made for everyone - even your grandma!</div>
 
