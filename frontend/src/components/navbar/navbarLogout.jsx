@@ -19,7 +19,7 @@ class NavbarLogout extends Component {
 
   render() {
     if (this.state.logout === true) {
-      return <Redirect to="/" />;
+      return <Redirect to="/login" />;
     } else {
       return (
         <React.Fragment>

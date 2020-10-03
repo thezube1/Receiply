@@ -48,70 +48,82 @@ const pool = mysql.createPool({
 app.post("/api/recipe", upload.single("myImage"), (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
-
     const token = req.cookies.userAuth;
     if (!token) return res.status(200).send(false);
     jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, result) => {
       if (err) throw err;
       connection.query(
-        `SELECT FAMILY, FAMILY_AUTH FROM Accounts WHERE USER_ID = '${result.user_id}'`,
-        (err, family) => {
+        `SELECT VERIFIED FROM Accounts WHERE USER_ID = '${result.user_id}'`,
+        (err, data) => {
           if (err) throw err;
-          const recipe = req.body;
-          if (recipe.sharing === "2") {
-            if (
-              family[0].FAMILY === null ||
-              family[0].FAMILY_AUTH === "request"
-            ) {
-              res.send("badFamily").end();
-            }
+          if (data[0].VERIFIED === 0) {
+            res.send(false).end();
           } else {
-            let SHARING;
-            let FAMILY_ID;
-            const USER_ID = result.user_id;
-            let PHOTO_PATH = req.file.path;
-            let newPath = PHOTO_PATH.replace("uploads\\", "");
-            newPath = "uploads/" + newPath;
-
-            if (family[0].FAMILY === "NULL" || family[0].FAMILY === null) {
-              FAMILY_ID = null;
-            } else {
-              FAMILY_ID = family[0].FAMILY;
-            }
-            if (recipe.sharing === "1") {
-              SHARING = "private";
-            } else if (recipe.sharing === "2") {
-              SHARING = "family";
-            } else {
-              SHARING = "public";
-            }
-
-            const handleInserts = (item, type) => {
-              const array = JSON.parse(item);
-              let string = `INSERT INTO ${type} VALUES `;
-              array.map((item, index) => {
-                string = string.concat(
-                  `(@recipe_uuid, ${connection.escape(item)}, ${index}), `
-                );
-              });
-              return string.substr(0, string.length - 2) + ";";
-            };
-
             connection.query(
-              `SET @recipe_uuid := uuid(); INSERT INTO Recipes (RECIPE_ID, RECIPE_IDENTIFIER, CREATOR_ID, FAMILY_ID, DATE_CREATED, TTM, RECIPE_NAME, DESCRIPTION, PUBLISH_STATE, PHOTO_NAME, LIKES) VALUES (@recipe_uuid, uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), ${connection.escape(
-                recipe.TTM
-              )}, ${connection.escape(recipe.name)}, ${connection.escape(
-                recipe.description
-              )}, '${SHARING}', '${newPath}', 0); ${handleInserts(
-                recipe.ingredients,
-                "Ingredients"
-              )} ${handleInserts(recipe.prep, "Prep")} ${handleInserts(
-                recipe.steps,
-                "Cooking_instructions"
-              )} ${handleInserts(recipe.tags, "Tags")}`,
-              (err, data) => {
+              `SELECT FAMILY, FAMILY_AUTH FROM Accounts WHERE USER_ID = '${result.user_id}'`,
+              (err, family) => {
                 if (err) throw err;
-                res.send(true).end();
+                const recipe = req.body;
+                if (recipe.sharing === "2") {
+                  if (
+                    family[0].FAMILY === null ||
+                    family[0].FAMILY_AUTH === "request"
+                  ) {
+                    res.send("badFamily").end();
+                  }
+                } else {
+                  let SHARING;
+                  let FAMILY_ID;
+                  const USER_ID = result.user_id;
+                  let PHOTO_PATH = req.file.path;
+                  let newPath = PHOTO_PATH.replace("uploads\\", "");
+                  newPath = "uploads/" + newPath;
+
+                  if (
+                    family[0].FAMILY === "NULL" ||
+                    family[0].FAMILY === null
+                  ) {
+                    FAMILY_ID = null;
+                  } else {
+                    FAMILY_ID = family[0].FAMILY;
+                  }
+                  if (recipe.sharing === "1") {
+                    SHARING = "private";
+                  } else if (recipe.sharing === "2") {
+                    SHARING = "family";
+                  } else {
+                    SHARING = "public";
+                  }
+
+                  const handleInserts = (item, type) => {
+                    const array = JSON.parse(item);
+                    let string = `INSERT INTO ${type} VALUES `;
+                    array.map((item, index) => {
+                      string = string.concat(
+                        `(@recipe_uuid, ${connection.escape(item)}, ${index}), `
+                      );
+                    });
+                    return string.substr(0, string.length - 2) + ";";
+                  };
+
+                  connection.query(
+                    `SET @recipe_uuid := uuid(); INSERT INTO Recipes (RECIPE_ID, RECIPE_IDENTIFIER, CREATOR_ID, FAMILY_ID, DATE_CREATED, TTM, RECIPE_NAME, DESCRIPTION, PUBLISH_STATE, PHOTO_NAME, LIKES) VALUES (@recipe_uuid, uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), ${connection.escape(
+                      recipe.TTM
+                    )}, ${connection.escape(recipe.name)}, ${connection.escape(
+                      recipe.description
+                    )}, '${SHARING}', '${newPath}', 0); ${handleInserts(
+                      recipe.ingredients,
+                      "Ingredients"
+                    )} ${handleInserts(recipe.prep, "Prep")} ${handleInserts(
+                      recipe.steps,
+                      "Cooking_instructions"
+                    )} ${handleInserts(recipe.tags, "Tags")}`,
+                    (err, data) => {
+                      if (err) throw err;
+                      res.send(true).end();
+                    }
+                  );
+                }
               }
             );
           }

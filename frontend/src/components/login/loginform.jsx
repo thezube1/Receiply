@@ -3,6 +3,8 @@ import { Redirect } from "react-router";
 import axios from "axios";
 import "./login.css";
 import Navbar from "../navbar/navbar";
+import { Link } from "react-router-dom";
+import ResetPassword from "../resetPassword/ResetPassword";
 
 class LoginForm extends Component {
   state = {
@@ -88,7 +90,11 @@ class LoginForm extends Component {
               placeholder="Enter password"
               value={this.state.pass}
               onChange={this.handleChange("pass")}
+              style={{ marginBottom: 10 }}
             />
+
+            <ResetPassword />
+
             <div style={{ textAlign: "center" }}>
               <input
                 type="button"

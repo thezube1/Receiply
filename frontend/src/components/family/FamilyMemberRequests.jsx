@@ -22,7 +22,7 @@ class FamilyMemberRequests extends Component {
 
   handleAccept = (index) => {
     const user = this.state.users[index];
-    axios.post("/api/acceptfamilyuser", user);
+    axios.post("/api/family/requests/accept", user);
     window.location.reload(false);
   };
 
@@ -58,7 +58,7 @@ class FamilyMemberRequests extends Component {
 
   componentDidMount() {
     axios
-      .get("/api/getfamilyrequests", { cancelToken: this.source.token })
+      .get("/api/family/requests", { cancelToken: this.source.token })
       .then((response) => this.setState({ users: response.data }));
   }
 

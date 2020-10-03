@@ -6,6 +6,7 @@ import {
   userRecipesReducer,
 } from "./recipeReducer";
 import { EditReducer } from "./editReducer";
+import { verifyReducer } from "./verifyReducer";
 
 const allReducers = combineReducers({
   search: searchReducer,
@@ -14,6 +15,7 @@ const allReducers = combineReducers({
   family_recipes: familyRecipesReducer,
   public_recipes: publicRecipesReducer,
   edit_reducer: EditReducer,
+  verify_reducer: verifyReducer,
 });
 
 export default allReducers;

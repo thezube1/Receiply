@@ -1,0 +1,21 @@
+#resetWrapper {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.resetHeader {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 35px;
+}
+
+.resetButton {
+  border: none;
+}
+
+.resetInput {
+  margin-bottom: 10px;
+  width: 300px;
+}

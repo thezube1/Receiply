@@ -4,6 +4,7 @@ import { ToggleButtonGroup, ToggleButton } from "react-bootstrap";
 import SearchFamily from "./SearchFamily";
 import { Route, Switch } from "react-router-dom";
 import axios from "axios";
+import LoadingPage from "../../Loading";
 
 import "./createfamily.css";
 
@@ -11,8 +12,8 @@ import FamilyChoice from "./FamilyChoice";
 
 class CreateFamilyForm extends Component {
   state = {
-    name: { FIRST_NAME: "", LAST_NAME: "" },
-    families: [],
+    name: undefined,
+    families: undefined,
     value: undefined,
     createName: "",
   };
@@ -23,13 +24,14 @@ class CreateFamilyForm extends Component {
 
   componentDidMount() {
     document.body.style.backgroundColor = "rgb(136, 228, 138)";
-    axios
-      .get("/api/getname", { cancelToken: this.source.token })
-      .then((response) => this.setState({ name: response.data }));
-
-    axios
-      .get("/api/findfamily", { cancelToken: this.source.token })
-      .then((response) => this.setState({ families: response.data }));
+    Promise.all([
+      axios
+        .get("/api/getname", { cancelToken: this.source.token })
+        .then((response) => this.setState({ name: response.data })),
+      axios
+        .get("/api/family/find", { cancelToken: this.source.token })
+        .then((response) => this.setState({ families: response.data })),
+    ]);
   }
 
   handleChange = (event) => {
@@ -47,7 +49,7 @@ class CreateFamilyForm extends Component {
     if (this.state.createName.length === 0) {
       console.log("One or more fields is empty");
     } else {
-      axios.post("/api/addfamily", data);
+      axios.post("/api/family/add", data);
     }
   };
 
@@ -55,7 +57,7 @@ class CreateFamilyForm extends Component {
     const data = {
       FAMILY_ID: this.state.families[this.state.value].FAMILY_ID,
     };
-    axios.post("/api/requestfamily", data);
+    axios.post("/api/family/request", data);
   };
 
   renderChoiceButton = () => {
@@ -123,60 +125,64 @@ class CreateFamilyForm extends Component {
   }
 
   render() {
-    return (
-      <Switch>
-        <Route path="/family/search" component={SearchFamily} />
-        <div id="createFam">
-          <NavbarMain />
-          <div id="createFamWrapper">
-            <div>
-              <div id="createFamContent">
-                {this.renderChoice()}
+    if (this.state.name === undefined || this.state.families === undefined) {
+      return <LoadingPage />;
+    } else {
+      return (
+        <Switch>
+          <Route path="/family/search" component={SearchFamily} />
+          <div id="createFam">
+            <NavbarMain />
+            <div id="createFamWrapper">
+              <div>
+                <div id="createFamContent">
+                  {this.renderChoice()}
 
-                <div id="createFamilyBottom">
-                  <div>
-                    <div className="createFamThinText">Search for family</div>
-                    <input
-                      className="createFamInput"
-                      type="text"
-                      placeholder="Search for family"
-                    />
+                  <div id="createFamilyBottom">
                     <div>
+                      <div className="createFamThinText">Search for family</div>
                       <input
-                        id="createFamilyBottomButton"
-                        className="createFamilyButton"
-                        type="button"
-                        value="Search"
+                        className="createFamInput"
+                        type="text"
+                        placeholder="Search for family"
                       />
+                      <div>
+                        <input
+                          id="createFamilyBottomButton"
+                          className="createFamilyButton"
+                          type="button"
+                          value="Search"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div id="createFamilyBottomSeperator"></div>
-                  <div>
-                    <div className="createFamThinText">Create family</div>
-                    <input
-                      className="createFamInput"
-                      type="text"
-                      placeholder="Enter name of family"
-                      defaultValue={this.state.name.LAST_NAME}
-                      onChange={this.handleInput("createName")}
-                    />
+                    <div id="createFamilyBottomSeperator"></div>
                     <div>
+                      <div className="createFamThinText">Create family</div>
                       <input
-                        id="createFamilyBottomButton"
-                        className="createFamilyButton"
-                        type="button"
-                        value="Create"
-                        onClick={this.handleCreate}
+                        className="createFamInput"
+                        type="text"
+                        placeholder="Enter name of family"
+                        defaultValue={this.state.name.LAST_NAME}
+                        onChange={this.handleInput("createName")}
                       />
+                      <div>
+                        <input
+                          id="createFamilyBottomButton"
+                          className="createFamilyButton"
+                          type="button"
+                          value="Create"
+                          onClick={this.handleCreate}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </Switch>
-    );
+        </Switch>
+      );
+    }
   }
 }
 

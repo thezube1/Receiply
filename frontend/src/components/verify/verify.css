@@ -1,0 +1,36 @@
+.verifyWrapper {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.verifyContent {
+  display: grid;
+  justify-content: center;
+}
+
+.verifyHeader {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 35px;
+}
+
+.verifyButton {
+  background-color: rgb(255, 110, 120);
+  color: white;
+  padding: 8px;
+  text-align: center;
+  position: relative;
+  bottom: 0px;
+  transition: bottom 0.1s;
+  border-radius: 3px;
+}
+
+.verifyButton:hover {
+  bottom: 2px;
+  border-bottom-style: solid;
+  border-color: rgb(206, 87, 95);
+  color: white;
+  text-decoration: none;
+}

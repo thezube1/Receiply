@@ -17,6 +17,14 @@ const pool = mysql.createPool({
 
 app.use(cookieParser());
 
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "receiply@gmail.com",
+    pass: "LetMeIn1234",
+  },
+});
+
 app.post("/api/user/login", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) return console.log(err);
@@ -76,14 +84,6 @@ app.get("/api/user/logout", (req, res) => {
   res.end();
 });
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "receiply@gmail.com",
-    pass: "LetMeIn1234",
-  },
-});
-
 app.post("/api/user/create", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
@@ -129,11 +129,12 @@ app.post("/api/user/create", (req, res) => {
                                     "Please verify your Receiply account!",
                                   text: `Verification link: receiply.com/verify/${token}`,
                                 };
+                                res.send(true);
                                 transporter.sendMail(
                                   mailOptions,
                                   (err, info) => {
                                     if (err) throw err;
-                                    res.send(true);
+
                                     res.end();
                                   }
                                 );
@@ -156,6 +157,68 @@ app.post("/api/user/create", (req, res) => {
         }
       }
     );
+    connection.release();
+  });
+});
+
+app.post("/api/user/password/forgot/:email", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query(
+      `SELECT EMAIL FROM Accounts WHERE EMAIL='${req.params.email}'`,
+      (err, data) => {
+        if (err) throw err;
+        if (data.length !== 0) {
+          jwt.sign(
+            { email: data[0].EMAIL },
+            process.env.ACCESS_TOKEN_KEY,
+            (err, token) => {
+              if (err) throw err;
+              const mailOptions = {
+                from: "receiply@gmail.com",
+                to: req.params.email,
+                subject: "Reset your Receiply password",
+                text: `Password reset link: receiply.com/reset/${token}`,
+              };
+              console.log("Sent");
+              transporter.sendMail(mailOptions, (err, info) => {
+                if (err) throw err;
+                res.send(true).end();
+              });
+            }
+          );
+        } else {
+          res.send(true).end();
+        }
+      }
+    );
+    connection.release();
+  });
+});
+
+app.get("/api/user/password/forgot/:email", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    jwt.verify(req.params.email, process.env.ACCESS_TOKEN_KEY, (err, token) => {
+      if (err) {
+        res.send(false).end();
+      } else {
+        res.send(true).end();
+      }
+    });
+    connection.release();
+  });
+});
+
+app.put("/api/user/password/reset", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    const token = req.cookies.userAuth;
+    if (!token) return res.send(false).end();
+    jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, user) => {
+      if (err) throw err;
+      console.log(req.params.reset);
+    });
     connection.release();
   });
 });
