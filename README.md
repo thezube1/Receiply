@@ -1,5 +1,5 @@
 # Receiply
 Receiply.com
 
-A family recipe sharing website made for everyone - even your grandma!
-<h1>Receiply</h1>
+<div style="color: red">A family recipe sharing website made for everyone - even your grandma!</div>
+
