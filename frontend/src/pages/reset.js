@@ -13,6 +13,7 @@ class ResetPage extends Component {
     newPassword: "",
     errors: undefined,
     response: undefined,
+    show: "password",
   };
 
   componentDidMount() {
@@ -83,7 +84,7 @@ class ResetPage extends Component {
                 <div>
                   <input
                     className="settingsInput resetInput"
-                    type="password"
+                    type={this.state.show}
                     name="oldPassword"
                     placeholder="Enter old password"
                     onChange={(event) =>
@@ -94,13 +95,27 @@ class ResetPage extends Component {
                 <div>
                   <input
                     className="settingsInput resetInput"
-                    type="password"
+                    type={this.state.show}
                     placeholder="Enter new password"
                     name="newPassword"
                     onChange={(event) =>
                       this.setState({ newPassword: event.target.value })
                     }
                   />
+                </div>
+                <div
+                  className="signupDescription"
+                  style={{ display: "flex", gap: 5, marginBottom: 10 }}
+                >
+                  <input
+                    type="checkbox"
+                    onClick={() =>
+                      this.state.show === "password"
+                        ? this.setState({ show: "text" })
+                        : this.setState({ show: "password" })
+                    }
+                  />
+                  Show password
                 </div>
                 <button
                   onClick={this.handleSubmit}

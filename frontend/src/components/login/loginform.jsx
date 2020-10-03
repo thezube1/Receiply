@@ -83,6 +83,7 @@ class LoginForm extends Component {
               value={this.state.email}
               onChange={this.handleChange("email")}
             />
+
             <div className="loginDescription">Password</div>
             <input
               type="password"
@@ -94,7 +95,6 @@ class LoginForm extends Component {
             />
 
             <ResetPassword />
-
             <div style={{ textAlign: "center" }}>
               <input
                 type="button"
