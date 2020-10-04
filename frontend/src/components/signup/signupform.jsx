@@ -3,8 +3,9 @@ import axios from "axios";
 import validator from "email-validator";
 import "./signup.css";
 import Navbar from "../navbar/navbar";
-
+import zxcvbn from "zxcvbn";
 import { Redirect } from "react-router-dom";
+import SignupStrength from "./SignupStrength";
 
 class SignupForm extends Component {
   state = {
@@ -95,7 +96,6 @@ class SignupForm extends Component {
         </React.Fragment>
       );
     }
-
     return (
       <div id="signupBody">
         <Navbar />
@@ -169,7 +169,9 @@ class SignupForm extends Component {
               placeholder="Enter password"
               value={this.state.pass}
               onChange={this.handleChange("pass")}
+              style={{ marginBottom: 1 }}
             />
+            <SignupStrength strength={zxcvbn(this.state.pass).score} />
             <div className="signupDescription">Confirm password</div>
             <input
               type={this.state.show}

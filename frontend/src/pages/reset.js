@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../components/resetPassword/reset.css";
-import ResetPassword from "../components/resetPassword/ResetPassword";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import LoadingPage from "../Loading";

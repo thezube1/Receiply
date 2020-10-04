@@ -99,3 +99,23 @@
 #signupSubmitButton:active {
   background-color: rgb(108, 184, 109);
 }
+
+#signupStrengthWrapper {
+  margin-bottom: 10px;
+}
+
+#signupStrength {
+  height: 10px;
+  border: none;
+}
+
+#signupStrength::-moz-progress-bar {
+  background: rgb(255, 110, 120);
+}
+
+#signupStrengthText {
+  line-height: 1;
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 15px;
+}

@@ -3,7 +3,6 @@ import { Redirect } from "react-router";
 import axios from "axios";
 import "./login.css";
 import Navbar from "../navbar/navbar";
-import { Link } from "react-router-dom";
 import ResetPassword from "../resetPassword/ResetPassword";
 
 class LoginForm extends Component {
