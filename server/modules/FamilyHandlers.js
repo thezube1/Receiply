@@ -53,7 +53,7 @@ app.post("/api/family/add", (req, res) => {
                             if (err) {
                               console.log(err);
                             } else {
-                              console.log("Everything has been updated!");
+                              res.send(true);
                             }
                           }
                         );

@@ -4,9 +4,9 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./privateroute";
 import RouterFork from "./RouteFork";
-import { createStore } from "redux";
+import { store, persistor } from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
-import allReducer from "./reducers";
 import { CookiesProvider } from "react-cookie";
 
 //pages
@@ -30,39 +30,33 @@ import ResetPage from "./pages/reset";
 import AboutPage from "./pages/about";
 import Loading from "./Loading";
 
-const store = createStore(
-  allReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ &&
-    window.__REDUX_DEVTOOLS_EXTENSION__({
-      latency: 0,
-    })
-);
-
 ReactDOM.render(
   <CookiesProvider>
     <Provider store={store}>
-      <Router>
-        <Switch>
-          <Route path="/signup" component={SignupPage} />
-          <Route path="/loading" component={Loading} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/search" component={SearchPage} />
-          <Route path="/browse" component={BrowsePage} />
-          <Route path="/about" component={AboutPage} />
-          <Route exact path="/reset/:reset" component={ResetPage} />
-          <Route exact path="/verify/:verify" component={VerifyAccountPage} />
-          <PrivateRoute path="/inviteurl/" component={InviteRouter} />
-          <PrivateRoute path="/upload" component={UploadPage} />
-          <PrivateRoute path="/family" component={FamilyPage} />
-          <PrivateRoute path="/settings" component={SettingsPage} />
-          <PrivateRoute path="/myrecipes" component={MyRecipesPage} />
-          <Route path="/user/:user" component={PublicUser} />
-          <Route exact path="/:recipe/:recipeid" component={RecipePage} />
-          <Route exact path="/:recipe/:recipeid/edit" component={EditPage} />
-          <RouterFork Route1={App} Route2={DashboardPage} />
-          <Route component={NotFoundPage} />
-        </Switch>
-      </Router>
+      <PersistGate loading={<Loading />} persistor={persistor}>
+        <Router>
+          <Switch>
+            <Route path="/signup" component={SignupPage} />
+            <Route path="/loading" component={Loading} />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/search" component={SearchPage} />
+            <Route path="/browse" component={BrowsePage} />
+            <Route path="/about" component={AboutPage} />
+            <Route exact path="/reset/:reset" component={ResetPage} />
+            <Route exact path="/verify/:verify" component={VerifyAccountPage} />
+            <PrivateRoute path="/inviteurl/" component={InviteRouter} />
+            <PrivateRoute path="/upload" component={UploadPage} />
+            <PrivateRoute path="/family" component={FamilyPage} />
+            <PrivateRoute path="/settings" component={SettingsPage} />
+            <PrivateRoute path="/myrecipes" component={MyRecipesPage} />
+            <Route path="/user/:user" component={PublicUser} />
+            <Route exact path="/:recipe/:recipeid" component={RecipePage} />
+            <Route exact path="/:recipe/:recipeid/edit" component={EditPage} />
+            <RouterFork Route1={App} Route2={DashboardPage} />
+            <Route component={NotFoundPage} />
+          </Switch>
+        </Router>
+      </PersistGate>
     </Provider>
   </CookiesProvider>,
   document.getElementById("root")

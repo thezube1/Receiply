@@ -63,6 +63,7 @@
   background: none;
   outline: none;
   width: max-content;
+  padding: 0;
 }
 
 #navsearchwrapper {
@@ -112,4 +113,67 @@
 
 #navSearchButtonIcon {
   color: rgb(39, 39, 39);
+}
+
+#navBurger {
+  display: none;
+}
+
+@media screen and (max-width: 940px) {
+  #navContent {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 940px) {
+  #navBurger {
+    display: block;
+    background: none;
+    border: none;
+    padding: 15px;
+    outline: none;
+  }
+  #title {
+    margin-left: 0px;
+    line-height: 1;
+  }
+  .navBurgerLine {
+    width: 30px;
+    height: 4px;
+    background-color: black;
+    margin-bottom: 5px;
+    border: black;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 5px;
+  }
+  #navDropdown {
+    position: fixed;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 50px;
+    width: max-content;
+    height: 100vh;
+    transition: transform 0.3s cubic-bezier(0, 0.52, 0, 1);
+    left: 0;
+  }
+  #accountitemswrapper {
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+    margin-left: 0px;
+    align-items: flex-start;
+  }
+  #navsearchwrapper {
+    order: 1;
+    flex-direction: row-reverse;
+  }
+}
+#navDropdown.hide {
+  transform: translate3d(120vw, 0, 0);
+}
+#navDropdown.show {
+  transform: translate3d(0vw, 0, 0);
 }

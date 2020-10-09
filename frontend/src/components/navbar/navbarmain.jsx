@@ -6,7 +6,10 @@ import NavbarLogout from "./navbarLogout";
 import { Link } from "react-router-dom";
 
 class NavbarMain extends Component {
-  state = {};
+  state = {
+    type: "navContent",
+    visible: "hide",
+  };
 
   handleSearch = () => {
     if (window.location.pathname !== "/search") {
@@ -17,7 +20,19 @@ class NavbarMain extends Component {
   render() {
     return (
       <div id="navWrapper">
-        <div id="navContent">
+        <button
+          id="navBurger"
+          onClick={() =>
+            this.state.type === "navContent"
+              ? this.setState({ type: "navDropdown", visible: "show" })
+              : this.setState({ type: "navContent", visible: "hide" })
+          }
+        >
+          <div className="navBurgerLine"></div>
+          <div className="navBurgerLine"></div>
+          <div className="navBurgerLine"></div>
+        </button>
+        <div id={this.state.type} className={this.state.visible}>
           <Link to="/" style={{ textDecoration: "none", outline: "none" }}>
             <span id="title">Receiply</span>
           </Link>

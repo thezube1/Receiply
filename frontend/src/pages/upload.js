@@ -5,7 +5,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import UploadPhoto from "../components/upload/uploadPhoto/UploadPhoto";
 import NavbarMain from "../components/navbar/navbarmain";
-import UploadManual from "../components/upload/uploadManual/uploadManual";
+import UploadManual from "../components/upload/uploadManual";
 
 class UploadPage extends Component {
   state = {
