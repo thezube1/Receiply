@@ -24,8 +24,7 @@ app.post("/api/search", (req, res) => {
     process.env.ACCESS_TOKEN_KEY,
     (err, result) => {
       if (err) throw err;
-      params = req.body.s;
-
+      const params = req.body.s;
       pool.getConnection((err, connection) => {
         if (err) throw err;
         connection.query(
@@ -87,6 +86,28 @@ app.post("/api/search", (req, res) => {
       });
     }
   );
+});
+
+app.post("/api/family/search", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    const query = req.body.s.replace("-", " ");
+    connection.query(
+      `SELECT a.FAMILY_ID, a.FAMILY_NAME, a.FAMILY_IDENTIFIER, a.FAMILY_CREATOR, Accounts.FIRST_NAME, 
+              Accounts.LAST_NAME FROM (SELECT FAMILY_ID, FAMILY_NAME, FAMILY_CREATOR, FAMILY_IDENTIFIER FROM Receiply.Families 
+              WHERE Families.FAMILY_NAME LIKE '%${query}%') a INNER JOIN Receiply.Accounts ON a.FAMILY_CREATOR=Accounts.USER_ID`,
+      (err, data) => {
+        if (err) throw err;
+        res.send(data).end();
+      }
+    );
+    connection.release();
+  });
+});
+
+app.use((err, req, res, next) => {
+  res.status(500);
+  res.send("Oops, something went wrong");
 });
 
 module.exports = app;

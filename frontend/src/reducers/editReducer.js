@@ -110,6 +110,17 @@ export const EditReducer = (
       const share = { ...state };
       share.share = action.payload;
       return share;
+    case "CLEAR_RECIPE":
+      return {
+        ttm: "",
+        recipe_description: "",
+        recipe_name: "",
+        recipe_ingredients: [""],
+        prep_instructions: [""],
+        cooking_instructions: [""],
+        tags: [""],
+        share: 0,
+      };
     default:
       return state;
   }

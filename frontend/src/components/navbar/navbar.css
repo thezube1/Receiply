@@ -49,6 +49,15 @@
   border-bottom-style: solid;
 }
 
+#navitemupload {
+  color: white;
+}
+
+#navitemupload:hover {
+  bottom: 2px;
+  border-bottom-style: none;
+}
+
 .accountitems {
   color: white;
   border-radius: 3px;

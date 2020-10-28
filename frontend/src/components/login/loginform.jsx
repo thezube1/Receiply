@@ -4,6 +4,7 @@ import axios from "axios";
 import "./login.css";
 import Navbar from "../navbar/navbar";
 import ResetPassword from "../resetPassword/ResetPassword";
+import { Link } from "react-router-dom";
 
 class LoginForm extends Component {
   state = {
@@ -102,6 +103,16 @@ class LoginForm extends Component {
                 onClick={this.handleSubmit}
                 className="mainColor"
               />
+              <div style={{ fontSize: 13, marginTop: 10 }}>
+                <span>Don't have an account? </span>
+                <Link
+                  to="/signup"
+                  id="resetPasswordButton"
+                  style={{ textDecoration: "none" }}
+                >
+                  Sign up
+                </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -8,10 +8,14 @@
   background-color: white;
   max-width: 1000px;
   width: 90vw;
-  padding-top: 50px;
   display: grid;
   justify-content: center;
   align-content: flex-start;
+}
+
+#uploadInnerContent {
+  margin-top: 50px;
+  width: 700px;
 }
 
 #uploadManualTitleWrapper {
@@ -30,10 +34,6 @@
 }
 .uploadManualRequired {
   color: red;
-}
-
-#uploadManualTTM {
-  width: 300px;
 }
 
 #uploadManualPhoto {
@@ -86,13 +86,7 @@
   margin-top: 20px;
 }
 
-.uploadManualInputWrapper2 {
-  margin-bottom: 15px;
-}
-
 .uploadManualInput {
-  max-width: 700px;
-  width: 80vw;
   height: 50px;
   border: rgb(236, 236, 236);
   border-style: solid;
@@ -224,4 +218,38 @@
 #uploadManualBottom {
   height: 50px;
   width: 100%;
+}
+
+#uploadManualReturn {
+  width: 130px;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+#uploadManualReturn:hover {
+  color: white;
+  text-decoration: none;
+}
+
+#uploadManualConfirmed {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#uploadRedirectText {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 25px;
+}
+
+@media screen and (max-width: 1000px) {
+  #uploadManualTitleWrapper {
+    display: grid;
+  }
+  #uploadManualContent {
+    padding: 20px;
+    justify-content: left;
+  }
 }

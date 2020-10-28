@@ -72,7 +72,7 @@ app.post("/api/family/add", (req, res) => {
   });
 });
 
-app.get("/api/family/find", (req, res) => {
+app.get("/api/family/suggest", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     const token = req.cookies.userAuth;
@@ -136,7 +136,7 @@ app.post("/api/family/request", (req, res) => {
   });
 });
 
-app.get("/api/family/requests", (req, res) => {
+app.get("/api/family/request", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     const userCookie = req.cookies.userAuth;
@@ -178,7 +178,7 @@ app.get("/api/family/requests", (req, res) => {
   });
 });
 
-app.post("/api/family/requests/accept", (req, res) => {
+app.put("/api/family/request/accept", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     const userID = req.body.USER_ID;
@@ -192,7 +192,7 @@ app.post("/api/family/requests/accept", (req, res) => {
   });
 });
 
-app.post("/api/family/requests/ignore", (req, res) => {
+app.post("/api/family/request/ignore", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     const userID = req.body.USER_ID;

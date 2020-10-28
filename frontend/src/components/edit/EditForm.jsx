@@ -121,7 +121,10 @@ class EditForm extends Component {
                     id="uploadManualSave"
                     className="uploadManualButton"
                     style={{ marginLeft: 20, backgroundColor: "gray" }}
-                    onClick={() => this.setState({ check: true })}
+                    onClick={() => {
+                      this.setState({ check: true });
+                      this.props.clear_recipe();
+                    }}
                   >
                     Cancel
                   </button>
@@ -163,6 +166,7 @@ const mapDispatchToProps = (dispatch) => {
     add_tag: () => dispatch({ type: "ADD_TAG" }),
     remove_tag: (data) => dispatch({ type: "REMOVE_TAG", payload: data }),
     share: (data) => dispatch({ type: "SHARE", payload: data }),
+    clear_recipe: () => dispatch({ type: "CLEAR_RECIPE" }),
   };
 };
 

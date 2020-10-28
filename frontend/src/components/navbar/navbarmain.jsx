@@ -45,9 +45,18 @@ class NavbarMain extends Component {
 
           <Link
             to="/upload"
-            style={{ textDecoration: "none", outline: "none" }}
+            style={{
+              textDecoration: "none",
+              outline: "none",
+              backgroundColor: "rgb(136,228,138)",
+              borderRadius: 3,
+              lineHeight: 1,
+              padding: 5,
+            }}
           >
-            <span className="navitem">Upload</span>
+            <span className="navitem" id="navitemupload">
+              Upload Recipe
+            </span>
           </Link>
           <Link
             to="/family"

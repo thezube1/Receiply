@@ -141,3 +141,9 @@ export const share = (input) => {
     payload: input,
   };
 };
+
+export const clear_recipe = () => {
+  return {
+    type: "CLEAR_RECIPE",
+  };
+};

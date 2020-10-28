@@ -12,9 +12,11 @@ import FamilyChoice from "./FamilyChoice";
 class CreateFamilyForm extends Component {
   state = {
     name: undefined,
+
     families: undefined,
     value: undefined,
     createName: "",
+    search: "",
     check: false,
   };
 
@@ -29,7 +31,7 @@ class CreateFamilyForm extends Component {
         .get("/api/getname", { cancelToken: this.source.token })
         .then((response) => this.setState({ name: response.data })),
       axios
-        .get("/api/family/find", { cancelToken: this.source.token })
+        .get("/api/family/suggest", { cancelToken: this.source.token })
         .then((response) => this.setState({ families: response.data })),
     ]);
   }
@@ -151,14 +153,21 @@ class CreateFamilyForm extends Component {
                             className="createFamInput"
                             type="text"
                             placeholder="Search for family"
+                            onChange={(event) =>
+                              this.setState({ search: event.target.value })
+                            }
                           />
-                          <div>
-                            <input
-                              id="createFamilyBottomButton"
+                          <div id="createFamSearchWrapper">
+                            <Link
+                              id="createFamSearch"
                               className="createFamilyButton"
-                              type="button"
-                              value="Search"
-                            />
+                              to={`/family/search?s=${this.state.search.replace(
+                                " ",
+                                "-"
+                              )}`}
+                            >
+                              Search
+                            </Link>
                           </div>
                         </div>
                         <div id="createFamilyBottomSeperator"></div>
@@ -168,17 +177,17 @@ class CreateFamilyForm extends Component {
                             className="createFamInput"
                             type="text"
                             placeholder="Enter name of family"
-                            defaultValue={this.state.name.LAST_NAME}
+                            defaultValue={this.state.name.LAST_NAME + " Family"}
                             onChange={this.handleInput("createName")}
                           />
                           <div>
-                            <input
+                            <button
                               id="createFamilyBottomButton"
                               className="createFamilyButton"
-                              type="button"
-                              value="Create"
                               onClick={this.handleCreate}
-                            />
+                            >
+                              Create
+                            </button>
                           </div>
                         </div>
                       </div>

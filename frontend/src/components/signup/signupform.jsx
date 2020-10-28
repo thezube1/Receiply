@@ -4,7 +4,7 @@ import validator from "email-validator";
 import "./signup.css";
 import Navbar from "../navbar/navbar";
 import zxcvbn from "zxcvbn";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import SignupStrength from "./SignupStrength";
 
 class SignupForm extends Component {
@@ -205,6 +205,16 @@ class SignupForm extends Component {
                 id="signupSubmitButton"
                 onClick={this.handleSubmit}
               />
+              <div style={{ fontSize: 13, marginTop: 10 }}>
+                <span>Already have an account? </span>
+                <Link
+                  to="/login"
+                  id="resetPasswordButton"
+                  style={{ textDecoration: "none" }}
+                >
+                  Login
+                </Link>
+              </div>
             </div>
           </div>
         </div>

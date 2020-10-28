@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import NavbarMain from "../navbar/navbarmain";
 import { connect } from "react-redux";
-
+import { Link } from "react-router-dom";
+import axios from "axios";
 import EditItem from "../edit/EditItem";
 import EditItemArray from "../edit/EditItemArray";
 import EditShare from "../edit/EditShare";
@@ -11,7 +12,46 @@ import "./uploadManual/uploadManual.css";
 
 class UploadManual extends Component {
   state = {
-    selectedFile: null,
+    selectedFile: undefined,
+    complete: undefined,
+    cleared: false,
+  };
+
+  handleSubmit = () => {
+    const formData = new FormData();
+    formData.append("myImage", this.state.selectedFile);
+    const data = {
+      name: this.props.editReducer.recipe_name,
+      TTM: this.props.editReducer.ttm,
+      description: this.props.editReducer.recipe_description,
+      ingredients: JSON.stringify(this.props.editReducer.recipe_ingredients),
+      prep: JSON.stringify(this.props.editReducer.prep_instructions),
+      steps: JSON.stringify(this.props.editReducer.cooking_instructions),
+      tags: JSON.stringify(this.props.editReducer.tags),
+      sharing: this.props.editReducer.share,
+    };
+
+    for (var key in data) {
+      formData.append(key, data[key]);
+    }
+    if (
+      this.state.selectedFile === undefined ||
+      this.props.editReducer.share === undefined ||
+      this.props.editReducer.recipe_name === "" ||
+      this.props.editReducer.ttm === "" ||
+      this.props.editReducer.recipe_description === "" ||
+      this.props.editReducer.cooking_instructions.length === 0 ||
+      this.props.editReducer.cooking_instructions[0] === ""
+    ) {
+      window.scrollTo(0, 0);
+      this.setState({ check: false });
+    } else {
+      console.log(formData);
+
+      axios
+        .post("/api/recipe", formData)
+        .then((res) => this.setState({ complete: res.data }));
+    }
   };
 
   onFileChange = (event) => {
@@ -19,7 +59,8 @@ class UploadManual extends Component {
   };
 
   handlePhotoName = () => {
-    if (this.state.selectedFile !== null) {
+    console.log(this.state.selectedFile);
+    if (this.state.selectedFile !== undefined) {
       return this.state.selectedFile.name;
     } else {
       return "Choose a file";
@@ -46,6 +87,15 @@ class UploadManual extends Component {
     }
   };
 
+  componentDidUpdate() {
+    if (this.state.complete === true) {
+      if (this.state.cleared !== true) {
+        this.setState({ cleared: true });
+        this.props.clear_recipe();
+      }
+    }
+  }
+
   componentDidMount() {
     document.body.style.backgroundColor = "rgb(136, 228, 138)";
   }
@@ -55,19 +105,39 @@ class UploadManual extends Component {
   }
 
   render() {
+    if (this.state.complete === true) {
+      return (
+        <div id="uploadManualConfirmed">
+          <div id="uploadManualContent">
+            <div id="uploadManualWrapper">
+              <div id="uploadRedirectText">Your recipe has been uploaded</div>
+              <Link
+                id="uploadManualReturn"
+                className="uploadManualButton"
+                onClick={this.handleSubmit}
+                to="/"
+              >
+                Return to dashboard
+              </Link>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <React.Fragment>
         <NavbarMain />
-        <div id="editWrapper">
-          <div id="editContentWrapper">
-            <div id="editContent">
+        <div id="uploadManualWrapper">
+          <div id="uploadManualContent">
+            <div id="uploadInnerContent">
               <div id="uploadManualTitleWrapper">
                 <div id="uploadManualTitle">Upload recipe</div>
                 <div className="uploadManualRequired">
                   Items with * are required fields
                 </div>
               </div>
-              <div className="uploadManualInputWrapper">
+              {this.handleWarning()}
+              <div>
                 <div>Upload Photo:</div>
                 <input
                   id="uploadManualPhoto"
@@ -94,7 +164,7 @@ class UploadManual extends Component {
                 reducer={this.props.write_recipe_name}
                 defaultValue={this.props.editReducer.recipe_name}
                 placeholder="Enter name of Recipe"
-                width={900}
+                width={700}
               />
               <EditItem
                 title="Description"
@@ -102,7 +172,7 @@ class UploadManual extends Component {
                 reducer={this.props.write_recipe_description}
                 defaultValue={this.props.editReducer.recipe_description}
                 placeholder="Enter description of Recipe"
-                width={900}
+                width={700}
                 height={200}
               />
               <EditItemArray
@@ -147,17 +217,9 @@ class UploadManual extends Component {
                 <button
                   id="uploadManualSave"
                   className="uploadManualButton"
-                  onClick={this.handleSave}
+                  onClick={this.handleSubmit}
                 >
                   Save recipe
-                </button>
-                <button
-                  id="uploadManualSave"
-                  className="uploadManualButton"
-                  style={{ marginLeft: 20, backgroundColor: "gray" }}
-                  onClick={() => this.setState({ check: true })}
-                >
-                  Cancel
                 </button>
               </div>
             </div>
@@ -196,6 +258,7 @@ const mapDispatchToProps = (dispatch) => {
     add_tag: () => dispatch({ type: "ADD_TAG" }),
     remove_tag: (data) => dispatch({ type: "REMOVE_TAG", payload: data }),
     share: (data) => dispatch({ type: "SHARE", payload: data }),
+    clear_recipe: () => dispatch({ type: "CLEAR_RECIPE" }),
   };
 };
 
