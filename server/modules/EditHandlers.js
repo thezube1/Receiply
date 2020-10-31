@@ -36,12 +36,6 @@ app.put(`/api/recipe/:id`, (req, res) => {
         }
       };
 
-      const handleFamily = () => {
-        if (recipe === "family") {
-          return;
-        }
-      };
-
       const handleInserts = (recipeid, item, type) => {
         const array = item;
         let string = `INSERT INTO ${type} VALUES `;
@@ -56,49 +50,66 @@ app.put(`/api/recipe/:id`, (req, res) => {
         `SELECT FAMILY FROM Accounts WHERE USER_ID='${user.user_id}'`,
         (err, family) => {
           if (err) throw err;
-        }
-      );
-      connection.query(
-        `UPDATE RECIPES SET TTM=${connection.escape(
-          recipe.ttm
-        )}, RECIPE_NAME=${connection.escape(recipe.recipe_name)},
-    DESCRIPTION=${connection.escape(
-      recipe.recipe_description
-    )}, PUBLISH_STATE='${checkShare()}' WHERE RECIPE_IDENTIFIER='${
-          recipe.recipe_identifier
-        }'`,
-        (err, response) => {
-          if (err) throw err;
-          connection.query(
-            `SELECT RECIPE_ID FROM Recipes WHERE RECIPE_IDENTIFIER='${recipe.recipe_identifier}'`,
-            (err, id) => {
-              if (err) throw err;
-              if (recipe.share === "family") {
-                connection.query(
-                  `SELECT FAMILY FROM Accounts WHERE USER_ID=''`
-                );
+
+          const handleFamily = () => {
+            if (recipe.share === 2) {
+              if (family === undefined || family.length === 0) {
+                return "";
+              } else {
+                return `, FAMILY_ID='${family[0].FAMILY}'`;
               }
+            } else {
+              return "";
+            }
+          };
+
+          connection.query(
+            `UPDATE RECIPES SET TTM=${connection.escape(
+              recipe.ttm
+            )}, RECIPE_NAME=${connection.escape(recipe.recipe_name)},
+        DESCRIPTION=${connection.escape(
+          recipe.recipe_description
+        )}, PUBLISH_STATE='${checkShare()}' ${handleFamily()} WHERE RECIPE_IDENTIFIER='${
+              recipe.recipe_identifier
+            }'`,
+            (err, response) => {
+              if (err) throw err;
               connection.query(
-                `DELETE FROM Ingredients WHERE RECIPE_ID='${id[0].RECIPE_ID}'; DELETE FROM Prep WHERE RECIPE_ID='${id[0].RECIPE_ID}'; DELETE FROM Cooking_instructions WHERE RECIPE_ID='${id[0].RECIPE_ID}'; DELETE FROM Tags WHERE RECIPE_ID='${id[0].RECIPE_ID}';`,
-                (err, response) => {
+                `SELECT RECIPE_ID FROM Recipes WHERE RECIPE_IDENTIFIER='${recipe.recipe_identifier}'`,
+                (err, id) => {
                   if (err) throw err;
+                  if (recipe.share === "family") {
+                    connection.query(
+                      `SELECT FAMILY FROM Accounts WHERE USER_ID=''`
+                    );
+                  }
                   connection.query(
-                    `${handleInserts(
-                      id[0].RECIPE_ID,
-                      recipe.recipe_ingredients,
-                      "Ingredients"
-                    )} ${handleInserts(
-                      id[0].RECIPE_ID,
-                      recipe.prep_instructions,
-                      "Prep"
-                    )} ${handleInserts(
-                      id[0].RECIPE_ID,
-                      recipe.cooking_instructions,
-                      "Cooking_instructions"
-                    )} ${handleInserts(id[0].RECIPE_ID, recipe.tags, "Tags")}`,
-                    (err, data) => {
+                    `DELETE FROM Ingredients WHERE RECIPE_ID='${id[0].RECIPE_ID}'; DELETE FROM Prep WHERE RECIPE_ID='${id[0].RECIPE_ID}'; DELETE FROM Cooking_instructions WHERE RECIPE_ID='${id[0].RECIPE_ID}'; DELETE FROM Tags WHERE RECIPE_ID='${id[0].RECIPE_ID}';`,
+                    (err, response) => {
                       if (err) throw err;
-                      res.send(true).end();
+                      connection.query(
+                        `${handleInserts(
+                          id[0].RECIPE_ID,
+                          recipe.recipe_ingredients,
+                          "Ingredients"
+                        )} ${handleInserts(
+                          id[0].RECIPE_ID,
+                          recipe.prep_instructions,
+                          "Prep"
+                        )} ${handleInserts(
+                          id[0].RECIPE_ID,
+                          recipe.cooking_instructions,
+                          "Cooking_instructions"
+                        )} ${handleInserts(
+                          id[0].RECIPE_ID,
+                          recipe.tags,
+                          "Tags"
+                        )}`,
+                        (err, data) => {
+                          if (err) throw err;
+                          res.send(true).end();
+                        }
+                      );
                     }
                   );
                 }
