@@ -173,17 +173,32 @@
 
 #searchFamilyContent {
   background-color: white;
-  width: max-content;
-  height: max-content;
   padding: 30px;
+  width: 90vw;
 }
 
 #searchFamilyGroup {
   display: grid;
+  grid-auto-rows: max-content;
+  grid-template-columns: repeat(auto-fit, 250px);
 }
 
 .searchFamilyItem {
-  padding: 10px;
+  margin: 10px;
+}
+
+#searchFamilyNullWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+#searchFamilyNull {
+  font-family: Helvetica;
+  font-size: 25px;
+  font-weight: 600;
+  color: rgb(37, 37, 37);
 }
 
 @media screen and (max-width: 800px) {

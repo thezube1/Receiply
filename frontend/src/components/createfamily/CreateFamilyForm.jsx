@@ -6,6 +6,8 @@ import { Route, Switch, Link } from "react-router-dom";
 import axios from "axios";
 import LoadingPage from "../../Loading";
 import "./createfamily.css";
+import { search } from "../../actions/actions";
+import { connect } from "react-redux";
 
 import FamilyChoice from "./FamilyChoice";
 
@@ -135,88 +137,107 @@ class CreateFamilyForm extends Component {
       return (
         <Switch>
           <Route path="/family/search" component={SearchFamily} />
-          <div id="createFam">
-            <NavbarMain />
-            <div id="createFamWrapper">
-              <div>
-                <div id="createFamContent">
-                  {this.state.check === false ? (
-                    <React.Fragment>
-                      {this.renderChoice()}
+          <React.Fragment>
+            <div id="createFam">
+              <NavbarMain />
+              <div id="createFamWrapper">
+                <div>
+                  <div id="createFamContent">
+                    {this.state.check === false ? (
+                      <React.Fragment>
+                        {this.renderChoice()}
 
-                      <div id="createFamilyBottom">
-                        <div>
-                          <div className="createFamThinText">
-                            Search for family
-                          </div>
-                          <input
-                            className="createFamInput"
-                            type="text"
-                            placeholder="Search for family"
-                            onChange={(event) =>
-                              this.setState({ search: event.target.value })
-                            }
-                          />
-                          <div id="createFamSearchWrapper">
-                            <Link
-                              id="createFamSearch"
-                              className="createFamilyButton"
-                              to={`/family/search?s=${this.state.search.replace(
-                                " ",
-                                "-"
-                              )}`}
-                            >
-                              Search
-                            </Link>
-                          </div>
-                        </div>
-                        <div id="createFamilyBottomSeperator"></div>
-                        <div>
-                          <div className="createFamThinText">Create family</div>
-                          <input
-                            className="createFamInput"
-                            type="text"
-                            placeholder="Enter name of family"
-                            defaultValue={this.state.name.LAST_NAME + " Family"}
-                            onChange={this.handleInput("createName")}
-                          />
+                        <div id="createFamilyBottom">
                           <div>
-                            <button
-                              id="createFamilyBottomButton"
-                              className="createFamilyButton"
-                              onClick={this.handleCreate}
-                            >
-                              Create
-                            </button>
+                            <div className="createFamThinText">
+                              Search for family
+                            </div>
+                            <input
+                              className="createFamInput"
+                              type="text"
+                              placeholder="Search for family"
+                              onChange={(event) => {
+                                this.setState({ search: event.target.value });
+                                this.props.write_search(event.target.value);
+                              }}
+                            />
+                            <div id="createFamSearchWrapper">
+                              <Link
+                                id="createFamSearch"
+                                className="createFamilyButton"
+                                to={`/family/search?s=${this.state.search.replace(
+                                  " ",
+                                  "-"
+                                )}`}
+                              >
+                                Search
+                              </Link>
+                            </div>
+                          </div>
+                          <div id="createFamilyBottomSeperator"></div>
+                          <div>
+                            <div className="createFamThinText">
+                              Create family
+                            </div>
+                            <input
+                              className="createFamInput"
+                              type="text"
+                              placeholder="Enter name of family"
+                              defaultValue={
+                                this.state.name.LAST_NAME + " Family"
+                              }
+                              onChange={this.handleInput("createName")}
+                            />
+                            <div>
+                              <button
+                                id="createFamilyBottomButton"
+                                className="createFamilyButton"
+                                onClick={this.handleCreate}
+                              >
+                                Create
+                              </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </React.Fragment>
-                  ) : (
-                    <React.Fragment>
-                      <div
-                        className="createFamThinText"
-                        style={{ fontSize: 30 }}
-                      >
-                        Created family
-                      </div>
-                      <Link
-                        to="/"
-                        className="createFamilyButton"
-                        style={{ color: "white", textDecoration: "none" }}
-                      >
-                        Return to dashboard
-                      </Link>
-                    </React.Fragment>
-                  )}
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                        <div
+                          className="createFamThinText"
+                          style={{ fontSize: 30 }}
+                        >
+                          Created family
+                        </div>
+                        <Link
+                          to="/"
+                          className="createFamilyButton"
+                          style={{ color: "white", textDecoration: "none" }}
+                        >
+                          Return to dashboard
+                        </Link>
+                      </React.Fragment>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </React.Fragment>
         </Switch>
       );
     }
   }
 }
 
-export default CreateFamilyForm;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    write_search: (event) => dispatch(search(event)),
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    search: state.search,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateFamilyForm);
