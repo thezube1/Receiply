@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import FamilyMemberRequests from "./FamilyMemberRequests";
 import FamilyMembers from "../family/FamilyMembers";
 import FamilyInvite from "./FamilyInvite";
+import FamilySettings from "./FamilySettings"
 
 class FamilyMain extends Component {
   state = {
@@ -49,7 +50,7 @@ class FamilyMain extends Component {
         <Switch>
           <Route path="/family/invite" component={FamilyInvite} />
           <Route path="/family/members" component={FamilyMembers} />
-
+          <Route path="/family/settings" component={FamilySettings} />
           <React.Fragment>
             <FamilyMemberRequests />
             <div id="familyContentWrapper">
