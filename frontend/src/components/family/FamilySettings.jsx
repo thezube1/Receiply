@@ -3,6 +3,7 @@ import {Route, Switch} from "react-router-dom"
 import SettingsNavbar from "./SettingsNavbar"
 
 import FamilyMainSettings from "./Settings/FamilyMainSettings"
+import FamilyPrivacySettings from "./Settings/FamilyPrivacySettings"
 
 class FamilySettings extends Component {
     state = {  }
@@ -12,10 +13,10 @@ class FamilySettings extends Component {
           <div id="settingsWrapper">
             <SettingsNavbar />
             <Switch>
-              <Route path="/family/settings/privacy" component={FamilyMainSettings} />
+              <Route path="/family/settings/privacy" component={FamilyPrivacySettings} />
               <React.Fragment>
                 <div id="settingsContent">
-                    <div>Stuff</div>
+                    <FamilyMainSettings />
                 </div>
               </React.Fragment>
             </Switch>
