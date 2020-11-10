@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
 import NotFoundPage from "./404page";
-import "../components/userProfile/user.css";
+import "../components/profile/user.css";
 import NavbarSwitch from "../components/navbar/navbarswitch";
 
 import LoadingPage from "../Loading";
 
-import UserInfo from "../components/userProfile/UserInfo";
-import UserDescription from "../components/userProfile/UserDescription";
-import UserRecipes from "../components/userProfile/UserRecipes";
+import UserInfo from "../components/profile/UserInfo";
+import UserDescription from "../components/profile/UserDescription";
+import UserRecipes from "../components/profile/UserRecipes";
 
 class PublicUser extends Component {
   state = {

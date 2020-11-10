@@ -25,19 +25,11 @@ class NavbarSearch extends Component {
     }
   };
 
-  handleOpacity = () => {
-    return this.state.active === true ? "visible" : "hidden";
-  };
-
   render() {
     return (
       <div id="navsearchwrapper">
         {this.handleCheck()}
         <input
-          style={{
-            visibility: this.handleOpacity(),
-            transition: "visiblity 1s",
-          }}
           type="text"
           placeholder="Search"
           id="navSearchInput"

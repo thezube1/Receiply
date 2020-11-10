@@ -15,7 +15,7 @@ const pool = mysql.createPool({
 
 app.use(cookieParser());
 
-app.post("/api/family/add", (req, res) => {
+app.post("/api/family", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) return console.log(err);
     const name = req.body.family[0];
@@ -72,36 +72,28 @@ app.post("/api/family/add", (req, res) => {
   });
 });
 
-app.get("/api/family/suggest", (req, res) => {
-  pool.getConnection((err, connection) => {
+app.get("/api/family", (req, res) => {
+  const token = req.cookies.userAuth;
+  if (!token) return res.status(200).send(false);
+  jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, user) => {
     if (err) throw err;
-    const token = req.cookies.userAuth;
-    if (!token) return res.status(200).send(false);
-    jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, result) => {
+    pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `SELECT LAST_NAME FROM Accounts WHERE USER_ID = '${result.user_id}'`,
+        `SELECT FAMILY FROM Accounts WHERE USER_ID='${user.user_id}'`,
         (err, data) => {
           if (err) throw err;
-          const lastName = data[0].LAST_NAME;
           connection.query(
-            `SELECT a.FAMILY_ID, a.FAMILY_NAME, a.FAMILY_IDENTIFIER, a.FAMILY_CREATOR, Accounts.FIRST_NAME, 
-              Accounts.LAST_NAME FROM (SELECT FAMILY_ID, FAMILY_NAME, FAMILY_CREATOR, FAMILY_IDENTIFIER FROM Receiply.Families 
-              WHERE Families.FAMILY_NAME LIKE '%${lastName}%') a INNER JOIN Receiply.Accounts ON a.FAMILY_CREATOR=Accounts.USER_ID`,
+            `SELECT * FROM Families WHERE FAMILY_ID='${data[0].FAMILY}'`,
             (err, family) => {
               if (err) throw err;
-              if (family.length === 0) {
-                res.end();
-              } else {
-                res.send(family);
-                res.end();
-              }
+              res.send(family[0]).end();
             }
           );
         }
       );
+      connection.release();
     });
-    connection.release();
   });
 });
 
@@ -203,6 +195,92 @@ app.post("/api/family/request/ignore", (req, res) => {
         console.log("Request ignored");
       }
     );
+  });
+});
+
+app.get("/api/family/suggest", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    const token = req.cookies.userAuth;
+    if (!token) return res.status(200).send(false);
+    jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, result) => {
+      if (err) throw err;
+      connection.query(
+        `SELECT LAST_NAME FROM Accounts WHERE USER_ID = '${result.user_id}'`,
+        (err, data) => {
+          if (err) throw err;
+          const lastName = data[0].LAST_NAME;
+          connection.query(
+            `SELECT a.FAMILY_ID, a.FAMILY_NAME, a.FAMILY_IDENTIFIER, a.FAMILY_CREATOR, Accounts.FIRST_NAME, 
+              Accounts.LAST_NAME FROM (SELECT FAMILY_ID, FAMILY_NAME, FAMILY_CREATOR, FAMILY_IDENTIFIER FROM Receiply.Families 
+              WHERE Families.FAMILY_NAME LIKE '%${lastName}%') a INNER JOIN Receiply.Accounts ON a.FAMILY_CREATOR=Accounts.USER_ID`,
+            (err, family) => {
+              if (err) throw err;
+              if (family.length === 0) {
+                res.end();
+              } else {
+                res.send(family);
+                res.end();
+              }
+            }
+          );
+        }
+      );
+    });
+    connection.release();
+  });
+});
+
+app.put("/api/family/description", (req, res) => {
+  const token = req.cookies.userAuth;
+  if (!token) return res.status(200).send(false).end();
+  jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, user) => {
+    if (err) throw err;
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+      connection.query(
+        `SELECT FAMILY FROM Accounts WHERE USER_ID='${user.user_id}'`,
+        (err, data) => {
+          if (err) throw err;
+          connection.query(
+            `UPDATE Families SET DESCRIPTION='${req.body.description}' WHERE FAMILY_ID='${data[0].FAMILY}'`,
+            (err, response) => {
+              if (err) throw err;
+              res.send(true).end();
+            }
+          );
+        }
+      );
+      connection.release();
+    });
+  });
+});
+
+app.put("/api/family/leave", (req, res) => {
+  const token = req.cookies.userAuth;
+  if (!token) return res.status(200).send(false).end();
+  jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, user) => {
+    if (err) throw err;
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+      connection.query(
+        `SELECT FAMILY FROM Accounts WHERE USER_ID='${user.user_id}'`,
+        (err, data) => {
+          if (err) throw err;
+          if (data[0].FAMILY === null) {
+            res.send(false).end();
+          } else {
+            connection.query(
+              `UPDATE Accounts SET FAMILY=null WHERE USER_ID='${user.user_id}'`,
+              (err, response) => {
+                if (err) throw err;
+                res.send(true).end();
+              }
+            );
+          }
+        }
+      );
+    });
   });
 });
 

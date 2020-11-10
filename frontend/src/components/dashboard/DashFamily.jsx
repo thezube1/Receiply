@@ -73,7 +73,7 @@ class DashFamily extends Component {
           <div>
             <div id="dashFamilyName">{this.state.family}</div>
             <div id="dashFamilyContent">
-              {this.state.family_recipe === false ? (
+              {this.state.family_recipe === "BadRecipe" ? (
                 <div>Your family does not have any recipes yet!</div>
               ) : (
                 <div>

@@ -321,6 +321,7 @@ app.get("/api/recipes/family", (req, res) => {
           if (
             family.length === 0 ||
             family[0].FAMILY === "NULL" ||
+            family[0].FAMILY === null ||
             family[0].FAMILY === undefined ||
             family[0].FAMILY_AUTH === "request"
           ) {
@@ -332,7 +333,7 @@ app.get("/api/recipes/family", (req, res) => {
               (err, response) => {
                 if (err) throw err;
                 if (response.length === 0) {
-                  res.send(false);
+                  res.send("BadRecipe");
                   res.end();
                 } else {
                   res.send(response);

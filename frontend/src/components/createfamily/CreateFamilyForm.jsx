@@ -54,7 +54,7 @@ class CreateFamilyForm extends Component {
       console.log("One or more fields is empty");
     } else {
       axios
-        .post("/api/family/add", data)
+        .post("/api/family", data)
         .then((res) => this.setState({ check: res.data }));
     }
   };

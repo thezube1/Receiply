@@ -24,6 +24,7 @@ class SettingsNavbar extends Component {
               Main
             </Link>
           </div>
+          {/* 
           <div>
             <Link
               to="/family/settings/privacy"
@@ -34,6 +35,19 @@ class SettingsNavbar extends Component {
               }}
             >
               Privacy
+            </Link>
+          </div>
+          */}
+          <div>
+            <Link
+              to="/family/settings/personal"
+              className="settingsNavbarItem"
+              style={{
+                color: this.handleColor("/family/settings/personal"),
+                border: this.handleColor("/family/settings/personal"),
+              }}
+            >
+              Personal
             </Link>
           </div>
         </div>

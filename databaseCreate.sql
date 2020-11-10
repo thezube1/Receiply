@@ -9,7 +9,8 @@ CREATE TABLE Receiply.Accounts
     FIRST_NAME varchar(200),
     LAST_NAME varchar(200),
     FAMILY varchar(36),
-    FAMILY_AUTH varchar(100)
+    FAMILY_AUTH varchar(100),
+    PRIVACY varchar(100)
 );
 
 CREATE TABLE Receiply.Recipes
@@ -37,7 +38,8 @@ CREATE TABLE Receiply.Families
     FAMILY_IDENTIFIER varchar(5),
     FAMILY_NAME varchar(100),
     FAMILY_CREATED varchar(100),
-    FAMILY_CREATOR varchar(200)
+    FAMILY_CREATOR varchar(200),
+    DESCRIPTION text
 );
 
 CREATE TABLE Receiply.Likes

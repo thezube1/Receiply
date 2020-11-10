@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import { Modal } from "react-bootstrap";
 import axios from "axios";
+import { Modal } from "react-bootstrap";
 
-class FamilyMainSettings extends Component {
+class FamilyPersonalSettings extends Component {
   state = {
     modalType: undefined,
     modal: false,
     family: undefined,
-    description: "",
     response: undefined,
   };
 
@@ -17,7 +16,7 @@ class FamilyMainSettings extends Component {
 
   handleModalContent = () => {
     switch (this.state.modalType) {
-      case "description":
+      case "leave":
         return (
           <div>
             {this.state.response === true ? (
@@ -25,26 +24,24 @@ class FamilyMainSettings extends Component {
             ) : (
               <React.Fragment></React.Fragment>
             )}
-            <textarea
-              defaultValue={this.state.family.DESCRIPTION}
-              className="settingsInput"
-              onChange={(event) =>
-                this.setState({ description: event.target.value })
-              }
-              style={{ display: "block", width: 400 }}
-            ></textarea>
+            {this.state.response === false ? (
+              <div id="loginError">An error has occured</div>
+            ) : (
+              <React.Fragment></React.Fragment>
+            )}
+            <div>Are you sure you want to leave your family?</div>
             <div style={{ display: "flex", gap: 10, marginTop: 10 }}>
               <button
                 className="settingsItemButton"
                 onClick={() =>
                   axios
-                    .put("/api/family/description", {
+                    .put("/api/family/leave", {
                       description: this.state.description,
                     })
                     .then((res) => this.setState({ response: res.data }))
                 }
               >
-                Update description
+                Leave family
               </button>
               <button
                 className="settingsItemButton settingsItemCancel"
@@ -59,6 +56,7 @@ class FamilyMainSettings extends Component {
         return <div>Error</div>;
     }
   };
+
   render() {
     return (
       <div>
@@ -67,21 +65,19 @@ class FamilyMainSettings extends Component {
           onHide={() => this.setState({ modal: false })}
         >
           <Modal.Header closeButton>
-            <Modal.Title>Change settings</Modal.Title>
+            <Modal.Title>Confirm leave</Modal.Title>
           </Modal.Header>
           <Modal.Body>{this.handleModalContent()}</Modal.Body>
         </Modal>
         <div className="settingsItemWrapper">
           <div>
-            <span className="settingsHeader">Family description </span>
+            <span className="settingsHeader">Leave family</span>
           </div>
           <button
             className="settingsItemButton"
-            onClick={() =>
-              this.setState({ modal: true, modalType: "description" })
-            }
+            onClick={() => this.setState({ modal: true, modalType: "leave" })}
           >
-            Edit description
+            Leave family
           </button>
         </div>
       </div>
@@ -89,4 +85,4 @@ class FamilyMainSettings extends Component {
   }
 }
 
-export default FamilyMainSettings;
+export default FamilyPersonalSettings;

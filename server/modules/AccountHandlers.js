@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const nodemailer = require("nodemailer");
+const { response } = require("express");
 require("dotenv").config();
 
 const pool = mysql.createPool({
@@ -111,7 +112,7 @@ app.post("/api/user/create", (req, res) => {
                       if (err) console.log(err);
                       const hashPass = String(hash);
                       connection.query(
-                        `INSERT INTO Accounts VALUES (UUID(), '${email}', 0, '${user}', '${hashPass}', '${first}', '${last}', NULL, NULL)`,
+                        `INSERT INTO Accounts VALUES (UUID(), '${email}', 0, '${user}', '${hashPass}', '${first}', '${last}', NULL, NULL, 'public')`,
                         (err, data) => {
                           if (err) {
                             console.log(err);
@@ -287,40 +288,6 @@ app.get("/api/user/current", (req, res) => {
   });
 });
 
-app.get("/api/user/:user", (req, res) => {
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(
-      `SELECT USER_ID, USERNAME, FIRST_NAME, LAST_NAME, FAMILY FROM Accounts WHERE USERNAME='${req.params.user}'`,
-      (err, data) => {
-        if (err) throw err;
-        if (data.length === 0) {
-          res.send(false);
-          res.end();
-        } else {
-          if (data[0].FAMILY === null || data[0].FAMILY === "NULL") {
-            data[0].FAMILY = "No family";
-            res.send(data);
-            res.end();
-          } else {
-            connection.query(
-              `SELECT FAMILY_NAME FROM Families WHERE FAMILY_ID='${data[0].FAMILY}'`,
-              (err, family) => {
-                if (err) throw err;
-                data[0].FAMILY = family[0].FAMILY_NAME;
-                res.send(data);
-                res.end();
-              }
-            );
-          }
-        }
-      }
-    );
-    connection.release();
-  });
-});
-module.exports = app;
-
 app.get("/api/user/:user/recipes/public", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
@@ -340,3 +307,132 @@ app.get("/api/user/:user/recipes/public", (req, res) => {
     connection.release();
   });
 });
+
+app.get("/api/user/privacy", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    const token = req.cookies.userAuth;
+    if (!token) return res.send(false).end();
+    jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, user) => {
+      if (err) throw err;
+      connection.query(
+        `SELECT PRIVACY FROM Accounts WHERE USER_ID='${user.user_id}'`,
+        (err, data) => {
+          if (err) throw err;
+
+          data.length === 0
+            ? res.send(false).end()
+            : res.send(data[0].PRIVACY).end();
+        }
+      );
+    });
+    connection.release();
+  });
+});
+
+app.put("/api/user/privacy", (req, res) => {
+  console.log("Stuff!");
+  const token = req.cookies.userAuth;
+  if (!token) return res.send(false).end();
+  jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, user) => {
+    if (err) throw err;
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+      connection.query(
+        `UPDATE Accounts SET PRIVACY='${req.body.privacy}' WHERE USER_ID='${user.user_id}'`,
+        (err, data) => {
+          if (err) throw err;
+          res.send(true).end();
+        }
+      );
+      connection.release();
+    });
+  });
+});
+
+app.get("/api/user/:user", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query(
+      `SELECT USER_ID, USERNAME, FIRST_NAME, LAST_NAME, FAMILY, PRIVACY FROM Accounts WHERE USERNAME='${req.params.user}'`,
+      (err, data) => {
+        if (err) throw err;
+        if (data.length === 0) {
+          res.send(false);
+          res.end();
+        } else {
+          const handleCheck = (family_id) => {
+            const handleGate = (value, user) => {
+              if (
+                data[0].PRIVACY === "public" ||
+                (value === true
+                  ? data[0].USER_ID === user
+                  : data[0].PRIVACY === "public")
+              ) {
+                res.send(data).end();
+              } else if (data[0].PRIVACY === "private") {
+                data[0].FAMILY = false;
+                data[0].FIRST_NAME = false;
+                data[0].LAST_NAME = false;
+                res.send(data).end();
+              } else if (data[0].PRIVACY === "family") {
+                if (value === false) {
+                  data[0].FAMILY = false;
+                  data[0].FIRST_NAME = false;
+                  data[0].LAST_NAME = false;
+                  res.send(data).end();
+                } else {
+                  if (err) throw err;
+                  connection.query(
+                    `SELECT FAMILY FROM Accounts WHERE USER_ID='${user}'`,
+                    (err, family) => {
+                      if (err) throw err;
+                      if (family[0].FAMILY === family_id) {
+                        res.send(data).end();
+                      } else {
+                        data[0].FAMILY = false;
+                        data[0].FIRST_NAME = false;
+                        data[0].LAST_NAME = false;
+                        res.send(data).end();
+                      }
+                    }
+                  );
+                }
+              } else {
+                data[0].FAMILY = family[0].FAMILY_NAME;
+                res.send(data);
+                res.end();
+              }
+            };
+            const token = req.cookies.userAuth;
+            if (!token) {
+              handleGate(false);
+            } else {
+              jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, user) => {
+                if (err) throw err;
+                handleGate(true, user.user_id);
+              });
+            }
+          };
+          if (data[0].FAMILY === null || data[0].FAMILY === "NULL") {
+            data[0].FAMILY = "No family";
+            handleCheck();
+          } else {
+            connection.query(
+              `SELECT FAMILY_NAME FROM Families WHERE FAMILY_ID='${data[0].FAMILY}'`,
+              (err, family) => {
+                if (err) throw err;
+                const family_id = data[0].FAMILY;
+                data[0].FAMILY = family[0].FAMILY_NAME;
+                handleCheck(family_id);
+              }
+            );
+          }
+        }
+      }
+    );
+    connection.release();
+  });
+});
+
+module.exports = app;

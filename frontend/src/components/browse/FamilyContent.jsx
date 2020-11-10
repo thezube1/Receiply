@@ -27,7 +27,10 @@ class FamilyContent extends Component {
   };
 
   render() {
-    if (this.props.family_recipes !== false) {
+    if (
+      this.props.family_recipes !== false &&
+      this.props.family_recipes !== "BadRecipe"
+    ) {
       return (
         <div style={{ marginBottom: 50 }}>
           <div className="browseHeader">Family recipes</div>
@@ -54,12 +57,21 @@ class FamilyContent extends Component {
           {this.viewMoreVisible()}
         </div>
       );
-    } else {
+    } else if (this.props.family_recipes === false) {
       return (
         <div id="myrecipeNoneWrapper">
           <div id="myrecipeText">You are not apart of a family</div>
           <Link to="/family" id="myrecipeUploadButton">
             Join family
+          </Link>
+        </div>
+      );
+    } else {
+      return (
+        <div id="myrecipeNoneWrapper">
+          <div id="myrecipeText">You don't have any family recipes</div>
+          <Link to="/upload" id="myrecipeUploadButton">
+            Create recipe
           </Link>
         </div>
       );

@@ -17,75 +17,92 @@ const pool = mysql.createPool({
 app.use(cookieParser());
 
 app.post("/api/search", (req, res) => {
-  const token = req.cookies.userAuth;
-  if (!token) return res.send(false).end();
-  jwt.verify(
-    req.cookies.userAuth,
-    process.env.ACCESS_TOKEN_KEY,
-    (err, result) => {
+  const isUser = (check, result) => {
+    const params = req.body.s;
+    pool.getConnection((err, connection) => {
       if (err) throw err;
-      const params = req.body.s;
-      pool.getConnection((err, connection) => {
-        if (err) throw err;
-        connection.query(
-          `SELECT * FROM Accounts WHERE USER_ID='${result.user_id}'`,
-          (err, user) => {
-            if (err) throw err;
+      connection.query(
+        `SELECT * FROM Accounts WHERE USER_ID='${result.user_id}'`,
+        (err, user) => {
+          if (err) throw err;
 
-            const filterPrivacy = () => {
-              if (req.body.shr === "prv") {
-                return `AND PUBLISH_STATE='private' AND CREATOR_ID='${result.user_id}'`;
-              } else if (req.body.shr === "fam") {
-                if (
-                  user[0].FAMILY === "NULL" ||
-                  user[0].FAMILY === null ||
-                  user[0].FAMILY_AUTH === 0
-                ) {
-                  res.send(false).end();
-                } else {
-                  return `AND FAMILY_ID='${user[0].FAMILY}' AND PUBLISH_STATE='family'`;
-                }
-              } else if (req.body.shr === "pub") {
-                return `AND PUBLISH_STATE='public'`;
-              } else {
-                return `AND (PUBLISH_STATE='family' AND FAMILY_ID='${user[0].FAMILY}') OR PUBLISH_STATE='public' OR (CREATOR_ID='${result.user_id}' AND PUBLISH_STATE='private')`;
-              }
-            };
-
-            const filterIngredients = () => {
-              let ingredientFilter;
-              if (typeof req.body.ingr === "string") {
-                ingredientFilter = [req.body.ingr];
-              } else if (typeof req.body.ingr === "object") {
-                ingredientFilter = req.body.ingr;
-              } else {
+          const filterPrivacy = (check, result) => {
+            if (check === false) {
+              return `AND PUBLISH_STATE='public'`;
+            } else if (req.body.shr === "prv") {
+              if (check === false) {
                 return "";
+              } else {
+                return `AND PUBLISH_STATE='private' AND CREATOR_ID='${result.user_id}'`;
               }
-              const ingredientChecks = ingredientFilter.join(" ");
-              console.log(ingredientChecks);
-              return `AND INGREDIENTS LIKE '%${ingredientChecks}%'`;
-            };
-
-            connection.query(
-              `SELECT * FROM Recipes WHERE (RECIPE_NAME LIKE '%${params}%') ${filterPrivacy()} ${filterIngredients()}`,
-              (err, data) => {
-                if (err) throw err;
-                if (data.length === 0) {
-                  res.send(false);
-                  res.end();
-                } else {
-                  res.send(data);
-                  res.end();
-                }
+            } else if (req.body.shr === "fam") {
+              if (
+                check === false ||
+                user[0].FAMILY === "NULL" ||
+                user[0].FAMILY === null ||
+                user[0].FAMILY_AUTH === 0
+              ) {
+                return "";
+              } else {
+                return `AND FAMILY_ID='${user[0].FAMILY}' AND PUBLISH_STATE='family'`;
               }
-            );
-          }
-        );
+            } else if (req.body.shr === "pub") {
+              return `AND PUBLISH_STATE='public'`;
+            } else if (check !== false) {
+              return `AND (PUBLISH_STATE='family' AND FAMILY_ID='${user[0].FAMILY}') OR PUBLISH_STATE='public' OR (CREATOR_ID='${result.user_id}' AND PUBLISH_STATE='private')`;
+            } else {
+              return `AND PUBLISH_STATE='public'`;
+            }
+          };
 
-        connection.release();
-      });
-    }
-  );
+          const filterIngredients = () => {
+            let ingredientFilter;
+            if (typeof req.body.ingr === "string") {
+              ingredientFilter = [req.body.ingr];
+            } else if (typeof req.body.ingr === "object") {
+              ingredientFilter = req.body.ingr;
+            } else {
+              return "";
+            }
+            const ingredientChecks = ingredientFilter.join(" ");
+            console.log(ingredientChecks);
+            return `AND INGREDIENTS LIKE '%${ingredientChecks}%'`;
+          };
+
+          connection.query(
+            `SELECT * FROM Recipes WHERE (RECIPE_NAME LIKE '%${params}%') ${filterPrivacy(
+              check
+            )} ${filterIngredients()}`,
+            (err, data) => {
+              if (err) throw err;
+              if (data.length === 0) {
+                res.send(false);
+                res.end();
+              } else {
+                res.send(data);
+                res.end();
+              }
+            }
+          );
+        }
+      );
+
+      connection.release();
+    });
+  };
+  const token = req.cookies.userAuth;
+  if (token === undefined) {
+    isUser(false, false);
+  } else {
+    jwt.verify(
+      req.cookies.userAuth,
+      process.env.ACCESS_TOKEN_KEY,
+      (err, result) => {
+        if (err) throw err;
+        isUser(true, result);
+      }
+    );
+  }
 });
 
 app.post("/api/family/search", (req, res) => {
@@ -108,11 +125,6 @@ app.post("/api/family/search", (req, res) => {
     }
     connection.release();
   });
-});
-
-app.use((err, req, res, next) => {
-  res.status(500);
-  res.send("Oops, something went wrong");
 });
 
 module.exports = app;

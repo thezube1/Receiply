@@ -28,12 +28,12 @@ class MyRecipesPage extends Component {
   };
 
   render() {
-    console.log(this.props.user_recipes.length < 1);
+    console.log(this.props.user_recipes);
     return (
       <div>
         <NavbarMain />
         <div id="myrecipesWrapper">
-          {this.props.user_recipes.length > 1 ? (
+          {this.props.user_recipes !== false ? (
             <React.Fragment>
               <div className="contentOutline" id="myrecipesContent">
                 {this.props.user_recipes.map((item) => {
