@@ -15,7 +15,7 @@ class EditItem extends Component {
 
           <span>{this.props.title}</span>
         </div>
-        <textarea
+        <textarea 
           onChange={(event) => this.props.reducer(event.target.value)}
           className="uploadManualInput"
           defaultValue={this.props.defaultValue}
