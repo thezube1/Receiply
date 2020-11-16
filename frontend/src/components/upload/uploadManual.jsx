@@ -182,6 +182,7 @@ class UploadManual extends Component {
                 placeholder="Enter ingredient"
                 addReducer={this.props.add_recipe_ingredient}
                 removeReducer={this.props.remove_recipe_ingredient}
+                width={600}
               />
               <EditItemArray
                 title="Prep instructions:"
@@ -190,6 +191,7 @@ class UploadManual extends Component {
                 placeholder="Enter step"
                 addReducer={this.props.add_prep_instruction}
                 removeReducer={this.props.remove_prep_instruction}
+                width={600}
               />
               <EditItemArray
                 title="Cooking instructions:"
@@ -199,6 +201,7 @@ class UploadManual extends Component {
                 addReducer={this.props.add_cooking_instruction}
                 removeReducer={this.props.remove_cooking_instruction}
                 isRequired={true}
+                width={600}
               />
               <EditItemArray
                 title="Tags:"
@@ -207,7 +210,7 @@ class UploadManual extends Component {
                 placeholder="Enter tag"
                 addReducer={this.props.add_tag}
                 removeReducer={this.props.remove_tag}
-                width={300}
+                width={600}
               />
               <EditShare
                 reducer={this.props.share}

@@ -22,7 +22,7 @@ app.post("/api/family", (req, res) => {
     const d = new Date();
     const date = `${d.getMonth() + 1} ${d.getDate()} ${d.getFullYear()}`;
     const token = req.cookies.userAuth;
-    if (!token) return res.status(200).send(false);
+    if (!token) return res.status(200).send(false).end();
     jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, result) => {
       if (err) return res.status(500);
       connection.query(
@@ -53,7 +53,7 @@ app.post("/api/family", (req, res) => {
                             if (err) {
                               console.log(err);
                             } else {
-                              res.send(true);
+                              res.send(true).end();
                             }
                           }
                         );
@@ -67,8 +67,29 @@ app.post("/api/family", (req, res) => {
         }
       );
     });
-
     connection.release();
+  });
+});
+
+app.get("/api/check", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    const token = req.cookies.userAuth;
+
+    const selectRecipes = async (check) => {
+      const query = await connection.query(`SELECT * FROM Recipes`);
+      if (check === true) {
+        res.send(query).end();
+      } else {
+        res.send(false).end();
+      }
+    };
+
+    if (!token) {
+      selectRecipes(false);
+    } else {
+      selectRecipes(true);
+    }
   });
 });
 
@@ -101,6 +122,7 @@ app.post("/api/family/request", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     const userCookie = req.cookies.userAuth;
+    if (!userCookie) return res.send(false).end();
     jwt.verify(userCookie, process.env.ACCESS_TOKEN_KEY, (err, result) => {
       if (err) throw err;
       connection.query(

@@ -201,6 +201,12 @@
   color: rgb(37, 37, 37);
 }
 
+.searchFamilyJoinTitle {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 20px;
+}
+
 @media screen and (max-width: 800px) {
   #familyChoiceOrder {
     display: grid;

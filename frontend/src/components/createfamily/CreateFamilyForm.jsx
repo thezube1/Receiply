@@ -20,6 +20,7 @@ class CreateFamilyForm extends Component {
     createName: "",
     search: "",
     check: false,
+    response: undefined,
   };
 
   CancelToken = axios.CancelToken;
@@ -63,7 +64,9 @@ class CreateFamilyForm extends Component {
     const data = {
       FAMILY_ID: this.state.families[this.state.value].FAMILY_ID,
     };
-    axios.post("/api/family/request", data);
+    axios
+      .post("/api/family/request", data)
+      .then((res) => this.setState({ response: res.data }));
   };
 
   renderChoiceButton = () => {
@@ -143,78 +146,88 @@ class CreateFamilyForm extends Component {
               <div id="createFamWrapper">
                 <div>
                   <div id="createFamContent">
-                    {this.state.check === false ? (
-                      <React.Fragment>
-                        {this.renderChoice()}
-
-                        <div id="createFamilyBottom">
-                          <div>
-                            <div className="createFamThinText">
-                              Search for family
-                            </div>
-                            <input
-                              className="createFamInput"
-                              type="text"
-                              placeholder="Search for family"
-                              onChange={(event) => {
-                                this.setState({ search: event.target.value });
-                                this.props.write_search(event.target.value);
-                              }}
-                            />
-                            <div id="createFamSearchWrapper">
-                              <Link
-                                id="createFamSearch"
-                                className="createFamilyButton"
-                                to={`/family/search?s=${this.state.search.replace(
-                                  " ",
-                                  "-"
-                                )}`}
-                              >
-                                Search
-                              </Link>
-                            </div>
-                          </div>
-                          <div id="createFamilyBottomSeperator"></div>
-                          <div>
-                            <div className="createFamThinText">
-                              Create family
-                            </div>
-                            <input
-                              className="createFamInput"
-                              type="text"
-                              placeholder="Enter name of family"
-                              defaultValue={
-                                this.state.name.LAST_NAME + " Family"
-                              }
-                              onChange={this.handleInput("createName")}
-                            />
-                            <div>
-                              <button
-                                id="createFamilyBottomButton"
-                                className="createFamilyButton"
-                                onClick={this.handleCreate}
-                              >
-                                Create
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </React.Fragment>
+                    {this.state.response === true ? (
+                      <div id="createFamIntro" className="createFamThinText">
+                        Succesfully requested to join a family!
+                      </div>
                     ) : (
                       <React.Fragment>
-                        <div
-                          className="createFamThinText"
-                          style={{ fontSize: 30 }}
-                        >
-                          Created family
-                        </div>
-                        <Link
-                          to="/"
-                          className="createFamilyButton"
-                          style={{ color: "white", textDecoration: "none" }}
-                        >
-                          Return to dashboard
-                        </Link>
+                        {this.state.check === false ? (
+                          <React.Fragment>
+                            {this.renderChoice()}
+
+                            <div id="createFamilyBottom">
+                              <div>
+                                <div className="createFamThinText">
+                                  Search for family
+                                </div>
+                                <input
+                                  className="createFamInput"
+                                  type="text"
+                                  placeholder="Search for family"
+                                  onChange={(event) => {
+                                    this.setState({
+                                      search: event.target.value,
+                                    });
+                                    this.props.write_search(event.target.value);
+                                  }}
+                                />
+                                <div id="createFamSearchWrapper">
+                                  <Link
+                                    id="createFamSearch"
+                                    className="createFamilyButton"
+                                    to={`/family/search?s=${this.state.search.replace(
+                                      " ",
+                                      "-"
+                                    )}`}
+                                  >
+                                    Search
+                                  </Link>
+                                </div>
+                              </div>
+                              <div id="createFamilyBottomSeperator"></div>
+                              <div>
+                                <div className="createFamThinText">
+                                  Create family
+                                </div>
+                                <input
+                                  className="createFamInput"
+                                  type="text"
+                                  placeholder="Enter name of family"
+                                  defaultValue={
+                                    this.state.name.LAST_NAME + " Family"
+                                  }
+                                  onChange={this.handleInput("createName")}
+                                />
+                                <div>
+                                  <button
+                                    id="createFamilyBottomButton"
+                                    className="createFamilyButton"
+                                    onClick={this.handleCreate}
+                                  >
+                                    Create
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </React.Fragment>
+                        ) : (
+                          <React.Fragment>
+                            <div
+                              className="createFamThinText"
+                              style={{ fontSize: 30 }}
+                            >
+                              Created family
+                            </div>
+                            <Link
+                              to="/"
+                              className="createFamilyButton"
+                              style={{ color: "white", textDecoration: "none" }}
+                            >
+                              Return to dashboard
+                            </Link>
+                          </React.Fragment>
+                        )}
                       </React.Fragment>
                     )}
                   </div>

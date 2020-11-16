@@ -20,9 +20,7 @@ class EditItemArray extends Component {
           return (
             <div key={index} className="uploadManualInputWrapper2">
               <textarea
-                style={{ width: this.props.width }}
                 className="uploadManualInput"
-                id="uploadManualInputIngredient"
                 placeholder={this.props.placeholder}
                 value={item}
                 onChange={(event) =>

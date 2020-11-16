@@ -16,6 +16,8 @@ const pool = mysql.createPool({
 
 app.use(cookieParser());
 
+// Pattern 1 - instance
+
 app.post("/api/search", (req, res) => {
   const isUser = (check, result) => {
     const params = req.body.s;
@@ -25,7 +27,6 @@ app.post("/api/search", (req, res) => {
         `SELECT * FROM Accounts WHERE USER_ID='${result.user_id}'`,
         (err, user) => {
           if (err) throw err;
-
           const filterPrivacy = (check, result) => {
             if (check === false) {
               return `AND PUBLISH_STATE='public'`;

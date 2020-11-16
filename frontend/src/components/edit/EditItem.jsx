@@ -20,11 +20,6 @@ class EditItem extends Component {
           className="uploadManualInput"
           defaultValue={this.props.defaultValue}
           placeholder={this.props.placeholder}
-          style={{
-            maxWidth: this.props.width,
-            width: "90%",
-            height: this.props.height,
-          }}
         ></textarea>
       </div>
     );

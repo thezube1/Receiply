@@ -10,6 +10,8 @@ import LoadingPage from "../../Loading";
 import { search } from "../../actions/actions";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { Modal } from "react-bootstrap";
+import { FaThList } from "react-icons/fa";
 
 class SearchFamily extends Component {
   state = {
@@ -18,6 +20,9 @@ class SearchFamily extends Component {
     redirect: undefined,
     default: undefined,
     families: undefined,
+    modal: undefined,
+    selected: undefined,
+    response: undefined,
   };
 
   componentDidMount() {
@@ -69,6 +74,64 @@ class SearchFamily extends Component {
     } else {
       return (
         <React.Fragment>
+          <Modal
+            show={this.state.modal}
+            onHide={() => this.setState({ modal: false })}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Join family</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {this.state.response === true ? (
+                <div className="searchFamilyJoinTitle">
+                  Sucessfuly requested to join a family! Wait for their response
+                </div>
+              ) : (
+                <div>
+                  {this.state.response === false ? (
+                    <div id="loginError">
+                      An error has occurred. Please try again
+                    </div>
+                  ) : (
+                    <React.Fragment></React.Fragment>
+                  )}
+                  <div className="searchFamilyJoinTitle">
+                    {this.state.selected === undefined ? (
+                      <React.Fragment></React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                        <span>Request to join </span>
+                        <span style={{ fontWeight: 900 }}>
+                          {this.state.families[this.state.selected].FAMILY_NAME}
+                        </span>
+                      </React.Fragment>
+                    )}
+                  </div>
+                  <div style={{ display: "flex", gap: 10, marginTop: 10 }}>
+                    <button
+                      className="settingsItemButton"
+                      onClick={() =>
+                        axios
+                          .post(
+                            "/api/family/request",
+                            this.state.families[this.state.selected]
+                          )
+                          .then((res) => this.setState({ response: res.data }))
+                      }
+                    >
+                      Request
+                    </button>
+                    <button
+                      className="settingsItemButton settingsItemCancel"
+                      onClick={() => this.setState({ modal: false })}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
+            </Modal.Body>
+          </Modal>
           <NavbarMain />
           <div id="searchFamilyWrapper">
             <div id="searchFamilyContent">
@@ -110,6 +173,7 @@ class SearchFamily extends Component {
                   {this.state.families.map((item, index) => {
                     return (
                       <ToggleButton
+                        onClick={() => this.setState({ modal: true })}
                         name="radio"
                         type="radio"
                         variant="light"
@@ -117,7 +181,10 @@ class SearchFamily extends Component {
                         className="searchFamilyItem"
                         value={index}
                         onChange={(event) =>
-                          this.setState({ value: event.currentTarget.value })
+                          this.setState({
+                            selected: index,
+                            value: event.currentTarget.value,
+                          })
                         }
                       >
                         <FamilyChoice

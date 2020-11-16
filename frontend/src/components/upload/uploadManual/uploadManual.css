@@ -95,10 +95,23 @@
   padding: 10px;
   color: rgb(56, 56, 56);
   font-size: 16px;
-  display: grid;
   display: inline-block;
   outline: none;
   transition: 0.2s;
+  resize: horizontal;
+}
+
+.textarea {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  resize: both;
+  min-height: 40px;
+  line-height: 20px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 1px 6px;
 }
 
 .uploadManualInput:focus {

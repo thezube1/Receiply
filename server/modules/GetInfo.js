@@ -141,7 +141,7 @@ app.get("/api/getfamily/members", (req, res) => {
             if (err) return console.log(err);
             const family = result1[0].FAMILY;
             connection.query(
-              `SELECT FIRST_NAME, LAST_NAME, USER_ID FROM Accounts WHERE FAMILY='${family}'`,
+              `SELECT FIRST_NAME, LAST_NAME, USER_ID FROM Accounts WHERE FAMILY='${family}' AND FAMILY_AUTH='1'`,
               (err, result2) => {
                 if (err) return console.log(err);
                 else {
