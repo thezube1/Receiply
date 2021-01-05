@@ -4,7 +4,7 @@ import FamilyMemberRequests from "./FamilyMemberRequests";
 
 class FamilyMembers extends Component {
   state = {
-    members: [],
+    members: undefined,
   };
 
   CancelToken = axios.CancelToken;
@@ -25,15 +25,22 @@ class FamilyMembers extends Component {
   }
 
   render() {
+    if (this.state.members === undefined) {
+      <div>Loading...</div>;
+    }
     return (
       <div id="familyMemberWrapper">
         <FamilyMemberRequests />
         <div className="familyMemberHeader">Members:</div>
-        {this.state.members.map((content, index) => (
-          <div className="familyMemberItem" key={content.USER_ID}>{`${
-            index + 1
-          }. ${content.FIRST_NAME} ${content.LAST_NAME}`}</div>
-        ))}
+        {this.state.members === undefined ? (
+          <div className="familyMemberItem">Loading...</div>
+        ) : (
+          this.state.members.map((content, index) => (
+            <div className="familyMemberItem" key={content.USER_ID}>{`${
+              index + 1
+            }. ${content.FIRST_NAME} ${content.LAST_NAME}`}</div>
+          ))
+        )}
       </div>
     );
   }

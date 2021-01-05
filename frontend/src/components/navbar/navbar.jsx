@@ -5,12 +5,27 @@ import NavbarSearch from "./navbarSearch";
 import { Link } from "react-router-dom";
 
 class Navbar extends Component {
-  state = {};
+  state = {
+    type: "navContent",
+    visible: "hide",
+  };
 
   render() {
     return (
       <div id="navWrapper">
-        <div id="navContent">
+        <button
+          id="navBurger"
+          onClick={() =>
+            this.state.type === "navContent"
+              ? this.setState({ type: "navDropdown", visible: "show" })
+              : this.setState({ type: "navContent", visible: "hide" })
+          }
+        >
+          <div className="navBurgerLine"></div>
+          <div className="navBurgerLine"></div>
+          <div className="navBurgerLine"></div>
+        </button>
+        <div id={this.state.type} className={this.state.visible}>
           <Link to="/" style={{ textDecoration: "none" }}>
             <span id="title">Receiply</span>
           </Link>

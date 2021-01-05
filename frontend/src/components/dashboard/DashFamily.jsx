@@ -7,7 +7,7 @@ import DashFamilyItem from "./DashFamilyItem";
 class DashFamily extends Component {
   state = {
     family: undefined,
-    family_recipe: [],
+    family_recipe: undefined,
   };
 
   CancelToken = axios.CancelToken;
@@ -58,57 +58,68 @@ class DashFamily extends Component {
   }
 
   render() {
-    const num = this.randomShowRange();
-    return (
-      <div className="dashOutlineWrapper" id="dashFamilyWrapper">
-        <div className="dashOutlineHeader">Family</div>
-        {this.state.family === false ? (
-          <div className="dashRecipeContent">
-            <div>You're not apart of a family!</div>
-            <Link to="/family" style={{ textDecoration: "none" }}>
-              <span className="dashRecipeCreate">Join family</span>
-            </Link>
-          </div>
-        ) : (
-          <div>
-            <div id="dashFamilyName">{this.state.family}</div>
-            <div id="dashFamilyContent">
-              {this.state.family_recipe === "BadRecipe" ? (
-                <div>Your family does not have any recipes yet!</div>
-              ) : (
-                <div>
-                  {this.state.family_recipe
-                    .slice(num[0], num[1])
-                    .map((item) => {
-                      return (
-                        <Link
-                          to={`/recipe/${item.RECIPE_IDENTIFIER}`}
-                          key={item.RECIPE_ID}
-                          className="recipeCardLink"
-                        >
-                          <DashFamilyItem
-                            key={item.RECIPE_ID}
-                            title={item.RECIPE_NAME}
-                            description={item.DESCRIPTION}
-                            image={item.PHOTO_NAME}
-                          />
-                        </Link>
-                      );
-                    })}
-                </div>
-              )}
+    if (
+      this.state.family_recipe === undefined ||
+      this.state.family === undefined
+    ) {
+      return <div>Loading...</div>;
+    } else {
+      const num = this.randomShowRange();
+      return (
+        <div className="dashOutlineWrapper" id="dashFamilyWrapper">
+          <div className="dashOutlineHeader">Family</div>
+          {this.state.family === false ? (
+            <div className="dashRecipeContent">
+              <div>You're not apart of a family!</div>
+              <Link to="/family" style={{ textDecoration: "none" }}>
+                <span className="dashRecipeCreate">Join family</span>
+              </Link>
             </div>
-          </div>
-        )}
-        {this.state.family_recipe !== false ? (
-          <Link to="/browse/family" className="browseMore" id="dashFamilyView">
-            View more
-          </Link>
-        ) : (
-          <React.Fragment></React.Fragment>
-        )}
-      </div>
-    );
+          ) : (
+            <div>
+              <div id="dashFamilyName">{this.state.family}</div>
+              <div id="dashFamilyContent">
+                {this.state.family_recipe === "BadRecipe" ? (
+                  <div>Your family does not have any recipes yet!</div>
+                ) : (
+                  <div>
+                    {this.state.family_recipe
+                      .slice(num[0], num[1])
+                      .map((item) => {
+                        return (
+                          <Link
+                            to={`/recipe/${item.RECIPE_IDENTIFIER}`}
+                            key={item.RECIPE_ID}
+                            className="recipeCardLink"
+                          >
+                            <DashFamilyItem
+                              key={item.RECIPE_ID}
+                              title={item.RECIPE_NAME}
+                              description={item.DESCRIPTION}
+                              image={item.PHOTO_NAME}
+                            />
+                          </Link>
+                        );
+                      })}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          {this.state.family_recipe !== false ? (
+            <Link
+              to="/browse/family"
+              className="browseMore"
+              id="dashFamilyView"
+            >
+              View more
+            </Link>
+          ) : (
+            <React.Fragment></React.Fragment>
+          )}
+        </div>
+      );
+    }
   }
 }
 

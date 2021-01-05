@@ -17,47 +17,70 @@ class DashPop extends Component {
   }
 
   render() {
-    return (
-      <div className="dashOutlineWrapper" id="dashPopWrapper">
-        <div className="dashOutlineHeader">Popular Recipes</div>
-        <Carousel indicators={false}>
-          <Carousel.Item>
-            <div className="dashPopItemWrapper">
-              {this.props.public_recipes.slice(0, 2).map((item) => {
-                return (
-                  <Link
-                    to={`/recipe/${item.RECIPE_IDENTIFIER}`}
-                    key={item.RECIPE_ID}
-                    className="recipeCardLink"
-                  >
-                    <DashPopItem
-                      key={item.RECIPE_ID}
-                      title={item.RECIPE_NAME}
-                      description={item.DESCRIPTION}
-                      image={item.PHOTO_NAME}
-                      likes={item.LIKES}
-                    />
-                  </Link>
-                );
-              })}
-            </div>
-          </Carousel.Item>
-          <Carousel.Item>
-            <div className="dashPopItemWrapper">
-              <DashPopItem
-                title="4"
-                description="The most popular recipe on our site"
-              />
-              <DashPopItem title="5" description="Another recipe right here" />
-              <DashPopItem title="6" description="Created by Aamer Hydrie" />
-            </div>
-          </Carousel.Item>
-        </Carousel>
-        <Link to="/browse/public" className="browseMore" id="dashFamilyView">
-          View more
-        </Link>
-      </div>
-    );
+    if (this.props.public_recipes === undefined) {
+      return <div>Loading...</div>;
+    } else {
+      return (
+        <div className="dashOutlineWrapper" id="dashPopWrapper">
+          <div className="dashOutlineHeader">Popular Recipes</div>
+          <Carousel indicators={false}>
+            <Carousel.Item>
+              <div className="dashPopItemWrapper">
+                {this.props.public_recipes.length === 0 ? (
+                  <div>No recipes to display</div>
+                ) : (
+                  this.props.public_recipes.slice(0, 2).map((item) => {
+                    return (
+                      <Link
+                        to={`/recipe/${item.RECIPE_IDENTIFIER}`}
+                        key={item.RECIPE_ID}
+                        className="recipeCardLink"
+                      >
+                        <DashPopItem
+                          key={item.RECIPE_ID}
+                          title={item.RECIPE_NAME}
+                          description={item.DESCRIPTION}
+                          image={item.PHOTO_NAME}
+                          likes={item.LIKES}
+                        />
+                      </Link>
+                    );
+                  })
+                )}
+              </div>
+            </Carousel.Item>
+            <Carousel.Item>
+              <div className="dashPopItemWrapper">
+                {this.props.public_recipes.length === 0 ? (
+                  <div>No recipes to display</div>
+                ) : (
+                  this.props.public_recipes.slice(3, 5).map((item) => {
+                    return (
+                      <Link
+                        to={`/recipe/${item.RECIPE_IDENTIFIER}`}
+                        key={item.RECIPE_ID}
+                        className="recipeCardLink"
+                      >
+                        <DashPopItem
+                          key={item.RECIPE_ID}
+                          title={item.RECIPE_NAME}
+                          description={item.DESCRIPTION}
+                          image={item.PHOTO_NAME}
+                          likes={item.LIKES}
+                        />
+                      </Link>
+                    );
+                  })
+                )}
+              </div>
+            </Carousel.Item>
+          </Carousel>
+          <Link to="/browse/public" className="browseMore" id="dashFamilyView">
+            View more
+          </Link>
+        </div>
+      );
+    }
   }
 }
 

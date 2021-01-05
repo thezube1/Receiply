@@ -34,7 +34,7 @@ class NavbarLogout extends Component {
               <Modal.Title>Confirm logout</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div>
+              <div style={{ display: "flex", gap: 15 }}>
                 <button id="logout" onClick={this.handleLogout}>
                   <span className="navitem accountitems">Logout</span>
                 </button>

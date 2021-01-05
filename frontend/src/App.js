@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Navbar from "./components/navbar/navbar";
 import IndexBar from "./components/indexbar/IndexBar";
 import "./App.css";
+import {} from "react-reveal";
 
 class App extends Component {
   state = {};

@@ -9,14 +9,14 @@ class FamilyInvite extends Component {
   onCreate = () => {
     axios.get("/api/createinvite").then((result) => {
       this.setState({
-        inviteLink: `localhost:3000/inviteurl/${result.data}`,
+        inviteLink: `receiply.com/inviteurl/${result.data}`,
       });
     });
   };
   render() {
     return (
       <div id="famSetInvWrapper">
-        <div className="famSetInvHeader">Create 30 minute invite link</div>
+        <div className="famSetInvHeader">Create a 30 minute invite link</div>
         <input
           type="button"
           value="Generate"

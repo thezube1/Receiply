@@ -62,38 +62,41 @@ app.get("/api/verify/user", (req, res) => {
 });
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  pool: true,
+  host: "az1-ss39.a2hosting.com",
+  port: 465,
+  secure: true,
   auth: {
-    user: "receiply@gmail.com",
-    pass: "LetMeIn1234",
+    user: "info@receiply.com",
+    pass: "3bR-J&(vu2a.",
   },
 });
 
 app.get("/api/verify/resend", (req, res) => {
   pool.getConnection((err, connection) => {
-    if (err) throw err;
+    if (err) res.send(false).end();
     const token = req.cookies.userAuth;
     if (!token) return res.send(false).end();
     jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, token) => {
-      if (err) throw err;
+      if (err) res.send(false).end();
       connection.query(
         `SELECT EMAIL, VERIFIED, USERNAME FROM Accounts WHERE USER_ID='${token.user_id}'`,
         (err, data) => {
-          if (err) throw err;
+          if (err) res.send(false).end();
           if (data[0].VERIFIED === 0) {
             jwt.sign(
               { username: data[0].USERNAME },
               process.env.ACCESS_TOKEN_KEY,
               (err, token) => {
-                if (err) throw err;
+                if (err) res.send(false).end();
                 const mailOptions = {
-                  from: "receiply@gmail.com",
+                  from: "info@receiply.com",
                   to: data[0].EMAIL,
                   subject: "Please verify your Receiply account!",
                   text: `Verification link: receiply.com/verify/${token}`,
                 };
                 transporter.sendMail(mailOptions, (err, info) => {
-                  if (err) throw err;
+                  if (err) res.send("Mail error!").end();
                   res.send(true).end();
                 });
               }

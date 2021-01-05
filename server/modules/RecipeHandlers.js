@@ -47,30 +47,31 @@ const pool = mysql.createPool({
 
 app.post("/api/recipe", upload.single("myImage"), (req, res) => {
   pool.getConnection((err, connection) => {
-    if (err) throw err;
+    if (err) res.send("error occured in first 4");
     const token = req.cookies.userAuth;
     if (!token) return res.status(200).send(false);
     jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, result) => {
-      if (err) throw err;
+      if (err) res.send("error occured in first 4");
       connection.query(
         `SELECT VERIFIED FROM Accounts WHERE USER_ID = '${result.user_id}'`,
         (err, data) => {
-          if (err) throw err;
+          if (err) res.send("error occured in first 4");
           if (data[0].VERIFIED === 0) {
             res.send(false).end();
           } else {
             connection.query(
               `SELECT FAMILY, FAMILY_AUTH FROM Accounts WHERE USER_ID = '${result.user_id}'`,
               (err, family) => {
-                if (err) throw err;
+                if (err) res.send("error occured in first 4");
                 const recipe = req.body;
-                if (recipe.sharing === "2") {
-                  if (
-                    family[0].FAMILY === null ||
-                    family[0].FAMILY_AUTH === "request"
-                  ) {
-                    res.send("badFamily").end();
-                  }
+                console.log("checkpoint");
+
+                if (
+                  recipe.sharing === 2 &&
+                  (family[0].FAMILY === null ||
+                    family[0].FAMILY_AUTH === "request")
+                ) {
+                  res.send("badFamily").end();
                 } else {
                   let SHARING;
                   let FAMILY_ID;
@@ -116,10 +117,11 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
                       "Ingredients"
                     )} ${handleInserts(recipe.prep, "Prep")} ${handleInserts(
                       recipe.steps,
-                      "Cooking_instructions"
+                      "Cooking_Instructions"
                     )} ${handleInserts(recipe.tags, "Tags")}`,
                     (err, data) => {
-                      if (err) throw err;
+                      if (err) res.send(err).end();
+                      console.log("Successfully uploaded a recipe!");
                       res.send(true).end();
                     }
                   );
@@ -216,7 +218,7 @@ app.delete("/api/recipe/:id", (req, res) => {
               (err, recipe) => {
                 if (err) throw err;
                 connection.query(
-                  `DELETE FROM Recipes WHERE RECIPE_IDENTIFIER='${req.params.id}'; DELETE FROM Ingredients WHERE RECIPE_ID='${recipe[0].RECIPE_ID}'; DELETE FROM Prep WHERE RECIPE_ID='${recipe[0].RECIPE_ID}'; DELETE FROM Cooking_instructions WHERE RECIPE_ID='${recipe[0].RECIPE_ID}'; DELETE FROM Tags WHERE RECIPE_ID='${recipe[0].RECIPE_ID}';`,
+                  `DELETE FROM Recipes WHERE RECIPE_IDENTIFIER='${req.params.id}'; DELETE FROM Ingredients WHERE RECIPE_ID='${recipe[0].RECIPE_ID}'; DELETE FROM Prep WHERE RECIPE_ID='${recipe[0].RECIPE_ID}'; DELETE FROM Cooking_instructions WHERE RECIPE_ID='${recipe[0].RECIPE_ID}'; DELETE FROM Tags WHERE RECIPE_ID='${recipe[0].RECIPE_ID}'; DELETE FROM Likes WHERE LIKE_ID='${recipe[0].RECIPE_ID}'; DELETE FROM Comments WHERE RECIPE_ID='${recipe[0].RECIPE_ID}';`,
                   (err, response) => {
                     if (err) throw err;
                     res.send(true).end();
@@ -350,18 +352,13 @@ app.get("/api/recipes/family", (req, res) => {
 });
 
 app.get("/api/recipes/public", (req, res) => {
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(
-      `SELECT * FROM receiply.recipes WHERE PUBLISH_STATE='public' ORDER BY LIKES DESC`,
-      (err, data) => {
-        if (err) throw err;
-        res.send(data);
-        res.end();
-      }
-    );
-    connection.release();
-  });
+  pool.query(
+    `SELECT * FROM Recipes WHERE PUBLISH_STATE='public' ORDER BY LIKES DESC`,
+    (err, data) => {
+      if (err) throw err;
+      res.send(data).end();
+    }
+  );
 });
 
 module.exports = app;

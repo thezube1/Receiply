@@ -6,7 +6,7 @@ import axios from "axios";
 class FamilyMemberRequests extends Component {
   state = {
     setShow: false,
-    users: [],
+    users: undefined,
   };
 
   CancelToken = axios.CancelToken;
@@ -27,7 +27,16 @@ class FamilyMemberRequests extends Component {
   };
 
   renderUsers = () => {
-    if (this.state.users.length !== 0) {
+    if (this.state.users === undefined) {
+      return <div>Loading...</div>;
+    } else if (this.state.users === false) {
+      return (
+        <React.Fragment>
+          <div>No requests</div>
+        </React.Fragment>
+      );
+    } else {
+      console.log(this.state.users);
       return (
         <div>
           {this.state.users.map((item, index) => (
@@ -46,12 +55,6 @@ class FamilyMemberRequests extends Component {
             </div>
           ))}
         </div>
-      );
-    } else {
-      return (
-        <React.Fragment>
-          <div>No requests</div>
-        </React.Fragment>
       );
     }
   };
@@ -78,7 +81,13 @@ class FamilyMemberRequests extends Component {
           <Modal.Header closeButton>
             <Modal.Title>Join requests</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{this.renderUsers()}</Modal.Body>
+          <Modal.Body>
+            {this.state.users === undefined ? (
+              <div>Loading...</div>
+            ) : (
+              this.renderUsers()
+            )}
+          </Modal.Body>
         </Modal>
       </React.Fragment>
     );

@@ -13,14 +13,22 @@ class AboutPage extends Component {
           <div id="aboutContent">
             <div className="aboutHeader">About us</div>
             <div className="aboutText">
-              Receiply is a recipe sharing website. "Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-              labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-              nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate
-              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-              occaecat cupidatat non proident, sunt in culpa qui officia
-              deserunt mollit anim id est laborum."
+              Receiply is a free recipe sharing website, with a twist. Say your
+              family has recipes passed down between generations, but you have
+              no place to securely keep them. Receiply is your solution. We make
+              it easy for families to keep their recipes safe, and easily
+              accessible. All you must do is sign up and start adding recipes.
+              Our process for uploading recipes is streamlined so that you do
+              not have to spend extra time trying to figure out how to get
+              started. We are focused on keeping your recipes safe and secure
+              from prying eyes. No account or recipe information will ever be
+              intentionally leaked or sold. Say goodbye to your stacks of recipe
+              books and lengthy group chats! All your family cooking needs can
+              be taken care of here, with Receiply.
+              <br />
+              <br />
+              Receiply was created by Zubin Hydrie, an avid programmer and high
+              school student.
             </div>
           </div>
         </div>

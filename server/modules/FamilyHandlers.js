@@ -135,7 +135,7 @@ app.post("/api/family/request", (req, res) => {
             const userID = result.user_id;
             const familyID = req.body.FAMILY_ID;
             connection.query(
-              `UPDATE Receiply.accounts SET FAMILY = '${familyID}', FAMILY_AUTH = 'request' WHERE USER_ID= '${userID}'`,
+              `UPDATE Accounts SET FAMILY = '${familyID}', FAMILY_AUTH = 'request' WHERE USER_ID= '${userID}'`,
               (err, data) => {
                 if (err) throw err;
                 res.send(true);
@@ -152,15 +152,15 @@ app.post("/api/family/request", (req, res) => {
 
 app.get("/api/family/request", (req, res) => {
   pool.getConnection((err, connection) => {
-    if (err) throw err;
+    if (err) res.send("pool err").end();
     const userCookie = req.cookies.userAuth;
-    if (!userCookie) return res.end();
+    if (!userCookie) return res.send(false).end();
     jwt.verify(userCookie, process.env.ACCESS_TOKEN_KEY, (err, result) => {
-      if (err) throw err;
+      if (err) res.send("verify err").end();
       connection.query(
         `SELECT VERIFIED FROM Accounts WHERE USER_ID='${result.user_id}'`,
         (err, data) => {
-          if (err) throw err;
+          if (err) res.send("query 1 err").end();
           if (data[0].USER_ID === 0) {
             res.send(false).end();
           } else {
@@ -168,14 +168,14 @@ app.get("/api/family/request", (req, res) => {
             connection.query(
               `SELECT FAMILY FROM Accounts WHERE USER_ID='${userID}'`,
               (err, response) => {
-                if (err) throw err;
+                if (err) res.send("query 2 err").end();
                 const familyID = response[0].FAMILY;
                 connection.query(
                   `SELECT USER_ID, USERNAME FROM Accounts WHERE FAMILY='${familyID}' AND FAMILY_AUTH='request'`,
                   (err, data) => {
-                    if (err) throw err;
+                    if (err) res.send("query 3 err").end();
                     if (data.length === 0) {
-                      res.end();
+                      res.send(false).end();
                     } else {
                       res.send(data);
                       res.end();

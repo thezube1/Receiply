@@ -10,8 +10,10 @@ import { Provider } from "react-redux";
 
 //pages
 import App from "./App";
+import PrivacyPolicyPage from "./pages/privacypolicy";
 import SignupPage from "./pages/signup";
 import EditPage from "./pages/edit";
+import ContactPage from "./pages/contact";
 import LoginPage from "./pages/login";
 import DashboardPage from "./pages/dashboard";
 import PublicUser from "./pages/publicuser";
@@ -36,10 +38,12 @@ ReactDOM.render(
         <Switch>
           <Route path="/signup" component={SignupPage} />
           <Route path="/loading" component={Loading} />
+          <Route path="/contact" component={ContactPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/search" component={SearchPage} />
           <Route path="/browse" component={BrowsePage} />
           <Route path="/about" component={AboutPage} />
+          <Route path="/privacy" component={PrivacyPolicyPage} />
           <Route exact path="/reset/:reset" component={ResetPage} />
           <Route exact path="/verify/:verify" component={VerifyAccountPage} />
           <PrivateRoute path="/inviteurl/" component={InviteRouter} />

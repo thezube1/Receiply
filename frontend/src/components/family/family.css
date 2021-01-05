@@ -1,8 +1,7 @@
 #familyNavWrapper {
   width: 300px;
   height: 100vh;
-  background-color: rgb(230, 230, 230);
-  box-shadow: 1px 1px 5px gray;
+  background-color: rgb(247, 247, 247);
   position: fixed;
   z-index: 0;
   left: 0px;
@@ -18,7 +17,7 @@
   padding: 5px;
   position: absolute;
   right: 20px;
-  top: 20px;
+  top: 70px;
   border-radius: 8px;
   border: none;
   outline: none;
@@ -77,7 +76,7 @@
 
 .familyNavHeader {
   font-family: "Source Sans Pro";
-  font-weight: 900;
+  font-weight: 500;
   font-size: 50px;
   color: rgb(250, 106, 106);
   margin: 20px;
@@ -97,36 +96,34 @@
 
 .familyTitle {
   font-family: "Source Sans Pro";
-  font-weight: 700;
+  font-weight: 500;
   font-size: 50px;
   color: white;
   background-color: rgb(136, 228, 138);
-  padding: 3px;
-  border-radius: 5px;
-  text-shadow: 0px 0px 5px rgb(141, 141, 141);
+  padding: 10px;
+  line-height: 1;
 }
 
 #familyName {
   font-family: "Source Sans Pro";
-  font-weight: 900;
+  font-weight: 300;
   font-size: 60px;
   margin-top: 13px;
 }
 
 .familyHeader {
   font-family: "Source Sans Pro";
-  font-weight: 700;
+  font-weight: 500;
   font-size: 40px;
   color: white;
   background-color: rgb(136, 228, 138);
-  padding: 3px;
-  border-radius: 5px;
-  text-shadow: 0px 0px 5px rgb(141, 141, 141);
+  padding: 5px;
+  line-height: 1;
 }
 
 #familyDescription {
   font-family: "Source Sans Pro";
-  font-weight: 600;
+  font-weight: 300;
   font-size: 40px;
   margin-top: 13px;
 }
@@ -170,30 +167,46 @@
 
 .famSetInvHeader {
   font-family: "Source Sans Pro";
-  font-weight: 900;
+  font-weight: 300;
   font-size: 40px;
 }
 
 .famSetInvGenerate {
-  width: max-content;
-  padding: 7px;
   font-family: "Source Sans Pro";
-  font-weight: 700;
+  font-weight: 300;
   font-size: 20px;
+  background-color: rgb(250, 106, 106);
+  color: white;
+  padding: 9px;
+  border-radius: 3px;
+  bottom: 0px;
+  position: relative;
+  border: none;
+  transition: bottom 0.2s;
   margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.famSetInvGenerate:hover {
+  bottom: 2px;
+  border-width: 1px;
+  border: rgb(196, 82, 82);
+  border-bottom-style: solid;
+  color: white;
+  padding: 8px;
 }
 
 #famSetInvLink {
   width: 500px;
   word-wrap: break-word;
   padding: 20px;
-  background-color: rgb(136, 228, 138);
-  color: white;
+  background-color: rgb(247, 247, 247);
+  color: black;
   margin-top: 20px;
   border-radius: 20px;
+  font-size: 20px;
   font-family: "Source Sans Pro";
-  font-weight: 600;
-  text-shadow: 0px 0px 5px gray;
+  font-weight: 300;
 }
 
 #familyMemberWrapper {

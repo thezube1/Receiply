@@ -13,8 +13,18 @@ import "./uploadManual/uploadManual.css";
 class UploadManual extends Component {
   state = {
     selectedFile: undefined,
-    complete: undefined,
+    complete: false,
     cleared: false,
+    check: undefined,
+    warned: false,
+  };
+
+  handleLoading = () => {
+    return this.state.complete === undefined ? (
+      <div>Loading</div>
+    ) : (
+      <div>Save recipe</div>
+    );
   };
 
   handleSubmit = () => {
@@ -46,8 +56,7 @@ class UploadManual extends Component {
       window.scrollTo(0, 0);
       this.setState({ check: false });
     } else {
-      console.log(formData);
-
+      this.setState({ complete: undefined });
       axios
         .post("/api/recipe", formData)
         .then((res) => this.setState({ complete: res.data }));
@@ -69,15 +78,18 @@ class UploadManual extends Component {
 
   handleWarning = () => {
     if (this.state.check === false) {
-      window.scrollTo(0, 0);
+      if (this.state.warned !== true) {
+        window.scrollTo(0, 0);
+      }
       return (
         <div className="uploadManualRequired">
           One or more fields is missing!
         </div>
       );
     } else if (this.state.complete === "badFamily") {
-      window.scrollTo(0, 0);
-
+      if (this.state.warned !== true) {
+        window.scrollTo(0, 0);
+      }
       return (
         <div className="uploadManualRequired">
           Error: You are not apart of a family, so you cannot choose to share
@@ -94,6 +106,11 @@ class UploadManual extends Component {
         this.props.clear_recipe();
       }
     }
+    if (this.state.check !== undefined) {
+      if (this.state.warned !== true) {
+        this.setState({ warned: true });
+      }
+    }
   }
 
   componentDidMount() {
@@ -105,6 +122,7 @@ class UploadManual extends Component {
   }
 
   render() {
+    console.log(this.state);
     if (this.state.complete === true) {
       return (
         <div id="uploadManualConfirmed">
@@ -164,7 +182,7 @@ class UploadManual extends Component {
                 reducer={this.props.write_recipe_name}
                 defaultValue={this.props.editReducer.recipe_name}
                 placeholder="Enter name of Recipe"
-                width={700}
+                width={600}
               />
               <EditItem
                 title="Description"
@@ -172,7 +190,7 @@ class UploadManual extends Component {
                 reducer={this.props.write_recipe_description}
                 defaultValue={this.props.editReducer.recipe_description}
                 placeholder="Enter description of Recipe"
-                width={700}
+                width={600}
                 height={200}
               />
               <EditItemArray
@@ -220,9 +238,10 @@ class UploadManual extends Component {
                 <button
                   id="uploadManualSave"
                   className="uploadManualButton"
+                  onClick={() => this.setState({ check: true })}
                   onClick={this.handleSubmit}
                 >
-                  Save recipe
+                  {this.handleLoading()}
                 </button>
               </div>
             </div>

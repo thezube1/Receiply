@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import NavbarMain from "../components/navbar/navbarmain";
 import LoadingPage from "../Loading";
 import "../components/family/family.css";
+import { Nav } from "react-bootstrap";
 
 class FamilyPage extends Component {
   state = {
@@ -60,6 +61,9 @@ class FamilyPage extends Component {
     } else {
       return (
         <React.Fragment>
+          <div style={{ height: "maxContent" }}>
+            <NavbarMain anchor />
+          </div>
           <div id="familyWrapper">
             <div>
               <FamilyNav />

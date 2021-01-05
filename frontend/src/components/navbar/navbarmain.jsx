@@ -19,7 +19,12 @@ class NavbarMain extends Component {
 
   render() {
     return (
-      <div id="navWrapper">
+      <div
+        id="navWrapper"
+        style={{
+          position: this.props.anchor ? "static" : "fixed",
+        }}
+      >
         <button
           id="navBurger"
           onClick={() =>

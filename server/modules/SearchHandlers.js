@@ -16,8 +16,6 @@ const pool = mysql.createPool({
 
 app.use(cookieParser());
 
-// Pattern 1 - instance
-
 app.post("/api/search", (req, res) => {
   const isUser = (check, result) => {
     const params = req.body.s;
@@ -72,7 +70,8 @@ app.post("/api/search", (req, res) => {
 
           connection.query(
             `SELECT * FROM Recipes WHERE (RECIPE_NAME LIKE '%${params}%') ${filterPrivacy(
-              check
+              check,
+              result
             )} ${filterIngredients()}`,
             (err, data) => {
               if (err) throw err;

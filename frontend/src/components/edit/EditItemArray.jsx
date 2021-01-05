@@ -26,6 +26,7 @@ class EditItemArray extends Component {
                 onChange={(event) =>
                   this.props.reducer([index, event.target.value])
                 }
+                style={{ maxWidth: this.props.width }}
               ></textarea>
 
               {this.props.defaultValue.length !== 1 ? (

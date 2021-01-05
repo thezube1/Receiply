@@ -4,6 +4,7 @@
 }
 
 #uploadManualContent {
+  padding-top: 50px;
   margin-top: 100px;
   background-color: white;
   max-width: 1000px;
@@ -15,9 +16,8 @@
 }
 
 #uploadInnerContent {
-  margin-top: 50px;
   max-width: 700px;
-  width: 100vw;
+  width: 80vw;
 }
 
 #uploadManualTitleWrapper {
@@ -104,19 +104,6 @@
   width: 100%;
 }
 
-.textarea {
-  display: block;
-  width: 100%;
-  overflow: hidden;
-  resize: both;
-  min-height: 40px;
-  line-height: 20px;
-  border: 1px solid #ccc;
-  font-family: inherit;
-  font-size: inherit;
-  padding: 1px 6px;
-}
-
 .uploadManualInput:focus {
   border: rgb(167, 167, 167);
   border-style: solid;
@@ -149,6 +136,7 @@
   border: none;
   outline: none;
   margin-left: 5px;
+  margin-top: 20px;
 }
 
 .uploadManualRemove:hover {
