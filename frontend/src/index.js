@@ -19,6 +19,7 @@ import DashboardPage from "./pages/dashboard";
 import PublicUser from "./pages/publicuser";
 import InviteRouter from "./pages/inviterouter";
 import UploadPage from "./pages/upload";
+import TermsOfServicePage from "./pages/termsofservice";
 import FamilyPage from "./pages/family";
 import RecipePage from "./pages/recipe";
 import SearchPage from "./pages/search";
@@ -44,6 +45,7 @@ ReactDOM.render(
           <Route path="/browse" component={BrowsePage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/privacy" component={PrivacyPolicyPage} />
+          <Route path="/terms-of-service" component={TermsOfServicePage} />
           <Route exact path="/reset/:reset" component={ResetPage} />
           <Route exact path="/verify/:verify" component={VerifyAccountPage} />
           <PrivateRoute path="/inviteurl/" component={InviteRouter} />

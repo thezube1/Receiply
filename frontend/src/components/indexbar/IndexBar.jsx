@@ -33,7 +33,9 @@ class IndexBar extends Component {
               <Link to="/privacy" className="indexBarLink">
                 <div className="indexBarSectionItem">Privacy Policy</div>
               </Link>
-              <div className="indexBarSectionItem">Cookie policy</div>
+              <Link to="/terms-of-service" className="indexBarLink">
+                <div className="indexBarSectionItem">Terms of Use</div>
+              </Link>
               <Link to="/contact" className="indexBarLink">
                 <div className="indexBarSectionItem">Contact</div>
               </Link>
