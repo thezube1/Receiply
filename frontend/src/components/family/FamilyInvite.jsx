@@ -4,6 +4,7 @@ import axios from "axios";
 class FamilyInvite extends Component {
   state = {
     inviteLink: undefined,
+    copyStatus: false,
   };
 
   onCreate = () => {
@@ -13,6 +14,12 @@ class FamilyInvite extends Component {
       });
     });
   };
+
+  copyToClipboard = () => {
+    navigator.clipboard.writeText(this.state.inviteLink);
+    this.setState({ copyStatus: true });
+  };
+
   render() {
     return (
       <div id="famSetInvWrapper">
@@ -24,6 +31,11 @@ class FamilyInvite extends Component {
           onClick={this.onCreate}
         />
         <div id="famSetInvLink">{this.state.inviteLink}</div>
+        {this.state.inviteLink !== undefined ? (
+          <button onClick={() => this.copyToClipboard()} id="famSetInvCopy">
+            {this.state.copyStatus === true ? "Copied!" : "Copy to Clipboard"}
+          </button>
+        ) : undefined}
       </div>
     );
   }

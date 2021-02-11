@@ -206,7 +206,7 @@ app.put("/api/family/request/accept", (req, res) => {
   });
 });
 
-app.post("/api/family/request/ignore", (req, res) => {
+app.put("/api/family/request/ignore", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     const userID = req.body.USER_ID;
@@ -215,6 +215,7 @@ app.post("/api/family/request/ignore", (req, res) => {
       (err, response) => {
         if (err) throw err;
         console.log("Request ignored");
+        res.send(true).end();
       }
     );
   });

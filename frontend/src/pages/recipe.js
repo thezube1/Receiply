@@ -7,7 +7,9 @@ import { Modal } from "react-bootstrap";
 import NavbarSwitch from "../components/navbar/navbarswitch";
 import Loading from "../Loading";
 import NotFoundPage from "./404page";
+import { initGA, PageView } from "../components/tracking/index";
 
+import RecipeSetup from "../components/recipe/RecipeSetup";
 import RecipeInfo from "../components/recipe/RecipeInfo";
 import RecipePhoto from "../components/recipe/RecipePhoto";
 import RecipeCooking from "../components/recipe/RecipeCooking";
@@ -58,6 +60,8 @@ class RecipePage extends Component {
   };
 
   componentDidMount() {
+    initGA();
+    PageView();
     axios
       .get(`/api/recipe/${this.props.match.params.recipeid}`)
       .then((response) => this.setState({ recipe: response.data }))
@@ -139,9 +143,13 @@ class RecipePage extends Component {
                   recipeid={this.props.match.params.recipeid}
                   title={this.state.recipe.recipe.RECIPE_NAME}
                   description={this.state.recipe.recipe.DESCRIPTION}
+                  likes={this.state.recipe.recipe.LIKES}
+                />
+              </div>
+              <div id="recipeSetupWrapper">
+                <RecipeSetup
                   prep={this.state.recipe.prep}
                   ingredients={this.state.recipe.ingredients}
-                  likes={this.state.recipe.recipe.LIKES}
                 />
               </div>
               <div id="recipeCookingWrapper">

@@ -6,6 +6,7 @@ class DashPopItem extends Component {
     description: this.props.description,
     image: this.props.image,
   };
+
   render() {
     return (
       <div className="dashPopItem">

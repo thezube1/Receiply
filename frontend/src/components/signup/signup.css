@@ -119,3 +119,11 @@
   font-weight: 300;
   font-size: 15px;
 }
+
+@media screen and (max-width: 500px) {
+  #signupFormWrapper {
+    margin-top: 75px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}

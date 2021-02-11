@@ -26,24 +26,56 @@ class Navbar extends Component {
           <div className="navBurgerLine"></div>
         </button>
         <div id={this.state.type} className={this.state.visible}>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <button
+            id="navBurger"
+            onClick={() =>
+              this.state.type === "navContent"
+                ? this.setState({ type: "navDropdown", visible: "show" })
+                : this.setState({ type: "navContent", visible: "hide" })
+            }
+          >
+            <div className="navBurgerLine"></div>
+            <div className="navBurgerLine"></div>
+            <div className="navBurgerLine"></div>
+          </button>
+          <Link
+            to="/"
+            className="navItemLink"
+            style={{ textDecoration: "none" }}
+          >
             <span id="title">Receiply</span>
           </Link>
-          <Link to="/browse" style={{ textDecoration: "none" }}>
+          <Link
+            to="/browse"
+            className="navItemLink"
+            style={{ textDecoration: "none" }}
+          >
             <span className="navitem">Browse</span>
           </Link>
-          <Link to="/about" style={{ textDecoration: "none" }}>
+          <Link
+            to="/about"
+            className="navItemLink"
+            style={{ textDecoration: "none" }}
+          >
             <span className="navitem">About</span>
           </Link>
 
           <div id="accountitemswrapper">
             <NavbarSearch searchDefault={this.props.searchDefault} />
-            <Link to="/signup" style={{ textDecoration: "none" }}>
+            <Link
+              to="/signup"
+              className="navItemLink"
+              style={{ textDecoration: "none" }}
+            >
               <span className="navitem accountitems" id="signup">
                 Sign up
               </span>
             </Link>
-            <Link to="/login" style={{ textDecoration: "none" }}>
+            <Link
+              to="/login"
+              className="navItemLink"
+              style={{ textDecoration: "none" }}
+            >
               <span className="navitem accountitems" id="login">
                 Login
               </span>

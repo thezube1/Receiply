@@ -32,7 +32,7 @@ class AboutPage extends Component {
             </div>
           </div>
         </div>
-        <IndexBar />
+        <IndexBar bottom />
       </React.Fragment>
     );
   }

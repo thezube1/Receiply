@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import UploadPhoto from "../components/upload/uploadPhoto/UploadPhoto";
 import NavbarMain from "../components/navbar/navbarmain";
 import UploadManual from "../components/upload/uploadManual";
+import { initGA, PageView } from "../components/tracking/index";
 
 class UploadPage extends Component {
   state = {
@@ -13,6 +14,8 @@ class UploadPage extends Component {
   };
 
   componentDidMount() {
+    initGA();
+    PageView();
     axios
       .get("/api/verify/user")
       .then((res) =>

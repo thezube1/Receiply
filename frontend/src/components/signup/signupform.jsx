@@ -26,7 +26,8 @@ class SignupForm extends Component {
   CancelToken = axios.CancelToken;
   source = this.CancelToken.source();
   abortController = new AbortController();
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    e.preventDefault();
     let data = {
       account: [
         this.state.email,
@@ -101,121 +102,120 @@ class SignupForm extends Component {
         <Navbar />
         <div id="signupFormWrapper">
           <div id="signupFormContainer">
-            <div id="signupHeader">Signup</div>
-            <div id="signupBar"></div>
-            {this.state.check1 === "badUser" ? (
-              <div id="loginError">User with that username already exists!</div>
-            ) : (
-              <React.Fragment></React.Fragment>
-            )}
-            {this.state.check1 === "badEmail" ? (
-              <div id="loginError">
-                Account with email has already been created!
-              </div>
-            ) : (
-              <React.Fragment></React.Fragment>
-            )}
-            {this.state.check1 === "unvalidEmail" ? (
-              <div id="loginError">Please enter a valid email address</div>
-            ) : (
-              <React.Fragment></React.Fragment>
-            )}
-            {this.state.check1 === "fieldMissing" ? (
-              <div id="loginError">One or more fields is missing</div>
-            ) : (
-              <React.Fragment></React.Fragment>
-            )}
-            {this.state.check1 === "notPass" ? (
-              <div id="loginError">Passwords do not match</div>
-            ) : (
-              <React.Fragment></React.Fragment>
-            )}
-            <div className="signupDescription">Email</div>
-            <input
-              type="text"
-              className="signupInput"
-              placeholder="Enter email"
-              value={this.state.email}
-              onChange={this.handleChange("email")}
-            />
-            <div className="signupDescription">First name</div>
-            <input
-              type="text"
-              className="signupInput"
-              placeholder="Enter first name"
-              value={this.state.first}
-              onChange={this.handleChange("first")}
-            />
-            <div className="signupDescription">Last name</div>
-            <input
-              type="text"
-              className="signupInput"
-              placeholder="Enter last name"
-              value={this.state.last}
-              onChange={this.handleChange("last")}
-            />
-            <div className="signupDescription">Username</div>
-            <input
-              type="text"
-              className="signupInput"
-              placeholder="Enter username"
-              value={this.state.user}
-              onChange={this.handleChange("user")}
-            />
-            <div className="signupDescription">Password</div>
-            <input
-              type={this.state.show}
-              className="signupInput"
-              placeholder="Enter password"
-              value={this.state.pass}
-              onChange={this.handleChange("pass")}
-              style={{ marginBottom: 1 }}
-            />
-            <SignupStrength strength={zxcvbn(this.state.pass).score} />
-            <div className="signupDescription">Confirm password</div>
-            <input
-              type={this.state.show}
-              className="signupInput"
-              placeholder="Confirm password"
-              value={this.state.passCheck}
-              onChange={(event) =>
-                this.setState({ passCheck: event.target.value })
-              }
-              style={{ marginBottom: 10 }}
-            />
-            <div
-              className="signupDescription"
-              style={{ display: "flex", gap: 5, marginBottom: 10 }}
-            >
+            <form onSubmit={this.handleSubmit}>
+              <div id="signupHeader">Signup</div>
+              <div id="signupBar"></div>
+              {this.state.check1 === "badUser" ? (
+                <div id="loginError">
+                  User with that username already exists!
+                </div>
+              ) : (
+                <React.Fragment></React.Fragment>
+              )}
+              {this.state.check1 === "badEmail" ? (
+                <div id="loginError">
+                  Account with email has already been created!
+                </div>
+              ) : (
+                <React.Fragment></React.Fragment>
+              )}
+              {this.state.check1 === "unvalidEmail" ? (
+                <div id="loginError">Please enter a valid email address</div>
+              ) : (
+                <React.Fragment></React.Fragment>
+              )}
+              {this.state.check1 === "fieldMissing" ? (
+                <div id="loginError">One or more fields is missing</div>
+              ) : (
+                <React.Fragment></React.Fragment>
+              )}
+              {this.state.check1 === "notPass" ? (
+                <div id="loginError">Passwords do not match</div>
+              ) : (
+                <React.Fragment></React.Fragment>
+              )}
+              <div className="signupDescription">Email</div>
               <input
-                type="checkbox"
-                onClick={() =>
-                  this.state.show === "password"
-                    ? this.setState({ show: "text" })
-                    : this.setState({ show: "password" })
+                type="text"
+                className="signupInput"
+                placeholder="Enter email"
+                value={this.state.email}
+                onChange={this.handleChange("email")}
+              />
+              <div className="signupDescription">First name</div>
+              <input
+                type="text"
+                className="signupInput"
+                placeholder="Enter first name"
+                value={this.state.first}
+                onChange={this.handleChange("first")}
+              />
+              <div className="signupDescription">Last name</div>
+              <input
+                type="text"
+                className="signupInput"
+                placeholder="Enter last name"
+                value={this.state.last}
+                onChange={this.handleChange("last")}
+              />
+              <div className="signupDescription">Username</div>
+              <input
+                type="text"
+                className="signupInput"
+                placeholder="Enter username"
+                value={this.state.user}
+                onChange={this.handleChange("user")}
+              />
+              <div className="signupDescription">Password</div>
+              <input
+                type={this.state.show}
+                className="signupInput"
+                placeholder="Enter password"
+                value={this.state.pass}
+                onChange={this.handleChange("pass")}
+                style={{ marginBottom: 1 }}
+              />
+              <SignupStrength strength={zxcvbn(this.state.pass).score} />
+              <div className="signupDescription">Confirm password</div>
+              <input
+                type={this.state.show}
+                className="signupInput"
+                placeholder="Confirm password"
+                value={this.state.passCheck}
+                onChange={(event) =>
+                  this.setState({ passCheck: event.target.value })
                 }
+                style={{ marginBottom: 10 }}
               />
-              Show password
-            </div>
-
-            <div style={{ textAlign: "center" }}>
-              <input
-                type="button"
-                value="Submit"
-                id="signupSubmitButton"
-                onClick={this.handleSubmit}
-              />
-              <div style={{ fontSize: 13, marginTop: 10 }}>
-                <span>Already have an account? </span>
-                <Link
-                  to="/login"
-                  id="resetPasswordButton"
-                  style={{ textDecoration: "none" }}
-                >
-                  Login
-                </Link>
+              <div
+                className="signupDescription"
+                style={{ display: "flex", gap: 5, marginBottom: 10 }}
+              >
+                <input
+                  type="checkbox"
+                  onClick={() =>
+                    this.state.show === "password"
+                      ? this.setState({ show: "text" })
+                      : this.setState({ show: "password" })
+                  }
+                />
+                Show password
               </div>
-            </div>
+
+              <div style={{ textAlign: "center" }}>
+                <input type="submit" value="Submit" id="signupSubmitButton" />
+                <div style={{ fontSize: 13, marginTop: 10 }}>
+                  <span>Already have an account? </span>
+                  <Link
+                    to="/login"
+                    id="resetPasswordButton"
+                    style={{ textDecoration: "none" }}
+                  >
+                    Login
+                  </Link>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>

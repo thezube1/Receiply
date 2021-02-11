@@ -36,7 +36,6 @@ class FamilyMemberRequests extends Component {
         </React.Fragment>
       );
     } else {
-      console.log(this.state.users);
       return (
         <div>
           {this.state.users.map((item, index) => (
@@ -51,7 +50,18 @@ class FamilyMemberRequests extends Component {
               >
                 Accept
               </Button>
-              <Button variant="danger">Ignore</Button>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  axios.put(
+                    "/api/family/request/ignore",
+                    this.state.users[index]
+                  );
+                  window.location.reload(false);
+                }}
+              >
+                Ignore
+              </Button>
             </div>
           ))}
         </div>
@@ -69,14 +79,32 @@ class FamilyMemberRequests extends Component {
     this.source.cancel("Operation canceled by the user.");
   }
   render() {
+    console.log(this.state.users);
     return (
       <React.Fragment>
-        <input
-          type="button"
-          id="familyRequestLink"
-          value="Join requests"
-          onClick={this.handleShow}
-        />
+        <div id="familyRequestLinkWrapper">
+          <div
+            id="familyRequestNumbers"
+            style={{
+              display:
+                this.state.users === undefined ||
+                this.state.users === false ||
+                this.state.users.length === 0
+                  ? "none"
+                  : "flex",
+            }}
+          >
+            {this.state.users === undefined ? "." : this.state.users.length}
+          </div>
+
+          <button
+            type="button"
+            id="familyRequestLink"
+            onClick={this.handleShow}
+          >
+            <div>Join Requests</div>
+          </button>
+        </div>
         <Modal show={this.state.setShow} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Join requests</Modal.Title>

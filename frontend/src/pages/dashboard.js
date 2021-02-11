@@ -9,11 +9,17 @@ import DashRecipes from "../components/dashboard/DashRecipes";
 import NotVerified from "../components/verify/NotVerified";
 import axios from "axios";
 import { connect } from "react-redux";
+import { initGA, PageView } from "../components/tracking/index";
 
 class DashboardPage extends Component {
-  state = {};
+  state = {
+    redirect: false,
+  };
 
   componentDidMount() {
+    initGA();
+    PageView();
+
     axios
       .get("/api/verify/user")
       .then((res) =>
@@ -21,8 +27,9 @@ class DashboardPage extends Component {
       );
   }
 
+  redirectCookie = () => {};
+
   render() {
-    console.log(this.props.verified);
     return (
       <React.Fragment>
         {this.props.verified === false ? (
@@ -44,7 +51,7 @@ class DashboardPage extends Component {
             </div>
           </div>
         </div>
-        <IndexBar />
+        <IndexBar dissapear={1100} />
       </React.Fragment>
     );
   }

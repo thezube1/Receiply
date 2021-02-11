@@ -5,6 +5,7 @@ import "./login.css";
 import Navbar from "../navbar/navbar";
 import ResetPassword from "../resetPassword/ResetPassword";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 class LoginForm extends Component {
   state = {
@@ -12,7 +13,10 @@ class LoginForm extends Component {
     pass: "",
     check: undefined,
     error: undefined,
+    redirect: undefined,
   };
+
+  componentDidMount() {}
 
   CancelToken = axios.CancelToken;
   source = this.CancelToken.source();
@@ -22,7 +26,14 @@ class LoginForm extends Component {
     this.setState({ [inputType]: event.target.value });
   };
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const cookies = new Cookies();
+    const redirect = cookies.get("redirect");
+    if (redirect !== undefined) {
+      cookies.remove("redirect", { path: "/" });
+      this.setState({ redirect: redirect });
+    }
     const data = {
       account: [this.state.email, this.state.pass],
     };
@@ -64,56 +75,63 @@ class LoginForm extends Component {
 
   render() {
     if (this.state.check === true) {
-      return <Redirect to="/" />;
+      if (this.state.redirect !== undefined) {
+        const cookies = new Cookies();
+        cookies.remove("redirect", { path: "/" });
+        return <Redirect to={this.state.redirect} />;
+      } else {
+        return <Redirect to="/" />;
+      }
     }
-
     return (
       <div id="loginBody" className="mainColor">
         <Navbar />
         <div id="loginFormWrapper">
           <div id="loginFormContainer">
-            <div id="loginHeader">Login</div>
-            <div id="loginBar"></div>
-            {this.handleError()}
-            <div className="loginDescription">Email or username</div>
-            <input
-              type="text"
-              className="loginInput"
-              placeholder="Enter email"
-              value={this.state.email}
-              onChange={this.handleChange("email")}
-            />
-
-            <div className="loginDescription">Password</div>
-            <input
-              type="password"
-              className="loginInput"
-              placeholder="Enter password"
-              value={this.state.pass}
-              onChange={this.handleChange("pass")}
-              style={{ marginBottom: 10 }}
-            />
-
-            <ResetPassword />
-            <div style={{ textAlign: "center" }}>
+            <form onSubmit={this.handleSubmit}>
+              <div id="loginHeader">Login</div>
+              <div id="loginBar"></div>
+              {this.handleError()}
+              <div className="loginDescription">Email or username</div>
               <input
-                type="button"
-                value="Login"
-                id="loginSubmitButton"
-                onClick={this.handleSubmit}
-                className="mainColor"
+                type="text"
+                className="loginInput"
+                placeholder="Enter email"
+                value={this.state.email}
+                onFocus={(this.placeholder = "")}
+                onChange={this.handleChange("email")}
               />
-              <div style={{ fontSize: 13, marginTop: 10 }}>
-                <span>Don't have an account? </span>
-                <Link
-                  to="/signup"
-                  id="resetPasswordButton"
-                  style={{ textDecoration: "none" }}
-                >
-                  Sign up
-                </Link>
+
+              <div className="loginDescription">Password</div>
+              <input
+                type="password"
+                className="loginInput"
+                placeholder="Enter password"
+                value={this.state.pass}
+                onChange={this.handleChange("pass")}
+                style={{ marginBottom: 10 }}
+              />
+
+              <ResetPassword />
+              <div style={{ textAlign: "center" }}>
+                <input
+                  type="submit"
+                  value="Login"
+                  id="loginSubmitButton"
+                  className="mainColor"
+                />
+                <div style={{ fontSize: 13, marginTop: 10 }}>
+                  <span>Don't have an account? </span>
+                  <Link
+                    to="/signup"
+                    id="resetPasswordButton"
+                    style={{ textDecoration: "none" }}
+                  >
+                    Sign up
+                  </Link>
+                </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

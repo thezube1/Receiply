@@ -5,13 +5,12 @@ import { isEqual } from "lodash";
 import NavbarMain from "../navbar/navbarmain";
 import axios from "axios";
 import { IoIosSearch } from "react-icons/io";
-import { ButtonGroup, ToggleButton, Nav } from "react-bootstrap";
+import { ButtonGroup, ToggleButton } from "react-bootstrap";
 import LoadingPage from "../../Loading";
 import { search } from "../../actions/actions";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Modal } from "react-bootstrap";
-import { FaThList } from "react-icons/fa";
 
 class SearchFamily extends Component {
   state = {

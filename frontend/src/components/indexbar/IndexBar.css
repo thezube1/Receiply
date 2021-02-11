@@ -29,12 +29,13 @@
   background-color: rgb(255, 255, 255);
   width: 2px;
   height: 80%;
+  margin-left: 50px;
 }
 
 #indexBarSectionWrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, 120px);
-  margin-left: 50px;
+  margin-left: 100px;
 }
 
 .indexBarSection {
@@ -55,3 +56,5 @@
   text-decoration: none;
   width: max-content;
 }
+
+@media screen and (max-width: );

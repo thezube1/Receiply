@@ -38,17 +38,35 @@ class NavbarMain extends Component {
           <div className="navBurgerLine"></div>
         </button>
         <div id={this.state.type} className={this.state.visible}>
-          <Link to="/" style={{ textDecoration: "none", outline: "none" }}>
+          <button
+            id="navBurger"
+            onClick={() =>
+              this.state.type === "navContent"
+                ? this.setState({ type: "navDropdown", visible: "show" })
+                : this.setState({ type: "navContent", visible: "hide" })
+            }
+          >
+            <div className="navBurgerLine"></div>
+            <div className="navBurgerLine"></div>
+            <div className="navBurgerLine"></div>
+          </button>
+          <Link
+            className="navItemLink"
+            to="/"
+            style={{ textDecoration: "none", outline: "none" }}
+          >
             <span id="title">Receiply</span>
           </Link>
           <Link
             to="/browse"
+            className="navItemLink"
             style={{ textDecoration: "none", outline: "none" }}
           >
             <span className="navitem">Browse</span>
           </Link>
 
           <Link
+            className="navItemLink"
             to="/upload"
             style={{
               textDecoration: "none",
@@ -64,12 +82,14 @@ class NavbarMain extends Component {
             </span>
           </Link>
           <Link
+            className="navItemLink"
             to="/family"
             style={{ textDecoration: "none", outline: "none" }}
           >
             <span className="navitem">Family</span>
           </Link>
           <Link
+            className="navItemLink"
             to="/myrecipes"
             style={{ textDecoration: "none", outline: "none" }}
           >
@@ -78,7 +98,11 @@ class NavbarMain extends Component {
 
           <span id="accountitemswrapper">
             {this.handleSearch()}
-            <Link to="/settings" style={{ textDecoration: "none" }}>
+            <Link
+              className="navItemLink"
+              to="/settings"
+              style={{ textDecoration: "none" }}
+            >
               <span className="navitem accountitems" id="signup">
                 Settings
               </span>

@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import SettingsNavbar from "./SettingsNavbar";
 
 import FamilyMainSettings from "./Settings/FamilyMainSettings";
-import FamilyPrivacySettings from "./Settings/FamilyPrivacySettings";
+//import FamilyPrivacySettings from "./Settings/FamilyPrivacySettings";
 import FamilyPersonalSettings from "./Settings/FamilyPersonalSettings";
 
 class FamilySettings extends Component {

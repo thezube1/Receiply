@@ -8,6 +8,12 @@
   text-align: center;
 }
 
+#familyRequestLinkWrapper {
+  position: absolute;
+  right: 20px;
+  top: 80px;
+}
+
 #familyRequestLink {
   font-family: "Source Sans Pro";
   background-color: rgb(0, 0, 0);
@@ -15,12 +21,24 @@
   font-size: 20px;
   font-weight: 300;
   padding: 5px;
-  position: absolute;
-  right: 20px;
-  top: 70px;
   border-radius: 8px;
   border: none;
   outline: none;
+}
+
+#familyRequestNumbers {
+  background-color: red;
+  width: 25px;
+  height: 25px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 15px;
+  right: 10px;
+  font-size: 15px;
+  color: white;
 }
 
 #familyRequestItem {
@@ -97,11 +115,12 @@
 .familyTitle {
   font-family: "Source Sans Pro";
   font-weight: 500;
-  font-size: 50px;
+  font-size: 40px;
   color: white;
   background-color: rgb(136, 228, 138);
-  padding: 10px;
+  padding: 7px;
   line-height: 1;
+  border-radius: 5px;
 }
 
 #familyName {
@@ -114,11 +133,12 @@
 .familyHeader {
   font-family: "Source Sans Pro";
   font-weight: 500;
-  font-size: 40px;
+  font-size: 30px;
   color: white;
   background-color: rgb(136, 228, 138);
   padding: 5px;
   line-height: 1;
+  border-radius: 5px;
 }
 
 #familyDescription {
@@ -209,26 +229,45 @@
   font-weight: 300;
 }
 
+#famSetInvCopy {
+  background-color: rgb(250, 106, 106);
+  margin-top: 5px;
+  color: white;
+  outline: none;
+  border: none;
+  font-family: "Source Sans Pro";
+  border-radius: 5px;
+  padding: 5px;
+  transition: background-color 0.2s;
+}
+
+#famSetInvCopy:hover {
+  background-color: rgb(197, 82, 82);
+}
+
 #familyMemberWrapper {
   display: grid;
   justify-content: center;
+
   margin-top: 200px;
   font-family: "Source Sans Pro";
-  font-weight: 700;
+  font-weight: 300;
   font-size: 30px;
 }
 
 .familyMemberItem {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .familyMemberHeader {
-  font-size: 50px;
+  font-size: 40px;
   color: white;
   background-color: rgb(136, 228, 138);
-  padding: 5px;
-  text-shadow: 0px 0px 5px rgb(146, 146, 146);
+  padding: 10px;
   border-radius: 5px;
+  width: max-content;
+  line-height: 1;
+  font-weight: 500;
 }
 
 @media screen and (max-width: 500px) {

@@ -26,11 +26,11 @@
 
 #loginHeader {
   font-family: "Roboto";
-  font-size: 35px;
+  font-size: 33px;
   margin-bottom: 20px;
-  color: rgb(87, 87, 87);
+  color: rgb(46, 46, 46);
   text-align: center;
-  font-weight: 200;
+  font-weight: 400;
 }
 
 #loginBar {
@@ -54,21 +54,28 @@
   height: 45px;
   margin-bottom: 20px;
   border: rgb(241, 241, 241);
-  border-style: solid;
-  border-radius: 3px;
-  border-width: 1px;
   outline: none;
+  border-radius: 3px;
   font-family: "Source Sans Pro";
   font-size: 13px;
   color: rgb(110, 110, 110);
-  padding-left: 10px;
-  transition: border 0.2s;
+  padding: 10px;
+  transition: border 0.5s, background-color 0.5s;
+  background-color: rgb(240, 240, 240);
+  box-sizing: border-box;
 }
 
 .loginInput:focus {
+  background-color: rgb(255, 255, 255);
   border: rgb(156, 156, 156);
   border-style: solid;
   border-width: 1px;
+  padding: 9px;
+  box-sizing: border-box;
+}
+
+input:focus::placeholder {
+  color: transparent;
 }
 
 .loginInput::placeholder {
@@ -107,4 +114,11 @@
 
 #loginSubmitButton:active {
   background-color: rgb(108, 184, 109);
+}
+
+@media screen and (max-width: 500px) {
+  #loginFormWrapper {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 }

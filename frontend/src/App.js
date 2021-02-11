@@ -2,25 +2,51 @@ import React, { Component } from "react";
 import Navbar from "./components/navbar/navbar";
 import IndexBar from "./components/indexbar/IndexBar";
 import "./App.css";
-import {} from "react-reveal";
+import { initGA, PageView } from "./components/tracking/index";
+import { Fade } from "react-reveal";
+import UploadImage from "./photos/index/Capture.PNG";
 
 class App extends Component {
   state = {};
+
+  componentDidMount() {
+    initGA();
+    PageView();
+  }
+
   render() {
     return (
       <React.Fragment>
         <Navbar />
         <div id="mainpagewrapper">
           <div id="backgroundImage">
-            <div id="mainTitle">Receiply</div>
+            <Fade bottom big>
+              <div id="mainTitle">Receiply</div>
+            </Fade>
           </div>
           <div id="mainPageSecondWrapper">
-            <div className="mainHeader">
-              Receiply is family recipe sharing made easy
+            <Fade left>
+              <div className="mainHeader" id="mainPageSecondText">
+                Sharing recipes with your family has never been easier
+              </div>
+            </Fade>
+          </div>
+          <div id="mainPageThirdWrapper">
+            <div id="mainPageThirdContent">
+              <Fade left>
+                <div className="mainHeader">Effortlessly upload recipes</div>
+              </Fade>
+              <Fade right>
+                <img
+                  src={UploadImage}
+                  alt="Upload recipe sample"
+                  id="mainImage1"
+                />
+              </Fade>
             </div>
           </div>
         </div>
-        <IndexBar />
+        <IndexBar dissapear={900} />
       </React.Fragment>
     );
   }

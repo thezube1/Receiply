@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import NavbarMain from "../components/navbar/navbarmain";
 import LoadingPage from "../Loading";
 import "../components/family/family.css";
-import { Nav } from "react-bootstrap";
+import { initGA, PageView } from "../components/tracking/index";
 
 class FamilyPage extends Component {
   state = {
@@ -18,6 +18,8 @@ class FamilyPage extends Component {
   source = this.CancelToken.source();
   abortController = new AbortController();
   componentDidMount() {
+    initGA();
+    PageView();
     Promise.all([
       axios
         .get("/api/getfamily", { cancelToken: this.source.token })

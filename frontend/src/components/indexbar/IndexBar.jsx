@@ -3,10 +3,30 @@ import "./IndexBar.css";
 import { Link } from "react-router-dom";
 
 class IndexBar extends Component {
-  state = {};
+  state = { width: 0, height: 0 };
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions = () => {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+  };
   render() {
     return (
-      <div id="indexBarWrapper">
+      <div
+        id="indexBarWrapper"
+        style={{
+          position: this.props.bottom ? "absolute" : "static",
+          bottom: 0,
+          display: this.props.dissapear > this.state.width ? "none" : undefined,
+        }}
+      >
         <div id="indexBarContent">
           <div id="indexBarQuoteWrapper">
             <div id="indexBarQuote">

@@ -30,12 +30,14 @@ import VerifyAccountPage from "./pages/verifyaccount";
 import NotFoundPage from "./pages/404page";
 import ResetPage from "./pages/reset";
 import AboutPage from "./pages/about";
+import ScrollToTop from "./scrolltotop";
 import Loading from "./Loading";
 
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={<Loading />} persistor={persistor}>
       <Router>
+        <ScrollToTop />
         <Switch>
           <Route path="/signup" component={SignupPage} />
           <Route path="/loading" component={Loading} />
@@ -48,7 +50,7 @@ ReactDOM.render(
           <Route path="/terms-of-service" component={TermsOfServicePage} />
           <Route exact path="/reset/:reset" component={ResetPage} />
           <Route exact path="/verify/:verify" component={VerifyAccountPage} />
-          <PrivateRoute path="/inviteurl/" component={InviteRouter} />
+          <PrivateRoute path="/inviteurl" component={InviteRouter} />
           <PrivateRoute path="/upload" component={UploadPage} />
           <PrivateRoute path="/family" component={FamilyPage} />
           <PrivateRoute path="/settings" component={SettingsPage} />

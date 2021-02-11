@@ -5,6 +5,7 @@ import { Switch, Route, Link } from "react-router-dom";
 import queryString from "query-string";
 import { isEqual } from "lodash";
 
+import { initGA, PageView } from "../components/tracking/index";
 import BrowseFilters from "../components/browse/BrowseFilters";
 import NavbarSwitch from "../components/navbar/navbarswitch";
 import FamilyContentPage from "../components/browse/FamilyContentPage";
@@ -17,6 +18,8 @@ class BrowsePage extends Component {
   state = {};
 
   componentDidMount() {
+    initGA();
+    PageView();
     const parsed = queryString.parse(this.props.location.search, {
       arrayFormat: "comma",
     });

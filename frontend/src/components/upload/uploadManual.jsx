@@ -238,8 +238,10 @@ class UploadManual extends Component {
                 <button
                   id="uploadManualSave"
                   className="uploadManualButton"
-                  onClick={() => this.setState({ check: true })}
-                  onClick={this.handleSubmit}
+                  onClick={() => {
+                    this.handleSubmit();
+                    this.setState({ check: true });
+                  }}
                 >
                   {this.handleLoading()}
                 </button>

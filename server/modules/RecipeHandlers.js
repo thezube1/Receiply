@@ -150,8 +150,9 @@ app.get("/api/recipe/:id", (req, res) => {
           res.end();
         } else {
           connection.query(
-            `SELECT * FROM Ingredients WHERE RECIPE_ID='${recipe[0].RECIPE_ID}' ORDER BY STEP ASC; SELECT * FROM Prep WHERE RECIPE_ID='${recipe[0].RECIPE_ID}' ORDER BY STEP ASC; SELECT * FROM Cooking_instructions WHERE RECIPE_ID='${recipe[0].RECIPE_ID}' ORDER BY STEP ASC; SELECT * FROM Tags WHERE RECIPE_ID='${recipe[0].RECIPE_ID}' ORDER BY STEP ASC`,
+            `SELECT * FROM Ingredients WHERE RECIPE_ID='${recipe[0].RECIPE_ID}' ORDER BY STEP ASC; SELECT * FROM Prep WHERE RECIPE_ID='${recipe[0].RECIPE_ID}' ORDER BY STEP ASC; SELECT * FROM Cooking_Instructions WHERE RECIPE_ID='${recipe[0].RECIPE_ID}' ORDER BY STEP ASC; SELECT * FROM Tags WHERE RECIPE_ID='${recipe[0].RECIPE_ID}' ORDER BY STEP ASC`,
             (err, recipeData) => {
+              `w`;
               if (err) throw err;
               let data = {
                 recipe: recipe[0],
@@ -160,35 +161,58 @@ app.get("/api/recipe/:id", (req, res) => {
                 cooking_instructions: recipeData[2],
                 tags: recipeData[3],
               };
-
               if (recipe.length === 0) {
                 console.log("No recipe found!");
                 res.send(false);
                 res.end();
               } else if (recipe[0].PUBLISH_STATE === "private") {
-                if (token.user_id === recipe.CREATOR_ID) {
-                  res.send(data);
-                  res.end();
-                } else {
-                  res.send(false);
-                  res.end();
-                }
-              } else if (recipe[0].PUBLIC_STATE === "family") {
-                connection.query(
-                  `SELECT FAMILY, FAMILY_AUTH FROM Accounts WHERE USER_ID='${token.user_id}'`,
-                  (err, response) => {
-                    if (err) throw err;
-                    if (response.FAMILY_AUTH === 1) {
-                      if (response.FAMILY === recipe.FAMILY_ID) {
-                        res.send(data).end();
+                if (!token) res.send(false).end();
+                else {
+                  jwt.verify(
+                    token,
+                    process.env.ACCESS_TOKEN_KEY,
+                    (err, user) => {
+                      if (err) throw err;
+
+                      if (user.user_id === recipe[0].CREATOR_ID) {
+                        res.send(data);
+                        res.end();
                       } else {
-                        res.send(false).end();
+                        res.send(false);
+                        res.end();
                       }
                     }
-                  }
-                );
+                  );
+                }
+              } else if (recipe[0].PUBLISH_STATE === "family") {
+                if (!token) res.send(false).end();
+                else {
+                  jwt.verify(
+                    token,
+                    process.env.ACCESS_TOKEN_KEY,
+                    (err, user) => {
+                      if (err) throw err;
+
+                      connection.query(
+                        `SELECT FAMILY, FAMILY_AUTH FROM Accounts WHERE USER_ID='${user.user_id}'`,
+                        (err, response) => {
+                          if (err) throw err;
+                          console.log(response[0]);
+                          if (response[0].FAMILY_AUTH === "1") {
+                            if (response[0].FAMILY === recipe[0].FAMILY_ID) {
+                              res.send(data).end();
+                            } else {
+                              res.send(false).end();
+                            }
+                          } else {
+                            res.send(false).end();
+                          }
+                        }
+                      );
+                    }
+                  );
+                }
               } else {
-                console.log("Sending public recipe!");
                 res.send(data);
                 res.end();
               }

@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import DashRecipeItem from "./DashRecipeItem";
+import DashFamilyItem from "./DashFamilyItem";
 
 class DashRecipes extends Component {
   state = {
     recipes: false,
+    width: 0,
+    height: 0,
   };
 
   CancelToken = axios.CancelToken;
@@ -32,12 +35,21 @@ class DashRecipes extends Component {
                 key={item.RECIPE_ID}
                 className="recipeCardLink"
               >
-                <DashRecipeItem
-                  title={item.RECIPE_NAME}
-                  description={item.DESCRIPTION}
-                  image={item.PHOTO_NAME}
-                  likes={item.LIKES}
-                />
+                {this.state.width > 900 ? (
+                  <DashRecipeItem
+                    title={item.RECIPE_NAME}
+                    description={item.DESCRIPTION}
+                    image={item.PHOTO_NAME}
+                    likes={item.LIKES}
+                  />
+                ) : (
+                  <DashFamilyItem
+                    title={item.RECIPE_NAME}
+                    description={item.DESCRIPTION}
+                    image={item.PHOTO_NAME}
+                    likes={item.LIKES}
+                  />
+                )}
               </Link>
             );
           })}
@@ -47,6 +59,8 @@ class DashRecipes extends Component {
   };
 
   componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
     axios
       .get("/api/recipes/user", { cancelToken: this.source.token })
       .then((response) => this.setState({ recipes: response.data }))
@@ -54,8 +68,13 @@ class DashRecipes extends Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
     this.source.cancel();
   }
+
+  updateWindowDimensions = () => {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+  };
 
   render() {
     return (

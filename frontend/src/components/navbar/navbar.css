@@ -90,10 +90,11 @@
   font-weight: 400;
   padding-left: 5px;
   transition: border 0.2s;
+  outline: none;
 }
 
 #navSearchInput:focus {
-  border: gray;
+  border: rgb(121, 121, 121);
   border-style: solid;
   border-width: 1px;
 }
@@ -134,12 +135,19 @@
 }
 
 @media screen and (max-width: 940px) {
+  #navWrapper {
+    background: none;
+  }
   #navBurger {
+    position: fixed;
     display: block;
     background: none;
     border: none;
+    top: 0;
+    left: 0;
     padding: 15px;
     outline: none;
+    z-index: 0;
   }
   #title {
     margin-left: 0px;
@@ -155,12 +163,15 @@
     border-style: solid;
     border-radius: 5px;
   }
+  .navItemLink {
+    margin-bottom: 25px;
+  }
   #navDropdown {
     position: fixed;
+    top: 0;
     background-color: white;
     display: flex;
     flex-direction: column;
-    gap: 25px;
     padding: 50px;
     width: max-content;
     height: 100vh;
@@ -169,7 +180,6 @@
   }
   #accountitemswrapper {
     display: flex;
-    gap: 30px;
     flex-direction: column;
     margin-left: 0px;
     align-items: flex-start;

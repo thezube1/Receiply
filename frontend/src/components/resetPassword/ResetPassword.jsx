@@ -15,6 +15,7 @@ class ResetPassword extends Component {
         <div>
           <button
             id="resetPasswordButton"
+            type="button"
             onClick={() => this.setState({ show: true })}
           >
             Forgot password
