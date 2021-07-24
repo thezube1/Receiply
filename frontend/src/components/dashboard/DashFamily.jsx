@@ -69,10 +69,10 @@ class DashFamily extends Component {
         <div className="dashOutlineWrapper" id="dashFamilyWrapper">
           <div className="dashOutlineHeader">Family</div>
           {this.state.family === false ? (
-            <div className="dashRecipeContent">
+            <div className="title dashRecipeContent">
               <div>You're not apart of a family!</div>
               <Link to="/family" style={{ textDecoration: "none" }}>
-                <span className="dashRecipeCreate">Join family</span>
+                <span className="button">Join family</span>
               </Link>
             </div>
           ) : (

@@ -18,10 +18,10 @@ class DashRecipes extends Component {
   checkRecipe = () => {
     if (this.state.recipes === false) {
       return (
-        <div className="dashRecipeContent">
+        <div className="title dashRecipeContent">
           <div>You don't have any recipes!</div>
           <Link to="/upload" style={{ textDecoration: "none" }}>
-            <span className="dashRecipeCreate">Create recipe</span>
+            <span className="button">Create recipe</span>
           </Link>
         </div>
       );

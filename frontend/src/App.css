@@ -3,6 +3,28 @@ body {
   margin: 0px;
 }
 
+a {
+  text-decoration: none;
+}
+
+.button {
+  font-family: "Source Sans Pro";
+  font-size: 20px;
+  border-style: solid;
+  border-color: rgb(136, 228, 138);
+  padding: 10px 30px;
+  border-radius: 100px;
+  border-width: 2px;
+  color: black;
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: rgb(136, 228, 138);
+  color: white;
+}
+
 #backgroundImage {
   background-image: url("./photos/index/WBC_7095.jpg");
   background-position: center;

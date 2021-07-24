@@ -2,6 +2,12 @@
   margin-bottom: 500px;
 }
 
+.title {
+  font-family: "Source Sans Pro";
+  font-weight: 300;
+  font-size: 30px;
+}
+
 #dashWrapper {
   margin-top: 90px;
   display: grid;
@@ -121,21 +127,9 @@
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
-  font-family: "Source Sans Pro";
-  font-weight: 300;
-  font-size: 35px;
+
   text-align: center;
   width: 90%;
-}
-
-.dashRecipeCreate {
-  font-family: "Source Sans Pro";
-  font-weight: 700;
-  font-size: 23px;
-  padding: 5px;
-  background-color: rgb(136, 228, 138);
-  color: white;
-  border-radius: 3px;
 }
 
 #dashFamilyContent {
