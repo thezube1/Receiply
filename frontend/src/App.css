@@ -7,6 +7,14 @@ a {
   text-decoration: none;
 }
 
+.text {
+  font-family: "Cabin";
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 1;
+  color: black;
+}
+
 .button {
   font-family: "Source Sans Pro";
   font-size: 20px;
@@ -83,8 +91,8 @@ a {
 }
 
 .mainHeader {
-  font-family: "Source Sans Pro";
-  font-weight: 500;
+  font-family: "Open Sans";
+  font-weight: 100;
   font-size: 40px;
   color: rgb(44, 44, 44);
 }

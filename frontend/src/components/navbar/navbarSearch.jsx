@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
 import { connect } from "react-redux";
 import { search } from "../../actions/actions";
 class NavbarSearch extends Component {
@@ -29,20 +28,16 @@ class NavbarSearch extends Component {
     return (
       <div id="navsearchwrapper">
         {this.handleCheck()}
-        <input
-          type="text"
-          placeholder="Search"
-          id="navSearchInput"
-          onChange={(event) => this.props.write_search(event.target.value)}
-          defaultValue={this.props.search}
-        />
-        <button
-          id="navSearchButton"
-          onClick={this.handleSubmit}
-          onMouseEnter={() => this.setState({ active: true })}
-        >
-          <FaSearch id="navSearchButtonIcon " />
-        </button>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            tabIndex="if (event.keyCode == 13) { this.handleSubmit; return false; }"
+            type="text"
+            placeholder="Search"
+            id="navSearchInput"
+            onChange={(event) => this.props.write_search(event.target.value)}
+            defaultValue={this.props.search}
+          />
+        </form>
       </div>
     );
   }

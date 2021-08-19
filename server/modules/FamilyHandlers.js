@@ -35,7 +35,7 @@ app.post("/api/family", (req, res) => {
             connection.query(
               `INSERT INTO Families VALUES (UUID(), ${Math.floor(
                 Math.random() * 10000
-              )}, '${name}', '${date}', '${result.user_id}')`,
+              )}, '${name}', '${date}', '${result.user_id}', 'No description')`,
               (err, data) => {
                 if (err) {
                   console.log(err);

@@ -18,6 +18,7 @@ CREATE TABLE Receiply.Recipes
     RECIPE_ID varchar(36),
     RECIPE_IDENTIFIER varchar(36),
     CREATOR_ID varchar(36),
+    CREATOR_USERNAME varchar(200),
     FAMILY_ID varchar(36),
     DATE_CREATED date,
     TTM varchar(36),

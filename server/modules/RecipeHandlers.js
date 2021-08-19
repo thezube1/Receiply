@@ -53,7 +53,7 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
     jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, result) => {
       if (err) res.send("error occured in first 4");
       connection.query(
-        `SELECT VERIFIED FROM Accounts WHERE USER_ID = '${result.user_id}'`,
+        `SELECT VERIFIED, USERNAME FROM Accounts WHERE USER_ID = '${result.user_id}'`,
         (err, data) => {
           if (err) res.send("error occured in first 4");
           if (data[0].VERIFIED === 0) {
@@ -108,7 +108,9 @@ app.post("/api/recipe", upload.single("myImage"), (req, res) => {
                   };
 
                   connection.query(
-                    `SET @recipe_uuid := uuid(); INSERT INTO Recipes (RECIPE_ID, RECIPE_IDENTIFIER, CREATOR_ID, FAMILY_ID, DATE_CREATED, TTM, RECIPE_NAME, DESCRIPTION, PUBLISH_STATE, PHOTO_NAME, LIKES) VALUES (@recipe_uuid, uuid_short(), '${USER_ID}', '${FAMILY_ID}', CURDATE(), ${connection.escape(
+                    `SET @recipe_uuid := uuid(); INSERT INTO Recipes (RECIPE_ID, RECIPE_IDENTIFIER, CREATOR_ID, CREATOR_USERNAME, FAMILY_ID, DATE_CREATED, TTM, RECIPE_NAME, DESCRIPTION, PUBLISH_STATE, PHOTO_NAME, LIKES) VALUES (@recipe_uuid, uuid_short(), '${USER_ID}', '${
+                      data[0].USERNAME
+                    }', '${FAMILY_ID}', CURDATE(), ${connection.escape(
                       recipe.TTM
                     )}, ${connection.escape(recipe.name)}, ${connection.escape(
                       recipe.description

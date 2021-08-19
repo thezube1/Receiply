@@ -1,0 +1,166 @@
+:root {
+  --main-color: #ff7e36;
+}
+
+#navbar-wrapper {
+  display: flex;
+  justify-content: center;
+  height: 70px;
+  width: 100%;
+  top: 0;
+  align-items: center;
+  background-color: white;
+  position: fixed;
+  z-index: 100;
+}
+
+#navbar-title {
+  font-family: "Cabin";
+  font-size: 28px;
+  font-weight: 900;
+  margin-left: 50px;
+  cursor: pointer;
+  color: rgb(43, 43, 43);
+}
+
+#navbar-title::after {
+  content: "";
+  display: block;
+  border-bottom: 4px solid var(--main-color);
+  width: 0%;
+  position: absolute;
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+}
+
+#navbar-title:hover::after {
+  width: 98px;
+}
+
+.navbar-item {
+  font-family: "Cabin";
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 50px;
+  cursor: pointer;
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+  color: rgb(43, 43, 43);
+}
+
+.navbar-item::after {
+  content: "";
+  display: block;
+  border-bottom: 3px solid var(--main-color);
+  width: 0%;
+  position: absolute;
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+}
+
+.navbar-item:hover:after {
+  width: 50px;
+}
+
+#navbar-create {
+  margin-left: 0px;
+  color: var(--main-color);
+  border-color: var(--main-color);
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 50px;
+  padding: 3px 25px;
+  font-size: 14px;
+  font-weight: 100;
+
+  transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+#navbar-create:hover {
+  background-color: var(--main-color);
+  color: white;
+  border-color: var(--main-color);
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 50px;
+}
+
+#navbar-create:hover::after {
+  width: 0%;
+}
+
+#navbar-create:active {
+  border-color: #da5f1d;
+  background-color: #da5f1d;
+}
+
+#navbar-family:hover::after {
+  width: 44px;
+}
+
+#navbar-recipes:hover::after {
+  width: 78px;
+}
+
+#navbar-right {
+  position: absolute;
+  right: 50px;
+  display: flex;
+  align-items: center;
+}
+
+#navbar-settings {
+  margin-right: 50px;
+}
+
+#navbar-burger {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  border: none;
+  background: none;
+  z-index: 200;
+}
+
+.navbar-line {
+  background-color: black;
+  width: 30px;
+  height: 2px;
+  margin-bottom: 7px;
+  transition: all 0.1s;
+}
+
+#navbar-mobile-wrapper {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 100;
+  background-color: white;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+.navbar-item-mobile {
+  font-family: "Cabin";
+  font-size: 30px;
+  font-weight: 500;
+  margin-left: 50px;
+  cursor: pointer;
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+  color: rgb(43, 43, 43);
+}
+
+.navbar-item-mobile::after {
+  content: "";
+  display: block;
+  border-bottom: 3px solid var(--main-color);
+  width: 0%;
+  position: absolute;
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+}
+
+.navbar-item-mobile:hover:after {
+  width: 50px;
+}

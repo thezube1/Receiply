@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.text {
+  font-family: "Cabin";
+  font-weight: 900;
+  font-size: 20px;
+}

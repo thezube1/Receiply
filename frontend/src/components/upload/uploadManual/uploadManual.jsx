@@ -180,7 +180,10 @@ class uploadManual extends Component {
             </div>
             {this.handleWarning()}
             <div className="uploadManualInputWrapper">
-              <div>Upload Photo:</div>
+              <div>
+                <span className="uploadManualRequired">*</span>
+                <span>Upload Photo: </span>
+              </div>
               <input
                 id="uploadManualPhoto"
                 type="file"

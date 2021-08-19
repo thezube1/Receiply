@@ -27,7 +27,7 @@ class App extends Component {
           <div id="mainPageSecondWrapper">
             <Fade left>
               <div className="mainHeader" id="mainPageSecondText">
-                Sharing recipes with your family has never been easier
+                Sharing recipes with family has never been easier
               </div>
             </Fade>
           </div>

@@ -71,7 +71,10 @@ class DashFamily extends Component {
           {this.state.family === false ? (
             <div className="title dashRecipeContent">
               <div>You're not apart of a family!</div>
-              <Link to="/family" style={{ textDecoration: "none" }}>
+              <Link
+                to="/family"
+                style={{ textDecoration: "none", height: "100%" }}
+              >
                 <span className="button">Join family</span>
               </Link>
             </div>

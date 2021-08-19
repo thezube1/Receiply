@@ -1,212 +1,147 @@
-#dashboard {
-  margin-bottom: 500px;
-}
-
-.title {
-  font-family: "Source Sans Pro";
-  font-weight: 300;
-  font-size: 30px;
-}
-
-#dashWrapper {
-  margin-top: 90px;
-  display: grid;
-  grid-template-columns: 750px 350px;
-  grid-auto-rows: 400px;
-  justify-content: center;
-  grid-column-gap: 30px;
-  grid-row-gap: 30px;
-}
-
-#dashAreaRight {
-  grid-row: 1/3;
-  grid-column: 2/3;
-}
-
-.dashOutlineWrapper {
-  border: rgb(235, 235, 235);
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 5px;
-  height: 100%;
+#dashboard-wrapper {
   width: 100%;
-  position: relative;
+  height: 100vh;
 }
 
-.dashOutlineHeader {
-  font-family: "Roboto";
-  font-weight: 200;
-  font-size: 22px;
-  padding-top: 8px;
-  padding-left: 13px;
-}
-
-.dashPopItemWrapper {
+#dashboard-content {
+  padding-top: 110px;
+  height: max-content;
   display: flex;
   justify-content: space-evenly;
-  margin-top: 20px;
+  flex-wrap: wrap;
 }
 
-.dashPopItem {
-  border: rgb(235, 235, 235);
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 5px;
-  width: 200px;
-  height: 310px;
-  position: relative;
-}
-
-.dashPopItemContent {
+.dashboard-section {
+  background-color: #efefef;
+  max-width: 450px;
+  width: 90%;
+  height: 1000px;
+  border-radius: 40px;
   display: grid;
-  grid-template-rows: 80px 100px 100px 20px;
-  width: 90%;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
+  justify-items: center;
 }
 
-#dashFamilyWrapper {
-  height: 850px;
+.dashboard-section-container {
+  height: 860px;
 }
 
-#dashRecipeWrapper {
-  height: 420px;
-}
-
-#dashPopWrapper {
-  height: 420px;
-}
-
-#dashFamilyItemContent {
-  grid-template-rows: 40px 100px 55px;
-}
-
-.dashPopItemTitle {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  font-family: "Source Sans Pro";
-  font-weight: bold;
-  font-size: 20px;
-  padding-top: 5px;
-  line-height: 1.1;
-  white-space: wrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.dashPopItemImg {
-  width: 100%;
-  max-height: 100px;
-  background-color: blue;
-}
-
-.dashPopItemDesc {
-  margin-top: 10px;
-  font-family: "Source Sans Pro";
-  font-weight: 300;
-  font-size: 17px;
-  line-height: 1.1;
-  white-space: wrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-#dashFamilyItem {
-  width: 270px;
-  height: 210px;
-  margin-bottom: 10px;
-}
-
-#dashFamImg {
-  height: 100px;
-}
-
-.dashRecipeContent {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-
-  text-align: center;
-  width: 90%;
-}
-
-#dashFamilyContent {
-  margin-top: 20px;
+.dashboard-title-wrapper {
+  margin-top: 30px;
+  display: flex;
+  background-color: white;
   justify-content: center;
-  display: grid;
-  grid-template-rows: repeat(auto-fit, max-content);
-  grid-row-gap: 15px;
+  align-items: center;
+  border-radius: 50px;
+  box-shadow: 0px 0px 5px rgb(212, 212, 212);
+  width: 400px;
+  height: 65px;
 }
 
-#dashFamilyName {
-  font-family: "Source Sans Pro";
+.dashboard-title {
+  font-family: "Cabin";
+  font-size: 25px;
   font-weight: 900;
-  font-size: 40px;
+}
+
+.dashboard-card-container {
   display: grid;
   justify-content: center;
 }
 
-#dashFamilyView {
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
+.dash-card-wrapper {
+  margin-top: 20px;
+  width: 380px;
+  height: 90px;
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  left: 0px;
+  transition: all 0.1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-@media screen and (max-width: 1100px) {
-  #dashboard {
-    margin-bottom: 0px;
-  }
-  #dashWrapper {
-    grid-template-columns: minmax(300px, 750px);
-    width: 90%;
-    position: absolute;
-    left: 50%;
-
-    transform: translate(-50%);
-  }
-  #dashAreaTop {
-    grid-row: 1/2;
-    grid-column: 1/2;
-  }
-  #dashAreaBottom {
-    grid-row: 2/3;
-    grid-column: 1/2;
-  }
-  #dashAreaRight {
-    grid-row: 3/4;
-    grid-column: 1/2;
-  }
+.dash-card-wrapper:hover {
+  border-left-color: #ff7e36;
+  border-left-style: solid;
+  border-left-width: 5px;
+  left: 5px;
 }
 
-@media screen and (max-width: 900px) {
-  #dashWrapper {
-    grid-auto-rows: 850px;
-  }
-  #dashAreaRight {
-    height: 850px;
-  }
-  #dashAreaBottom {
-    height: 850px;
-  }
-  #dashFamilyWrapper {
-    height: 850px;
-  }
+.dash-card-image {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
 
-  #dashRecipeWrapper {
-    height: 850px;
-    display: grid;
-    grid-template-rows: repeat(auto-fit, max-content);
-    grid-row-gap: 15px;
-  }
-  .dashPopItemWrapper {
-    display: grid;
-    grid-template-columns: none;
-    grid-template-rows: repeat(auto-fit, max-content);
-    grid-row-gap: 15px;
-  }
-  #dashPopWrapper {
-    height: 850px;
+#dash-card-title {
+  color: #ff7e36;
+  margin-bottom: 5px;
+}
+
+#dash-card-desc {
+  font-weight: 300;
+  max-width: 90%;
+  font-size: 15px;
+}
+
+#dash-card-creator {
+  margin-top: 5px;
+  font-size: 10px;
+  color: #444444;
+}
+
+.dashboard-view-button {
+  border-color: #ff7e36;
+  padding: 8px 30px;
+  height: max-content;
+  color: #ff7e36;
+  font-family: "Cabin";
+  font-weight: 900;
+  font-size: 15px;
+}
+
+.dashboard-view-button:hover {
+  background-color: #ff7e36;
+  color: white;
+}
+
+.dashboard-view-button:active {
+  background-color: #e96620;
+  border-color: #e96620;
+}
+
+.dashboard-blank {
+  margin-top: 360px;
+  font-size: 40px;
+}
+
+.dashboard-create-button {
+  border-color: #ff7e36;
+  background-color: #ff7e36;
+  padding: 8px 30px;
+  height: max-content;
+  color: white;
+  font-family: "Cabin";
+  font-weight: 900;
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+.dashboard-create-button:hover {
+  background-color: #eb651e;
+  border-color: #eb651e;
+}
+
+.dashboard-create-button:active {
+  background-color: #bd4d10;
+  border-color: #bd4d10;
+}
+@media screen and (max-width: 1350px) {
+  .dashboard-section {
+    margin-bottom: 50px;
   }
 }

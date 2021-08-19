@@ -19,7 +19,8 @@ class EditItemArray extends Component {
         {this.props.defaultValue.map((item, index) => {
           return (
             <div key={index} className="uploadManualInputWrapper2">
-              <textarea
+              <input
+                type="text"
                 className="uploadManualInput"
                 placeholder={this.props.placeholder}
                 value={item}
@@ -27,7 +28,7 @@ class EditItemArray extends Component {
                   this.props.reducer([index, event.target.value])
                 }
                 style={{ maxWidth: this.props.width }}
-              ></textarea>
+              ></input>
 
               {this.props.defaultValue.length !== 1 ? (
                 <button

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import LoadingPage from "../../Loading";
 import { Modal } from "react-bootstrap";
+import NavbarLogout from "../navbar/navbarLogout";
 
 class SettingsAccount extends Component {
   state = {
@@ -220,6 +221,10 @@ class SettingsAccount extends Component {
             >
               Change email
             </button>
+          </div>
+          <div className="settingsItemWrapper">
+            <div className="settingsHeader">Logout</div>
+            <NavbarLogout />
           </div>
         </div>
       );

@@ -156,7 +156,18 @@ class UploadManual extends Component {
               </div>
               {this.handleWarning()}
               <div>
-                <div>Upload Photo:</div>
+                <div>
+                  <span className="uploadManualRequired">*</span>
+                  <span
+                    style={{
+                      fontFamily: "Source Sans Pro",
+                      fontSize: 25,
+                      fontWeight: 300,
+                    }}
+                  >
+                    Upload Photo:{" "}
+                  </span>
+                </div>
                 <input
                   id="uploadManualPhoto"
                   type="file"
@@ -186,6 +197,7 @@ class UploadManual extends Component {
               />
               <EditItem
                 title="Description"
+                textarea
                 isRequired={true}
                 reducer={this.props.write_recipe_description}
                 defaultValue={this.props.editReducer.recipe_description}

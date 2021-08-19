@@ -1,73 +1,198 @@
 import React, { Component } from "react";
-import "../components/dashboard/dashboard.css";
 import NavbarMain from "../components/navbar/navbarmain";
-import IndexBar from "../components/indexbar/IndexBar";
-
-import DashPop from "../components/dashboard/DashPop";
-import DashFamily from "../components/dashboard/DashFamily";
-import DashRecipes from "../components/dashboard/DashRecipes";
-import NotVerified from "../components/verify/NotVerified";
 import axios from "axios";
-import { connect } from "react-redux";
-import { initGA, PageView } from "../components/tracking/index";
+import "../components/dashboard/dashboard.css";
+import DashCard from "../components/dashboard/DashCard";
+import { Link } from "react-router-dom";
 
 class DashboardPage extends Component {
   state = {
-    redirect: false,
+    family: undefined,
+    family_recipes: undefined,
+    popular_recipes: undefined,
+    my_recipes: undefined,
   };
 
+  CancelToken = axios.CancelToken;
+  source = this.CancelToken.source();
+  abortController = new AbortController();
+
   componentDidMount() {
-    initGA();
-    PageView();
-
-    axios
-      .get("/api/verify/user")
-      .then((res) =>
-        res.data === true ? this.props.verify() : this.props.unverify()
-      );
+    Promise.all([
+      axios
+        .get("/api/getfamily", { cancelToken: this.source.token })
+        .then((result) => {
+          this.setState({ family: result.data });
+        })
+        .catch((err) => console.log(err)),
+      axios
+        .get("/api/recipes/family", { cancelToken: this.source.token })
+        .then((res) => this.setState({ family_recipes: res.data }))
+        .catch((err) => console.log(err)),
+      axios
+        .get("/api/recipes/public", { cancelToken: this.source.token })
+        .then((res) => this.setState({ popular_recipes: res.data }))
+        .catch((err) => console.log(err)),
+      axios
+        .get("/api/recipes/user", { cancelToken: this.source.token })
+        .then((res) => this.setState({ my_recipes: res.data }))
+        .catch((err) => console.log(err)),
+    ]);
   }
-
-  redirectCookie = () => {};
 
   render() {
     return (
-      <React.Fragment>
-        {this.props.verified === false ? (
-          <NotVerified />
+      <>
+        <NavbarMain />
+        {this.state.family === undefined ||
+        this.state.family_recipes === undefined ||
+        this.state.my_recipes === undefined ||
+        this.state.popular_recipes === undefined ? (
+          <div>Loading</div>
         ) : (
-          <React.Fragment></React.Fragment>
-        )}
-        <div id="dashboard">
-          <NavbarMain />
-          <div id="dashWrapper">
-            <div id="dashAreaTop" className="dashArea">
-              <DashPop />
-            </div>
-            <div id="dashAreaBottom" className="dashArea">
-              <DashRecipes />
-            </div>
-            <div id="dashAreaRight" className="dashArea">
-              <DashFamily />
+          <div id="dashboard-wrapper">
+            <div id="dashboard-content">
+              <div className="dashboard-section">
+                <div className="dashboard-section-container">
+                  <div className="dashboard-title-wrapper">
+                    <div className="dashboard-title">Popular Recipes</div>
+                  </div>
+                  <div className="dashboard-card-container">
+                    {this.state.popular_recipes.length === 0 ? (
+                      <div style={{ display: "grid", justifyItems: "center" }}>
+                        <div className="text dashboard-blank">No Recipes</div>
+                        <Link
+                          to="/upload/manual"
+                          className="button dashboard-create-button"
+                          style={{ textDecoration: "none" }}
+                        >
+                          Create Recipe
+                        </Link>
+                      </div>
+                    ) : (
+                      this.state.popular_recipes.slice(0, 7).map((item) => {
+                        return (
+                          <DashCard
+                            key={item.RECIPE_ID}
+                            identifier={item.RECIPE_IDENTIFIER}
+                            image={item.PHOTO_NAME}
+                            recipe_name={item.RECIPE_NAME}
+                            description={item.DESCRIPTION}
+                            creator={item.CREATOR_USERNAME}
+                          />
+                        );
+                      })
+                    )}
+                  </div>
+                </div>
+                {this.state.popular_recipes.length === 0 ? (
+                  false
+                ) : (
+                  <Link
+                    to="/myrecipes"
+                    className="button dashboard-view-button"
+                    style={{ textDecoration: "none" }}
+                  >
+                    View More
+                  </Link>
+                )}
+              </div>
+              <div className="dashboard-section">
+                <div className="dashboard-section-container">
+                  <div className="dashboard-title-wrapper">
+                    <div className="dashboard-title">Family Recipes</div>
+                  </div>
+                  <div className="dashboard-card-container">
+                    {this.state.family_recipes === "BadRecipe" ? (
+                      <div style={{ display: "grid", justifyItems: "center" }}>
+                        <div className="text dashboard-blank">No Recipes</div>
+                        <Link
+                          to="/upload/manual"
+                          className="button dashboard-create-button"
+                          style={{ textDecoration: "none" }}
+                        >
+                          Create Recipe
+                        </Link>
+                      </div>
+                    ) : (
+                      this.state.family_recipes.slice(0, 7).map((item) => {
+                        return (
+                          <DashCard
+                            key={item.RECIPE_ID}
+                            identifier={item.RECIPE_IDENTIFIER}
+                            image={item.PHOTO_NAME}
+                            recipe_name={item.RECIPE_NAME}
+                            description={item.DESCRIPTION}
+                            creator={item.CREATOR_USERNAME}
+                          />
+                        );
+                      })
+                    )}
+                  </div>
+                </div>
+                {this.state.family_recipes === "BadRecipe" ? (
+                  false
+                ) : (
+                  <Link
+                    to="/browse/family"
+                    className="button dashboard-view-button"
+                    style={{ textDecoration: "none" }}
+                  >
+                    View More
+                  </Link>
+                )}
+              </div>
+              <div className="dashboard-section">
+                <div className="dashboard-section-container">
+                  <div className="dashboard-title-wrapper">
+                    <div className="dashboard-title">My Recipes</div>
+                  </div>
+                  <div className="dashboard-card-container">
+                    {this.state.my_recipes === false ? (
+                      <div style={{ display: "grid", justifyItems: "center" }}>
+                        <div className="text dashboard-blank">No Recipes</div>
+                        <Link
+                          to="/upload/manual"
+                          className="button dashboard-create-button"
+                          style={{ textDecoration: "none" }}
+                        >
+                          Create Recipe
+                        </Link>
+                      </div>
+                    ) : (
+                      this.state.my_recipes.slice(0, 7).map((item) => {
+                        return (
+                          <DashCard
+                            key={item.RECIPE_ID}
+                            identifier={item.RECIPE_IDENTIFIER}
+                            image={item.PHOTO_NAME}
+                            recipe_name={item.RECIPE_NAME}
+                            description={item.DESCRIPTION}
+                            creator={item.CREATOR_USERNAME}
+                          />
+                        );
+                      })
+                    )}
+                  </div>
+                </div>
+                {this.state.my_recipes === false ? (
+                  false
+                ) : (
+                  <Link
+                    to="/myrecipes"
+                    className="button dashboard-view-button"
+                    style={{ textDecoration: "none" }}
+                  >
+                    View More
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-        <IndexBar dissapear={1100} />
-      </React.Fragment>
+        )}
+      </>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    verified: state.verify_reducer,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    verify: () => dispatch({ type: "VERIFIED" }),
-    unverify: () => dispatch({ type: "UNVERIFIED" }),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);
+export default DashboardPage;
