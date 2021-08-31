@@ -33,6 +33,12 @@ a {
   color: white;
 }
 
+.seperator {
+  background-color: black;
+  width: 100px;
+  height: 2px;
+}
+
 #backgroundImage {
   background-image: url("./photos/index/WBC_7095.jpg");
   background-position: center;

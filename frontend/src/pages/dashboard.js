@@ -4,6 +4,9 @@ import axios from "axios";
 import "../components/dashboard/dashboard.css";
 import DashCard from "../components/dashboard/DashCard";
 import { Link } from "react-router-dom";
+import { initGA, PageView } from "../components/tracking/index";
+import { connect } from "react-redux";
+import NotVerified from "../components/verify/NotVerified";
 
 class DashboardPage extends Component {
   state = {
@@ -18,6 +21,8 @@ class DashboardPage extends Component {
   abortController = new AbortController();
 
   componentDidMount() {
+    initGA();
+    PageView();
     Promise.all([
       axios
         .get("/api/getfamily", { cancelToken: this.source.token })
@@ -38,6 +43,12 @@ class DashboardPage extends Component {
         .then((res) => this.setState({ my_recipes: res.data }))
         .catch((err) => console.log(err)),
     ]);
+
+    axios
+      .get("/api/verify/user")
+      .then((res) =>
+        res.data === true ? this.props.verify() : this.props.unverify()
+      );
   }
 
   render() {
@@ -51,6 +62,7 @@ class DashboardPage extends Component {
           <div>Loading</div>
         ) : (
           <div id="dashboard-wrapper">
+            {this.props.verified === false ? <NotVerified /> : false}
             <div id="dashboard-content">
               <div className="dashboard-section">
                 <div className="dashboard-section-container">
@@ -103,7 +115,8 @@ class DashboardPage extends Component {
                     <div className="dashboard-title">Family Recipes</div>
                   </div>
                   <div className="dashboard-card-container">
-                    {this.state.family_recipes === "BadRecipe" ? (
+                    {this.state.family_recipes === "BadRecipe" ||
+                    this.state.family_recipes === false ? (
                       <div style={{ display: "grid", justifyItems: "center" }}>
                         <div className="text dashboard-blank">No Recipes</div>
                         <Link
@@ -130,7 +143,8 @@ class DashboardPage extends Component {
                     )}
                   </div>
                 </div>
-                {this.state.family_recipes === "BadRecipe" ? (
+                {this.state.family_recipes === "BadRecipe" ||
+                this.state.family_recipes === false ? (
                   false
                 ) : (
                   <Link
@@ -195,4 +209,17 @@ class DashboardPage extends Component {
   }
 }
 
-export default DashboardPage;
+const mapStateToProps = (state) => {
+  return {
+    verified: state.verify_reducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    verify: () => dispatch({ type: "VERIFIED" }),
+    unverify: () => dispatch({ type: "UNVERIFIED" }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);

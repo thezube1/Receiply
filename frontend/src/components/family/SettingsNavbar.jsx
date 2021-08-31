@@ -34,7 +34,7 @@ class SettingsNavbar extends Component {
                 border: this.handleColor("/family/settings/privacy"),
               }}
             >
-              Privacy
+              Privacy 
             </Link>
           </div>
           */}

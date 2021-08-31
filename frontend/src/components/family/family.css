@@ -17,14 +17,21 @@
 
 #familyRequestLink {
   font-family: "Source Sans Pro";
-  background-color: rgb(0, 0, 0);
-  color: white;
-  font-size: 20px;
+  background-color: white;
+  color: black;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  font-size: 15px;
   font-weight: 300;
-  padding: 5px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
+  padding: 9px 15px;
+  border-radius: 200px;
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+#familyRequestLink:hover {
+  color: white;
+  background-color: rgb(0, 0, 0);
 }
 
 #familyRequestNumbers {
@@ -56,15 +63,6 @@
 #familyRequestHeader {
   font-weight: 500;
   margin-right: -15px;
-}
-
-#familyRequestLink:hover {
-  background-color: rgb(43, 43, 43);
-}
-
-#familyWrapper {
-  display: grid;
-  grid-template-columns: 300px 1fr;
 }
 
 .familyNavItemWrapper {
@@ -248,27 +246,36 @@
 
 #familyMemberWrapper {
   display: grid;
-  justify-content: center;
-
+  justify-items: center;
   margin-top: 200px;
   font-family: "Source Sans Pro";
   font-weight: 300;
   font-size: 30px;
 }
 
-.familyMemberItem {
-  margin-top: 10px;
+.familyMemberHeader {
+  line-height: 1;
+  font-weight: 800;
+  font-family: "Cabin";
+  font-size: 40px;
+  color: black;
+  margin-bottom: 30px;
 }
 
-.familyMemberHeader {
-  font-size: 40px;
-  color: white;
-  background-color: rgb(136, 228, 138);
-  padding: 10px;
-  border-radius: 5px;
-  width: max-content;
-  line-height: 1;
-  font-weight: 500;
+.familyMemberItem {
+  margin-top: 30px;
+}
+
+#family-member-content {
+  border-radius: 40px;
+  margin-top: 30px;
+  background-color: #efefef;
+  max-width: 800px;
+  width: 90%;
+  min-height: 500px;
+  height: max-content;
+  display: flex;
+  padding: 30px;
 }
 
 @media screen and (max-width: 500px) {

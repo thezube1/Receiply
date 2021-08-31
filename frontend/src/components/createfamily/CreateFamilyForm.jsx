@@ -35,7 +35,12 @@ class CreateFamilyForm extends Component {
         .then((response) => this.setState({ name: response.data })),
       axios
         .get("/api/family/suggest", { cancelToken: this.source.token })
-        .then((response) => this.setState({ families: response.data })),
+        .then((response) =>
+          this.setState({
+            families: response.data,
+            createName: this.state.name.LAST_NAME + " Family",
+          })
+        ),
     ]);
   }
 

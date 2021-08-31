@@ -3,8 +3,8 @@ import axios from "axios";
 import { Switch, Route } from "react-router-dom";
 import LoadingPage from "../../Loading";
 
-import FamilyMemberRequests from "./FamilyMemberRequests";
-import FamilyMembers from "../family/FamilyMembers";
+import FamilyMemberRequests from "./members/FamilyMemberRequests";
+import FamilyMembers from "../family/members/FamilyMembers";
 import FamilyInvite from "./FamilyInvite";
 import FamilySettings from "./FamilySettings";
 

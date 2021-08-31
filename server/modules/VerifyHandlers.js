@@ -62,13 +62,21 @@ app.get("/api/verify/user", (req, res) => {
 });
 
 const transporter = nodemailer.createTransport({
+  /*
+  service: "gmail",
+  auth: {
+    user: "receiply@gmail.com",
+    pass: "LetMeIn1234",
+  },
+  */
+
   pool: true,
   host: "az1-ss39.a2hosting.com",
   port: 465,
   secure: true,
   auth: {
     user: "info@receiply.com",
-    pass: "3bR-J&(vu2a.",
+    pass: ",SbU^$%$RSvX",
   },
 });
 
@@ -96,7 +104,8 @@ app.get("/api/verify/resend", (req, res) => {
                   text: `Verification link: receiply.com/verify/${token}`,
                 };
                 transporter.sendMail(mailOptions, (err, info) => {
-                  if (err) res.send("Mail error!").end();
+                  console.log(err);
+                  if (err) res.send(err).end();
                   res.send(true).end();
                 });
               }

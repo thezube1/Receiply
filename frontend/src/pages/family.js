@@ -68,10 +68,10 @@ class FamilyPage extends Component {
           </div>
           <div id="familyWrapper">
             <div>
-              <FamilyNav />
+              <FamilyMain />
             </div>
             <div>
-              <FamilyMain />
+              <FamilyNav />
             </div>
           </div>
         </React.Fragment>
