@@ -9,7 +9,11 @@ class MemberCard extends Component {
         <div style={{ display: "grid", justifyItems: "center" }}>
           <div className="family-member-image"></div>
           <div className="family-member-name">{this.props.name}</div>
-          <div className="family-member-role">Family Manager</div>
+          {this.props.manager ? (
+            <div className="family-member-role">Family Manager</div>
+          ) : (
+            false
+          )}
         </div>
       </div>
     );

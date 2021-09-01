@@ -5,6 +5,7 @@ import "./App.css";
 import { initGA, PageView } from "./components/tracking/index";
 import { Fade } from "react-reveal";
 import UploadImage from "./photos/index/Capture.PNG";
+import { Link } from "react-router-dom";
 
 class App extends Component {
   state = {};
@@ -22,6 +23,22 @@ class App extends Component {
           <div id="backgroundImage">
             <Fade bottom big>
               <div id="mainTitle">Receiply</div>
+              <div style={{ display: "flex" }}>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to="/signup"
+                  className="mainButton"
+                >
+                  Sign Up
+                </Link>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to="/login"
+                  className="mainButton"
+                >
+                  Login
+                </Link>
+              </div>
             </Fade>
           </div>
           <div id="mainPageSecondWrapper">

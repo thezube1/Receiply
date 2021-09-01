@@ -46,9 +46,6 @@ class FamilyMain extends Component {
             <React.Fragment>
               <FamilyMemberRequests />
               <div id="familyContentWrapper">
-                <div style={{ marginTop: 100 }}>
-                  <span className="familyTitle">Family:</span>
-                </div>
                 <div id="familyName">{this.state.family.FAMILY_NAME}</div>
                 <div style={{ marginTop: 40 }}>
                   <span className="familyHeader">Description:</span>

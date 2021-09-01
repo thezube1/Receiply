@@ -1,86 +1,51 @@
 import React, { Component } from "react";
-import "./navbar.css";
+import { Link } from "react-router-dom";
 import NavbarSearch from "./navbarSearch";
 
-import { Link } from "react-router-dom";
-
 class Navbar extends Component {
-  state = {
-    type: "navContent",
-    visible: "hide",
-  };
+  state = { width: 0, open: false };
 
+  componentDidMount() {
+    window.addEventListener("resize", this.updateWidth);
+    this.updateWidth();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWidth);
+  }
+
+  updateWidth = () => {
+    this.setState({ width: window.innerWidth });
+  };
   render() {
     return (
-      <div id="navWrapper">
-        <button
-          id="navBurger"
-          onClick={() =>
-            this.state.type === "navContent"
-              ? this.setState({ type: "navDropdown", visible: "show" })
-              : this.setState({ type: "navContent", visible: "hide" })
-          }
-        >
-          <div className="navBurgerLine"></div>
-          <div className="navBurgerLine"></div>
-          <div className="navBurgerLine"></div>
-        </button>
-        <div id={this.state.type} className={this.state.visible}>
-          <button
-            id="navBurger"
-            onClick={() =>
-              this.state.type === "navContent"
-                ? this.setState({ type: "navDropdown", visible: "show" })
-                : this.setState({ type: "navContent", visible: "hide" })
-            }
-          >
-            <div className="navBurgerLine"></div>
-            <div className="navBurgerLine"></div>
-            <div className="navBurgerLine"></div>
-          </button>
-          <Link
-            to="/"
-            className="navItemLink"
-            style={{ textDecoration: "none" }}
-          >
-            <span id="title">Receiply</span>
-          </Link>
-          <Link
-            to="/browse"
-            className="navItemLink"
-            style={{ textDecoration: "none" }}
-          >
-            <span className="navitem">Browse</span>
-          </Link>
-          <Link
-            to="/about"
-            className="navItemLink"
-            style={{ textDecoration: "none" }}
-          >
-            <span className="navitem">About</span>
-          </Link>
-
-          <div id="accountitemswrapper">
-            <NavbarSearch searchDefault={this.props.searchDefault} />
-            <Link
-              to="/signup"
-              className="navItemLink"
-              style={{ textDecoration: "none" }}
-            >
-              <span className="navitem accountitems" id="signup">
-                Sign up
-              </span>
-            </Link>
-            <Link
-              to="/login"
-              className="navItemLink"
-              style={{ textDecoration: "none" }}
-            >
-              <span className="navitem accountitems" id="login">
-                Login
-              </span>
-            </Link>
+      <div id="navbar-wrapper">
+        <Link to="/browse" style={{ textDecoration: "none" }}>
+          <div className="navbar-item">Browse</div>
+        </Link>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <div id="navbar-title">Receiply</div>
+        </Link>
+        <Link to="/about" style={{ textDecoration: "none" }}>
+          <div className="navbar-item" id="navbar-about">
+            About
           </div>
+        </Link>
+
+        <div id="navbar-right" style={{ right: 20 }}>
+          <div>
+            <NavbarSearch searchDefault={this.props.searchDefault} />
+          </div>
+          <Link to="/login" style={{ textDecoration: "none", marginLeft: 20 }}>
+            <div className="navbar-item" id="navbar-create">
+              Login
+            </div>
+          </Link>
+          <Link to="/signup" style={{ textDecoration: "none", marginLeft: 20 }}>
+            <div className="navbar-item" id="navbar-create">
+              Sign up
+            </div>
+          </Link>
         </div>
       </div>
     );

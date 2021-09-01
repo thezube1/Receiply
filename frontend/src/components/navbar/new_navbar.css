@@ -164,3 +164,7 @@
 .navbar-item-mobile:hover:after {
   width: 50px;
 }
+
+#navbar-about:hover::after {
+  width: 41px;
+}

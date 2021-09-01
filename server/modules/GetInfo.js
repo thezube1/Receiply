@@ -126,35 +126,4 @@ app.get("/api/getfamily/description", (req, res) => {
     connection.release();
   });
 });
-
-app.get("/api/getfamily/members", (req, res) => {
-  pool.getConnection((err, connection) => {
-    if (err) return console.log(err);
-    jwt.verify(
-      req.cookies.userAuth,
-      process.env.ACCESS_TOKEN_KEY,
-      (err, token) => {
-        if (err) return console.log(err);
-        connection.query(
-          `SELECT FAMILY FROM Accounts WHERE USER_ID='${token.user_id}'`,
-          (err, result1) => {
-            if (err) return console.log(err);
-            const family = result1[0].FAMILY;
-            connection.query(
-              `SELECT FIRST_NAME, LAST_NAME, USER_ID FROM Accounts WHERE FAMILY='${family}' AND FAMILY_AUTH='1'`,
-              (err, result2) => {
-                if (err) return console.log(err);
-                else {
-                  res.json(result2);
-                  res.end();
-                }
-              }
-            );
-          }
-        );
-      }
-    );
-    connection.release();
-  });
-});
 module.exports = app;

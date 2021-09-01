@@ -47,17 +47,40 @@ a {
   background-attachment: fixed;
   width: 100%;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 0;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  z-index: -1;
 }
 
 #mainTitle {
-  font-family: "Source Sans Pro";
-  font-weight: 600;
+  font-family: "Cabin";
+  font-weight: 900;
   font-size: 250px;
   color: white;
+  text-shadow: 0px 0px 5px rgb(80, 80, 80);
+}
+
+.mainButton {
+  background: none;
+  width: max-content;
+  padding: 10px 50px;
+  border-color: rgb(255, 255, 255);
+  border-style: solid;
+  font-family: "Source Sans Pro";
+  font-weight: 700;
+  border-radius: 200px;
+  color: black;
+  background-color: white;
+  font-size: 20px;
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  margin-right: 20px;
+}
+
+.mainButton:hover {
+  background-color: #da5f1d;
+  color: white;
+  border-color: #da5f1d;
 }
 
 .recipeCardLink {

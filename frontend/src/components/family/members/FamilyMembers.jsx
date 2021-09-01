@@ -15,7 +15,7 @@ class FamilyMembers extends Component {
 
   componentDidMount() {
     axios
-      .get("/api/getfamily/members", { cancelToken: this.source.token })
+      .get("/api/family/members", { cancelToken: this.source.token })
       .then((result) => {
         this.setState({ members: result.data });
       })
@@ -39,14 +39,19 @@ class FamilyMembers extends Component {
           {this.state.members === undefined ? (
             <div className="familyMemberItem">Loading...</div>
           ) : (
-            this.state.members.map((content, index) => (
+            this.state.members.DATA.map((content, index) => (
               <Link
-                to={`/user/${this.props.username}`}
+                to={`/user/${content.USERNAME}`}
                 style={{ textDecoration: "none", outline: "none" }}
               >
                 <MemberCard
                   key={index}
                   name={`${content.FIRST_NAME} ${content.LAST_NAME}`}
+                  manager={
+                    this.state.members.CREATOR === content.USER_ID
+                      ? true
+                      : false
+                  }
                 />
               </Link>
             ))

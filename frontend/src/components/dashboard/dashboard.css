@@ -122,13 +122,14 @@
 .dashboard-create-button {
   border-color: #ff7e36;
   background-color: #ff7e36;
-  padding: 8px 30px;
+  padding: 12px 30px;
   height: max-content;
   color: white;
   font-family: "Cabin";
   font-weight: 900;
   font-size: 15px;
   margin-top: 10px;
+  line-height: 1;
 }
 
 .dashboard-create-button:hover {

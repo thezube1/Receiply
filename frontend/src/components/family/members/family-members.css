@@ -6,6 +6,7 @@
   width: 170px;
   height: 220px;
   border-radius: 30px;
+  margin: 7px;
 }
 
 .family-member-image {
@@ -29,4 +30,5 @@
   font-family: "Cabin";
   font-size: 15px;
   font-weight: 300;
+  color: black;
 }

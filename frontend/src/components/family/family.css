@@ -107,44 +107,41 @@
 }
 
 #familyContentWrapper {
-  justify-content: center;
+  height: 100vh;
   display: grid;
+  justify-content: center;
+  align-content: center;
 }
 
 .familyTitle {
-  font-family: "Source Sans Pro";
-  font-weight: 500;
+  font-family: "Cabin";
+  font-weight: 900;
   font-size: 40px;
-  color: white;
-  background-color: rgb(136, 228, 138);
-  padding: 7px;
+  color: rgb(68, 68, 68);
   line-height: 1;
-  border-radius: 5px;
 }
 
 #familyName {
-  font-family: "Source Sans Pro";
-  font-weight: 300;
-  font-size: 60px;
-  margin-top: 13px;
+  font-family: "Cabin";
+  font-weight: 900;
+  color: #ff7e36;
+  font-size: 100px;
+  line-height: 1;
 }
 
 .familyHeader {
-  font-family: "Source Sans Pro";
-  font-weight: 500;
+  font-family: "Cabin";
+  font-weight: 900;
   font-size: 30px;
-  color: white;
-  background-color: rgb(136, 228, 138);
-  padding: 5px;
+  color: rgb(68, 68, 68);
   line-height: 1;
-  border-radius: 5px;
 }
 
 #familyDescription {
   font-family: "Source Sans Pro";
   font-weight: 300;
   font-size: 40px;
-  margin-top: 13px;
+  margin-top: 20px;
 }
 
 #famInvWrapper {
@@ -268,13 +265,15 @@
 
 #family-member-content {
   border-radius: 40px;
-  margin-top: 30px;
+  margin-top: 40px;
   background-color: #efefef;
   max-width: 800px;
   width: 90%;
   min-height: 500px;
   height: max-content;
   display: flex;
+  flex-wrap: wrap;
+
   padding: 30px;
 }
 
